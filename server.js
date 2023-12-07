@@ -5,12 +5,10 @@ const path = require('path');
 const hostname = '127.0.0.1';
 const port = 3000;
 function loadFile(fileName) {
-  console.log('FILENAME', fileName);
   if (fileName === 'favicon.ico') {
     return '';
   }
   const pathName = path.join(__dirname, 'public', fileName);
-  console.log('PATH', pathName);
   return fs.readFileSync(pathName) || '';
 }
 
@@ -23,13 +21,10 @@ const server = http.createServer((req, res) => {
 
   let content;
   if (urlParts.pathname === '/') {
-    console.log('first');
     content = loadFile('index.html');
   } else {
-    console.log('second');
-    const content = loadFile(urlParts.pathname.slice(1)) || 'TEMP';
+    content = loadFile(urlParts.pathname.slice(1)) || 'TEMP';
   } 
-  console.log('CONTENT', content || 'try');
   res.writeHead(200);
   res.write(content);
   res.end();
