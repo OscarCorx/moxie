@@ -5,11 +5,9 @@ const path = require('path');
 const hostname = '127.0.0.1';
 const port = 3000;
 function loadFile(fileName) {
-  if (fileName === 'favicon.ico') {
-    return '';
-  }
   const pathName = path.join(__dirname, 'public', fileName);
-  return fs.readFileSync(pathName) || '';
+  if (!fs.existsSync(pathName)) return '';
+  return fs.readFileSync(pathName);
 }
 
 
