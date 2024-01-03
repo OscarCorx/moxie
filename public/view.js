@@ -1,9 +1,4 @@
 class View extends Actor {
-
-	getId() {
-		return Math.floor(Math.random() * 1000);
-	}
-
 	renderTemplate(context, templateId, stateId) {
 		let text = templateRegistry[templateId];
 		let matches;
