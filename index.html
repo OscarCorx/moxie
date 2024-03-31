@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canvas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+  </head>
+  <body>
+    <script>
+      let context;
+      let drawState;
+      let fontSize = '24';
+      const offset = {
+        x: 25,
+        y: 25,
+      };
+      const inputState = {};
+      const characterState = {
+        index: 63,
+      };
+      const glyphState = {
+        registry: {},
+        box: {},
+      };
+
+      let animateState = {
+        templateIndex: 0,
+        glyphIndex: 0,
+        strokeIndex: 0,
+        pointIndex: 0,
+        origin: {
+          x: 25,
+          y: 250,
+        }
+      };
+      
+      function drawScreen() {
+        context = document.getElementById("canvas").getContext("2d");
+        context.lineWidth = 1;
+        context.font = `${fontSize}px Arial`;
+
+        context.beginPath();
+        context.rect(0, 0, 600, 300);
+        context.stroke();
+      }
+
+      function setCanvas() {
+        const canvas = document.getElementById("canvas");
+        canvas.width = 600;
+        canvas.height = 300;
+        canvas.style.width = 600;
+        canvas.style.height = 300;
+      }
+
+      function drawPane() {
+        context.clearRect(10, 10, 425, 280);
+        context.font = `${fontSize}px Arial`;
+
+        let metrics = context.measureText(characterState.character);
+        glyphState.box[characterState.character] = [metrics.actualBoundingBoxRight, metrics.actualBoundingBoxAscent];
+        const x = 50;
+        const y = 200;
+
+        context.lineWidth = 1;
+        context.beginPath();
+        context.rect(x, y - metrics.actualBoundingBoxAscent, metrics.actualBoundingBoxRight, metrics.actualBoundingBoxAscent);
+        context.strokeText(characterState.character, x + metrics.actualBoundingBoxRight + 10, y);
+        context.stroke();
+      }
+
+      function nextCharacter() {
+        characterState.index = (94 + characterState.index + 1) % 94;;
+        characterState.character = String.fromCharCode(characterState.index + 33);
+        drawPane();
+      }
+
+      function startStroke(event) {
+        if (event.clientX > 600 || event.clientY > 300) return;
+
+        drawState = {
+          stroke: [[event.clientX - offset.x, event.clientY - offset.y]],
+          position: {
+            x: event.clientX - offset.x,
+            y: event.clientY - offset.y,
+          },
+        };
+
+        context.lineWidth = 1;
+        context.lineCap = "round";
+
+        context.beginPath(); // Start a new path
+        context.moveTo(event.clientX - offset.x, event.clientY - offset.y); // Move the pen to (30, 50)
+        context.lineTo(event.clientX - offset.x, event.clientY - offset.y); // Draw a line to (150, 100)
+        context.stroke(); // Render the path
+      }
+
+      function continueStroke(event) {
+        if (!drawState) return;
+
+        context.lineWidth = 1;
+        context.lineCap = "round";
+
+        context.beginPath(); // Start a new path
+        context.moveTo(drawState.position.x, drawState.position.y); // Move the pen to (30, 50)
+        context.lineTo(event.clientX - offset.x, event.clientY - offset.y); // Draw a line to (150, 100)
+        context.stroke(); // Render the path
+
+        drawState.stroke.push([event.clientX, event.clientY]);
+        drawState.position = {
+            x: event.clientX - offset.x,
+            y: event.clientY - offset.y,
+          };
+      }
+
+      function endStroke(event) {
+        if (event.clientX > 600 || event.clientY > 300) return;
+        
+        context.beginPath(); // Start a new path
+        context.moveTo(drawState.position.x, drawState.position.y); // Move the pen to (30, 50)
+        context.lineTo(event.clientX - offset.x, event.clientY - offset.y); // Draw a line to (150, 100)
+        context.stroke(); // Render the path
+
+        const character = characterState.character;
+        if (!glyphState.registry[character]) {
+          glyphState.registry[character] = [drawState.stroke];
+        } else {
+          glyphState.registry[character].push(drawState.stroke);
+        }
+
+        drawState = undefined;
+      }
+
+      function drawText() {
+        context.clearRect(10, 10, 425, 280);
+
+        const template = 'a quick brown fox jumps over the lazy dog';
+        let origin = { x: 50, y: 250 };
+
+        context.lineWidth = 1;
+        context.lineCap = "round";
+
+        for (const character of template) {
+          if (!glyphState.registry[character]) {
+            continue;
+          }
+
+          for (const stroke of glyphState.registry[character]) {
+            context.beginPath();
+            context.moveTo(stroke[0][0] + origin.x + offset.x, stroke[0][1] + offset.y);
+            for (const point of stroke.slice(1)) {
+              context.lineTo(point[0] + origin.x, point[1]);
+            }
+            context.stroke();
+          } 
+          origin = { 
+            x: origin.x + glyphState.box[character][0],
+            y: 250,
+          };
+        }
+      }
+
+      function changeFontSize(event) {
+        fontSize = event.target.value;
+      }
+
+      function animateText() {
+        if (!animateState.isFirst) {
+          context.clearRect(10, 10, 425, 280);
+          animateState.isFirst = true;
+        }
+
+        const template = 'the quick brown fox jumps over the lazy dog';
+        context.lineWidth = 1;
+        context.lineCap = "round";
+
+        const character = template[animateState.templateIndex];
+        if (!character) {
+          return true;
+        }
+        
+        const glyph = glyphState.registry[character];
+        if (!glyph) {
+          animateState.templateIndex++;
+          return;
+        }
+
+        let stroke = glyph[animateState.strokeIndex];
+        if (!stroke) {
+          animateState.templateIndex++;
+          animateState.strokeIndex = 0;
+          animateState.origin = {
+            x: animateState.origin.x + glyphState.box[character][0],
+            y: 250,
+          };
+          return;
+        }
+        stroke = stroke.slice(1);
+
+        const point = stroke[animateState.pointIndex];
+        if (!point) {
+          animateState.strokeIndex++;
+          animateState.pointIndex = 0;
+          animateState.position = undefined;
+          return;
+        }
+
+        animateState.pointIndex++;
+        if (!animateState.position) {
+          animateState.position = {
+            x: point[0],
+            y: point[1],
+          };
+        }
+
+        const to = {
+          x0: animateState.position.x + animateState.origin.x + offset.x,
+          y0: animateState.position.y + offset.y,
+          x1: point[0] + animateState.origin.x + offset.x,
+          y1: point[1] + offset.y,
+        };
+        context.beginPath();
+        context.moveTo(to.x0, to.y0);
+        context.lineTo(to.x1, to.y1);
+        context.stroke();
+
+        animateState.position = {
+          x: point[0],
+          y: point[1],
+        };
+        
+      }
+
+      function animateLoop() {
+        if (animateText()) {
+          animateState = {
+            templateIndex: 0,
+            glyphIndex: 0,
+            strokeIndex: 0,
+            pointIndex: 0,
+            origin: {
+              x: 25,
+              y: 250,
+            }
+          };
+          return;
+        };
+        requestAnimationFrame(animateLoop);
+      }
+
+      function printData(event) {
+        const template = JSON.stringify(glyphState);
+        navigator.clipboard.writeText(template);
+        console.log('PRINT');
+
+        // create a new div element
+        const newDiv = document.createElement("div");
+      
+        // and give it some content
+        const newContent = document.createTextNode(template);
+      
+        // add the text node to the newly created div
+        newDiv.appendChild(newContent);
+        document.getElementById("content").appendChild(newDiv);
+      }
+
+      addEventListener("mousedown", startStroke);
+      addEventListener("mouseup", endStroke);
+      addEventListener("mousemove", continueStroke);
+
+      addEventListener("touchstart", startStroke);
+      addEventListener("touchend", endStroke);
+      addEventListener("touchmove", continueStroke);
+    </script>
+    <div class="card">
+      <div id="content" class="card-content">
+        <canvas id="canvas"></canvas>
+      </div>
+      <footer class="card-footer">
+        <a id="next" href="#" class="card-footer-item">NEXT</a>
+        <a id="play" href="#" class="card-footer-item">PLAY</a>
+        <a id="print" href="#" class="card-footer-item">PRINT</a>
+        <input id="font-size" class="input is-primary card-footer-item" type="text" placeholder="Primary input" />
+      </footer>
+    </div>
+    <script>
+      setCanvas();
+      drawScreen();
+      document.getElementById("font-size").addEventListener("change", changeFontSize);
+      document.getElementById("next").addEventListener("click", nextCharacter);
+      document.getElementById("play").addEventListener("click", animateLoop);
+      document.getElementById("print").addEventListener("click", printData);
+    </script>
+  </body>
+</html>
