@@ -76,6 +76,7 @@
       }
 
       function startStroke(event) {
+        event.preventDefault();
         if (event.touches.length === 0) return;
         if (event.touches[0].clientX > 600 || event.touches[0].clientY > 300) return;
 
@@ -97,6 +98,7 @@
       }
 
       function continueStroke(event) {
+        event.preventDefault();
         if (event.touches.length === 0) return;
         if (!drawState) return;
 
@@ -116,6 +118,7 @@
       }
 
       function endStroke(event) {
+        event.preventDefault();
         //if (event.touches.length === 0) return;
         if (event.changedTouches[0].clientX > 600 || event.changedTouches[0].clientY > 300) return;
         
