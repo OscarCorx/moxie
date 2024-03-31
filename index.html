@@ -15,7 +15,8 @@
     <script>
       let context;
       let drawState;
-      let fontSize = '144';
+      let fontSize = '48';
+      const lineWidth = 1;
       const offset = {
         x: 25,
         y: 25,
@@ -42,7 +43,7 @@
       
       function drawScreen() {
         context = document.getElementById("canvas").getContext("2d");
-        context.lineWidth = 1;
+        context.lineWidth = lineWidth;
         context.font = `${fontSize}px Arial`;
 
         context.beginPath();
@@ -67,7 +68,7 @@
         const x = 50;
         const y = 200;
 
-        context.lineWidth = 1;
+        context.lineWidth = lineWidth;
         context.beginPath();
         context.rect(x, y - metrics.actualBoundingBoxAscent, metrics.actualBoundingBoxRight, metrics.actualBoundingBoxAscent);
         context.strokeText(characterState.character, x + metrics.actualBoundingBoxRight + 10, y);
@@ -93,7 +94,7 @@
           },
         };
 
-        context.lineWidth = 5;
+        context.lineWidth = lineWidth;
         context.lineCap = "round";
 
         context.beginPath(); // Start a new path
@@ -107,7 +108,7 @@
         if (event.touches.length === 0) return;
         if (!drawState) return;
 
-        context.lineWidth = 5;
+        context.lineWidth = lineWidth;
         context.lineCap = "round";
 
         context.beginPath(); // Start a new path
@@ -148,7 +149,7 @@
         const template = 'a quick brown fox jumps over the lazy dog';
         let origin = { x: 50, y: 250 };
 
-        context.lineWidth = 5;
+        context.lineWidth = lineWidth;
         context.lineCap = "round";
 
         for (const character of template) {
@@ -182,7 +183,7 @@
         }
 
         const template = 'the quick brown fox jumps over the lazy dog';
-        context.lineWidth = 5;
+        context.lineWidth = lineWidth;
         context.lineCap = "round";
 
         const character = template[animateState.templateIndex];
@@ -285,7 +286,7 @@
       </div>
       <footer class="card-footer">
         <a id="next" href="#" class="card-footer-item">NEXT</a>
-        <a id="play" href="#" class="card-footer-item">ALPHA</a>
+        <a id="play" href="#" class="card-footer-item">BRAVO</a>
         <a id="print" href="#" class="card-footer-item">PRINT</a>
         <input id="font-size" class="input is-primary card-footer-item" type="text" placeholder="Primary input" />
       </footer>
