@@ -37,7 +37,7 @@
       
       function drawScreen() {
         context = document.getElementById("canvas").getContext("2d");
-        context.lineWidth = 1;
+        context.lineWidth = lineWidth;
         context.font = `${fontSize}px Arial`;
 
         context.beginPath();
@@ -62,7 +62,7 @@
         const x = 50;
         const y = 200;
 
-        context.lineWidth = 1;
+        context.lineWidth = lineWidth;
         context.beginPath();
         context.rect(x, y - metrics.actualBoundingBoxAscent, metrics.actualBoundingBoxRight, metrics.actualBoundingBoxAscent);
         context.strokeText(characterState.character, x + metrics.actualBoundingBoxRight + 10, y);
@@ -76,6 +76,7 @@
       }
 
       function startStroke(event) {
+        event.preventDefault();
         if (event.touches.length === 0) return;
         if (event.touches[0].clientX > 600 || event.touches[0].clientY > 300) return;
 
@@ -87,7 +88,7 @@
           },
         };
 
-        context.lineWidth = 5;
+        context.lineWidth = lineWidth;
         context.lineCap = "round";
 
         context.beginPath();
@@ -97,10 +98,11 @@
       }
 
       function continueStroke(event) {
+        event.preventDefault();
         if (event.touches.length === 0) return;
         if (!drawState) return;
 
-        context.lineWidth = 5;
+        context.lineWidth = lineWidth;
         context.lineCap = "round";
 
         context.beginPath();
@@ -116,6 +118,7 @@
       }
 
       function endStroke(event) {
+        event.preventDefault();
         if (event.changedTouches[0].clientX > 600 || event.changedTouches[0].clientY > 300) return;
 
         const character = characterState.character;
@@ -134,7 +137,7 @@
         const template = 'a quick brown fox jumps over the lazy dog';
         let origin = { x: 50, y: 250 };
 
-        context.lineWidth = 5;
+        context.lineWidth = lineWidth;
         context.lineCap = "round";
 
         for (const character of template) {
@@ -168,7 +171,7 @@
         }
 
         const template = 'the quick brown fox jumps over the lazy dog';
-        context.lineWidth = 5;
+        context.lineWidth = lineWidth;
         context.lineCap = "round";
 
         const character = template[animateState.templateIndex];
