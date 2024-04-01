@@ -5,18 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Canvas</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
-    <style>
-      #canvas {
-        touch-action: none;
-      }
-    </style>
   </head>
   <body>
     <script>
       let context;
       let drawState;
-      let fontSize = '48';
-      const lineWidth = 1;
+      let fontSize = '144';
       const offset = {
         x: 25,
         y: 25,
@@ -43,7 +37,7 @@
       
       function drawScreen() {
         context = document.getElementById("canvas").getContext("2d");
-        context.lineWidth = lineWidth;
+        context.lineWidth = 1;
         context.font = `${fontSize}px Arial`;
 
         context.beginPath();
@@ -68,7 +62,7 @@
         const x = 50;
         const y = 200;
 
-        context.lineWidth = lineWidth;
+        context.lineWidth = 1;
         context.beginPath();
         context.rect(x, y - metrics.actualBoundingBoxAscent, metrics.actualBoundingBoxRight, metrics.actualBoundingBoxAscent);
         context.strokeText(characterState.character, x + metrics.actualBoundingBoxRight + 10, y);
@@ -82,56 +76,47 @@
       }
 
       function startStroke(event) {
-        event.preventDefault();
         if (event.touches.length === 0) return;
         if (event.touches[0].clientX > 600 || event.touches[0].clientY > 300) return;
 
         drawState = {
-          stroke: [[event.touches[0].clientX - offset.x, event.touches[0].clientY - offset.y]],
+          stroke: [[Math.floor(event.touches[0].clientX) - offset.x, Math.floor(event.touches[0].clientY) - offset.y]],
           position: {
-            x: event.touches[0].clientX - offset.x,
-            y: event.touches[0].clientY - offset.y,
+            x: Math.floor(event.touches[0].clientX) - offset.x,
+            y: Math.floor(event.touches[0].clientY) - offset.y,
           },
         };
 
-        context.lineWidth = lineWidth;
+        context.lineWidth = 5;
         context.lineCap = "round";
 
-        context.beginPath(); // Start a new path
-        context.moveTo(event.touches[0].clientX - offset.x, event.touches[0].clientY - offset.y); // Move the pen to (30, 50)
-        context.lineTo(event.touches[0].clientX - offset.x, event.touches[0].clientY - offset.y); // Draw a line to (150, 100)
-        context.stroke(); // Render the path
+        context.beginPath();
+        context.moveTo(Math.floor(event.touches[0].clientX) - offset.x, Math.floor(event.touches[0].clientY) - offset.y);
+        context.lineTo(Math.floor(event.touches[0].clientX) - offset.x, Math.floor(event.touches[0].clientY) - offset.y);
+        context.stroke();
       }
 
       function continueStroke(event) {
-        event.preventDefault();
         if (event.touches.length === 0) return;
         if (!drawState) return;
 
-        context.lineWidth = lineWidth;
+        context.lineWidth = 5;
         context.lineCap = "round";
 
-        context.beginPath(); // Start a new path
-        context.moveTo(drawState.position.x, drawState.position.y); // Move the pen to (30, 50)
-        context.lineTo(event.touches[0].clientX - offset.x, event.touches[0].clientY - offset.y); // Draw a line to (150, 100)
-        context.stroke(); // Render the path
+        context.beginPath();
+        context.moveTo(drawState.position.x, drawState.position.y);
+        context.lineTo(Math.floor(event.touches[0].clientX) - offset.x, Math.floor(event.touches[0].clientY) - offset.y);
+        context.stroke();
 
-        drawState.stroke.push([event.touches[0].clientX, event.touches[0].clientY]);
+        drawState.stroke.push([Math.floor(event.touches[0].clientX), Math.floor(event.touches[0].clientY)]);
         drawState.position = {
-            x: event.touches[0].clientX - offset.x,
-            y: event.touches[0].clientY - offset.y,
+            x: Math.floor(event.touches[0].clientX) - offset.x,
+            y: Math.floor(event.touches[0].clientY) - offset.y,
           };
       }
 
       function endStroke(event) {
-        event.preventDefault();
-        //if (event.touches.length === 0) return;
         if (event.changedTouches[0].clientX > 600 || event.changedTouches[0].clientY > 300) return;
-        
-        //context.beginPath(); // Start a new path
-        //context.moveTo(drawState.position.x, drawState.position.y); // Move the pen to (30, 50)
-        //context.lineTo(event.touches[0].clientX - offset.x, event.touches[0].clientY - offset.y); // Draw a line to (150, 100)
-        //context.stroke(); // Render the path
 
         const character = characterState.character;
         if (!glyphState.registry[character]) {
@@ -149,7 +134,7 @@
         const template = 'a quick brown fox jumps over the lazy dog';
         let origin = { x: 50, y: 250 };
 
-        context.lineWidth = lineWidth;
+        context.lineWidth = 5;
         context.lineCap = "round";
 
         for (const character of template) {
@@ -183,7 +168,7 @@
         }
 
         const template = 'the quick brown fox jumps over the lazy dog';
-        context.lineWidth = lineWidth;
+        context.lineWidth = 5;
         context.lineCap = "round";
 
         const character = template[animateState.templateIndex];
@@ -286,7 +271,7 @@
       </div>
       <footer class="card-footer">
         <a id="next" href="#" class="card-footer-item">NEXT</a>
-        <a id="play" href="#" class="card-footer-item">BRAVO</a>
+        <a id="play" href="#" class="card-footer-item">PLAY</a>
         <a id="print" href="#" class="card-footer-item">PRINT</a>
         <input id="font-size" class="input is-primary card-footer-item" type="text" placeholder="Primary input" />
       </footer>
