@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Font</title>
+  </head>
+  <body>
+		<script>
+			const delta = 8;
+			const activeState = {
+				curveIndex: 0,
+				pointIndex: 0,
+				isActive: false,
+			}
+			const characterState = {
+				index: 63,
+			};
+			const glyphState = {
+				registry: {},
+				box: {},
+			};
+			let bezierState = [];
+			const pointState = {
+				isActive: false,
+			};
+			const lineWidth = 1;
+			const fontSize = 144;
+			let context;
+			let bounds;
+			let drawPoints = true;
+
+			
+			function drawScreen() {
+				context = document.getElementById("canvas").getContext("2d");
+				context.lineWidth = lineWidth;
+			  context.font = `${fontSize}px Arial`;
+
+				context.beginPath();
+				context.rect(0, 0, 600, 300);
+				context.stroke();
+			}
+
+			function setCanvas() {
+				const canvas = document.getElementById("canvas");
+				bounds = canvas.getBoundingClientRect();
+
+				canvas.width = 600;
+		    canvas.height = 300;
+		    canvas.style.width = 600;
+		    canvas.style.height = 300;
+			}
+
+			function renderBezier() {
+	      context.clearRect(1, 1, 598, 298);
+
+				drawPane();
+
+				context.beginPath();
+				context.lineWidth = 5;
+				context.lineCap = 'round';
+				for (const i in bezierState) {
+					if (drawPoints) {
+						context.rect(bezierState[i][0].x, bezierState[i][0].y, delta, delta);
+						context.rect(bezierState[i][1].x, bezierState[i][1].y, delta, delta);
+						context.rect(bezierState[i][2].x, bezierState[i][2].y, delta, delta);
+						context.rect(bezierState[i][3].x, bezierState[i][3].y, delta, delta);
+					}
+					context.moveTo(bezierState[i][0].x, bezierState[i][0].y);
+					context.bezierCurveTo(bezierState[i][1].x, bezierState[i][1].y, bezierState[i][2].x, bezierState[i][2].y, bezierState[i][3].x, bezierState[i][3].y);
+				}
+				context.stroke();
+			}
+
+			function selectPoint(event) {
+				const x = event.clientX - bounds.left;
+				const y = event.clientY - bounds.top;
+
+				for (const i in bezierState) {
+					for (const j in bezierState[i]) {
+						if ( x - (x % delta) !== bezierState[i][j].x ) continue;
+						if ( y - (y % delta) !== bezierState[i][j].y ) continue;
+						activeState.curveIndex = i;
+						activeState.pointIndex = j;
+						activeState.isActive = true;
+						return;
+					}
+				}
+			}
+
+			function movePoint(event) {
+				if (!activeState.isActive) return;
+
+				const x = event.clientX - bounds.left;
+				const y = event.clientY - bounds.top;
+
+				bezierState[activeState.curveIndex][activeState.pointIndex] = {
+					x: x - (x % delta),
+					y: y - (y % delta),
+				};
+
+			  renderBezier();
+			}
+
+			function setPoint(event) {
+				activeState.isActive = false;
+			}
+
+			function addCurve() {
+				bezierState.push([{ x: 24, y: 24 }, { x: 104, y: 24 }, { x: 24, y: 104 }, { x: 104, y: 104 }]);
+				renderBezier();
+			}
+
+			function togglePoints() {
+				drawPoints = !drawPoints;
+				renderBezier();
+			}
+
+			function drawPane() {
+				context.clearRect(10, 10, 425, 280);
+			  context.font = `${fontSize}px Arial`;
+
+				let metrics = context.measureText(characterState.character);
+				glyphState.box[characterState.character] = [Math.floor(metrics.actualBoundingBoxRight / 4), Math.floor(metrics.actualBoundingBoxAscent / 4)];
+				const x = 50;
+				const y = 200;
+
+				context.lineWidth = 1;
+				context.beginPath();
+				context.rect(x, y - metrics.actualBoundingBoxAscent, metrics.actualBoundingBoxRight, metrics.actualBoundingBoxAscent);
+				context.strokeText(characterState.character, x + metrics.actualBoundingBoxRight + 10, y);
+				context.stroke();
+			}
+
+			function nextCharacter() {
+				glyphState.registry[characterState.character] = [];
+				for (const stroke of bezierState) {
+					if (stroke[0].x === stroke[1].x && stroke[0].y === stroke[1].y) {
+						glyphState.registry[characterState.character].push([{x: stroke[0].x/4, y: stroke[0].y/4}, {x: stroke[3].x/4, y: stroke[3].y/4}]);
+					} else if (stroke[0].x === stroke[2].x && stroke[0].y === stroke[2].y) {
+						glyphState.registry[characterState.character].push([{x: stroke[0].x/4, y: stroke[0].y/4}, {x: stroke[3].x/4, y: stroke[3].y/4}]);
+					} else {
+						glyphState.registry[characterState.character].push([{x: stroke[0].x/4, y: stroke[0].y/4}, {x: stroke[1].x/4, y : stroke[1].y/4}, {x: stroke[2].x/4, y: stroke[2].y/4}, {x: stroke[3].x/4, y: stroke[3].y/4}]);
+					}
+				}
+        
+				bezierState = [];
+				
+				characterState.index = (94 + characterState.index + 1) % 94;;
+				characterState.character = String.fromCharCode(characterState.index + 33);
+				drawPane();
+			}
+
+
+			addEventListener("mousedown", selectPoint);
+			addEventListener("mousemove", movePoint);
+			addEventListener("mouseup", setPoint);
+
+		</script>
+    <canvas id="canvas"></canvas>
+		<button id="add-curve"> ADD </button>
+		<button id="draw-points"> POINTS </button>
+		<button id="next"> NEXT </button>
+		<script>
+				setCanvas();
+				drawScreen();
+			  nextCharacter();
+			  renderBezier();
+				document.getElementById("add-curve").addEventListener("click", addCurve);
+				document.getElementById("draw-points").addEventListener("click", togglePoints);
+				document.getElementById("next").addEventListener("click", nextCharacter);
+		</script>
+  </body>
+</html>
