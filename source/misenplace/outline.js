@@ -31,7 +31,6 @@ class Outline extends Actor {
         Object.assign(group.style, {
           "display": "flex",
           "flex-direction": "row",
-          "padding": "5px",
         });
         if (i == 0) {
           Object.assign(group.style, {
@@ -52,7 +51,7 @@ class Outline extends Actor {
       }
       console.log("OUTLINE APP", c.id);
     },
-    "/panel": (c) => {
+    "/hud": (c) => {
       const panel = this.outlineComponent(c.id, c.parent_id);
       Object.assign(panel.style, {
         position: "absolute",
@@ -62,25 +61,34 @@ class Outline extends Actor {
         height: c.height,
         display: "flex",
       });
-      const wrapper = this.outlineComponent(c.configuration_id, c.id);
-      Object.assign(wrapper.style, {
-        "display": "flex",
-        "flex-direction": "column",
-        "flex": "auto",
-      });
     },
-    "/card": (c) => {
-      const card = this.outlineComponent(c.id, c.parent_id);
-      Object.assign(card.style, {
-        position: "absolute",
+    "/panel": (c) => {
+      const panel = this.outlineComponent(c.id, c.parent_id);
+      Object.assign(panel.style, {
         top: c.top,
         left: c.left,
         width: c.width,
         height: c.height,
+        display: "flex",
+        flex: "auto",
       });
-      Object.assign(card.style, {
+      Object.assign(panel.style, {
         border: "2px solid black",
       });
+    },
+    "/screen": (c) => {
+      const screen = this.outlineComponent(c.id, c.parent_id);
+      Object.assign(screen.style, {
+        position: "absolute",
+        top: "12vh",
+        left: "1vw",
+        width: "98vw",
+        height: "75vh",
+      });
+      Object.assign(screen.style, {
+        border: "2px solid black",
+      });
+      screen.textContent = c.id;
     },
     "/slide_input": (c) => {
       const group = this.outlineGroup(c.parent_id, c.group_index);
@@ -89,20 +97,16 @@ class Outline extends Actor {
       const manager = new Hammer.Manager(input);
       manager.add(new Hammer.Pan({ direction: Hammer.DIRECTION_HORIZONTAL }));
       manager.add(new Hammer.Pan({ direction: Hammer.DIRECTION_VERTICAL }));
-      manager.add(new Hammer.Swipe({ threshold: 5 }));
+      manager.add(new Hammer.Pan());
       manager.on('panleft panright', function(e) {
-        document.getElementById("/hud").textContent = e.additionalEvent;
-      });
-      manager.on('swipe', function(e) {
-        document.getElementById("/hud").textContent = "SWIPE";
+        console.log(e.additionalEvent);
       });
       manager.on('panup pandown', function(e) {
         console.log(e.additionalEvent);
       });
       Object.assign(input.style, {
-        "border-radius": "5px",
-        "background-color": "lightgrey",
-        "flex": "auto",
+        flex: "auto",
+        border: "2px solid black",
       });
 
       group.appendChild(input);
@@ -124,6 +128,9 @@ class Outline extends Actor {
         "justify-content": "center",
         "border": "1px solid black",
         "border-radius": "5px",
+      });
+      input.addEventListener("click", () => {
+        this.registry.emit(c.event, c.id, []);
       });
       group.appendChild(input);
     },

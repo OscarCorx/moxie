@@ -7,76 +7,174 @@ class Publisher {
     this.registry = registry;
   }
 
-  emit(action, contents, priorId, initId) {
-    const metadata = {
-      id: getId(),
-      source: "/metadata",
-      prior_id: priorId,
-      init_id: initId,
-      timestamp: Date.now(),
-      timeout: 0,
-    };
-    if (!initId) {
-      const id = getId();
-      metadata.prior_id = id;
-      metadata.init_id = id;
-    }
-    const message = [metadata, ...contents];
-    console.log("EMIT", action, message);
-    document.dispatchEvent(new CustomEvent(action, { detail: message }));
-  }
-
-  on(action, command) {
-    document.addEventListener(action, (event) => {
-      setTimeout(() => {
-        command(event.detail);
-      }, event.detail.timeout);
-    });
-  }
-
-  publish(reaction, contents, priorId, initId) {
-    console.log("PUBLISH", reaction, contents);
-
-    const outputMap = {};
-    for (const content of contents) {
-      const reactionEntity = this.registry.getData(content.reaction_id);
-      const subscriptions = this.registry.getSubscriptions(
-        reaction,
-        content.reaction_id,
-      );
-      for (const [action, actionId] of subscriptions) {
-        const actionEntity = this.registry.getData(actionId);
-        const outputs = this.publishContent(
-          reaction,
-          reactionEntity,
-          action,
-          actionEntity,
-          {
-            reaction,
-            action,
-            ...content,
-          },
-        );
-        for (const output of outputs) {
-          if (!outputMap[action]) outputMap[action] = [];
-          outputMap[action].push(output);
-        }
-      }
-    }
-    for (const [action, outputs] of Object.entries(outputMap)) {
-      this.emit(action, outputs, priorId, initId);
+  publish(event, entityId, priorId, initId) {
+    console.log("PUBLISH", event, entityId);
+    const eventEntity = this.registry.getData(entityId);
+    const subscriptions = this.registry.getSubscriptions(event, eventEntity);
+    for (const [command, commandEntity] of subscriptions) {
+      console.log("PUBLISH", command, commandEntity.id)
+      const outputs = this.publishContent(eventEntity, commandEntity, {
+        event,
+        command,
+      });
+      this.registry.emit(command, commandEntity.id, outputs, priorId, initId);
     }
   }
 
-  publishContent(reaction, reactionEntity, action, actionEntity, content) {
-    const actionKind = `${action}${actionEntity.source}`;
-    let actionQuery = this.QUERIES[actionKind];
-    if (!actionQuery) {
-      console.log("MISSING ACTION", "/publish", actionKind);
+  publishContent(eventEntity, commandEntity, content) {
+    const commandKind = `${content.command}${commandEntity.source}`;
+    let commandQuery = this.QUERIES[commandKind];
+    if (!commandQuery) {
+      console.log("MISSING COMMAND", "/publish", commandKind);
       return [];
     }
-    return actionQuery(reactionEntity, actionEntity, content) || [];
+    return commandQuery(eventEntity, commandEntity, content) || [];
   }
 
-  QUERIES = {};
+  childQuery(eventEntity, parentId, content) {
+    const contents = [];
+    for (const childId of this.registry.getIndex(
+      {
+        key: "parent_id",
+      },
+      parentId,
+    )) {
+      const childEntity = this.registry.data[childId];
+      contents.push(...this.publishContent(eventEntity, childEntity, content));
+    }
+    return contents;
+  }
+
+  QUERIES = {
+    "/outline/app": (e, a, c) => {
+      const contents = [
+        {
+          ...a,
+        },
+      ];
+      contents.push(...this.childQuery(e, a.id, c));
+      return contents;
+    },
+    "/outline/hud": (e, a, c) => {
+      const contents = [
+        {
+          ...a,
+        },
+      ];
+      return contents;
+    },
+    "/outline/card": (e, a, c) => {
+      const card = this.registry.card;
+      const contents = [
+        {
+          id: this.registry.card.navigation_id,
+          source: "/panel",
+          parent_id: "/navigation",
+        },
+        {
+          id: card.screens[card.screen_index],
+          source: "/screen",
+          parent_id: "/app",
+        },
+        {
+          id: this.registry.card.control_id,
+          source: "/panel",
+          parent_id: "/control",
+        },
+      ];
+      contents.push(...this.childQuery(e, card.navigation_id, c));
+      // contents.push(...this.childQuery(e, this.card.screens[card.screen_], c));
+      contents.push(...this.childQuery(e, card.control_id, c));
+      return contents;
+    },
+    "/outline/panel": (e, a, c) => {
+      const contents = [
+        {
+          ...a,
+        },
+      ];
+      contents.push(...this.childQuery(e, a.configuration_id, c));
+      return contents;
+    },
+    "/outline/text_entry": (e, a, c) => {
+      const contents = [
+        {
+          ...a,
+        },
+      ];
+      return contents;
+    },
+    "/outline/slide_input": (e, a, c) => {
+      const contents = [
+        {
+          ...a,
+        },
+      ];
+      return contents;
+    },
+    "/outline/swipe_input": (e, a, c) => {
+      const contents = [
+        {
+          ...a,
+        },
+      ];
+      return contents;
+    },
+    "/outline/button_input": (e, a, c) => {
+      const contents = [
+        {
+          ...a,
+        },
+      ];
+      return contents;
+    },
+    "/detail/card": (e, a, c) => {
+      const contents = [];
+      contents.push(...this.childQuery(e, this.registry.card.navigation_id, c));
+      contents.push(...this.childQuery(e, this.registry.card.screen_id, c));
+      contents.push(...this.childQuery(e, this.registry.card.control_id, c));
+      return contents;
+    },
+    "/detail/panel": (e, a, c) => {
+      const contents = [
+        {
+          ...a,
+        },
+      ];
+      contents.push(...this.childQuery(e, a.configuration_id, c));
+      return contents;
+    },
+    "/detail/text_entry": (e, a, c) => {
+      const contents = [
+        {
+          ...a,
+        },
+      ];
+      return contents;
+    },
+    "/detail/slide_input": (e, a, c) => {
+      const contents = [
+        {
+          ...a,
+        },
+      ];
+      return contents;
+    },
+    "/detail/swipe_input": (e, a, c) => {
+      const contents = [
+        {
+          ...a,
+        },
+      ];
+      return contents;
+    },
+    "/detail/button_input": (e, a, c) => {
+      const contents = [
+        {
+          ...a,
+        },
+      ];
+      return contents;
+    },
+  };
 }

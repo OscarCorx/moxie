@@ -1,6 +1,5 @@
-class Outline extends Actor {
-  action = "/outline";
-  reaction = "/outlined";
+class UserInput extends Actor {
+  event = "/inputed";
 
   constructor(registry, publisher) {
     super(registry, publisher);

@@ -1,0 +1,16 @@
+/product/application/system?project=id@v1&entity=id@v2
+/product/application/system?project=id@v1&entity=id@v2&form=id@v3
+/product?project=id@v1&system=id@v4&entity=id@v2&form=id@v3
+
+
+:Options
+ - Dashboard
+ - Presentation
+ -----
+:Collections
+ - Queue
+ - Table
+ -----
+:Members
+ - Wizard
+ - Easel

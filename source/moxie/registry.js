@@ -1,11 +1,49 @@
-const DEFAULT_REACTION_ID = "/reaction";
-
 class Registry {
   channels = {};
   index = {};
   subscriptions = {};
   data = {};
   delta = {};
+  original = {};
+
+  emit(action, entityId, contents, priorId, initId) {
+    const metadata = {
+      id: getId(),
+      source: "/metadata",
+      prior_id: priorId,
+      init_id: initId,
+      entity_id: entityId,
+      timestamp: Date.now(),
+      timeout: 0,
+    };
+    if (!initId) {
+      const id = getId();
+      metadata.prior_id = id;
+      metadata.init_id = id;
+    }
+    const message = [metadata, ...contents];
+    console.log("EMIT", action, message);
+    document.dispatchEvent(new CustomEvent(action, { detail: message }));
+  }
+
+  on(action, command) {
+    document.addEventListener(action, (event) => {
+      setTimeout(() => {
+        command(event.detail);
+      }, event.detail.timeout);
+    });
+  }
+
+  initialize(c) {
+    this.deck = this.data[c.deck_id];
+    const cardId = this.getIndex(
+      {
+        key: "deck_id",
+      },
+      c.deck_id,
+    )[this.deck.card_index];
+    this.card = this.data[cardId];
+  }
 
   isActive(id) {
     return !!(this.data[id] || {}).active;
@@ -15,13 +53,17 @@ class Registry {
     this.data[c.id] = c;
   }
 
+  getData(id) {
+    return this.data[id] || {};
+  }
+
   setIndex(indexContent, c) {
-    if (!c[indexContent.field]) return;
+    if (!c[indexContent.key]) return;
     let key;
     if (indexContent.index_source) {
-      key = `${indexContent.index_source}${indexContent.key || indexContent.field}${c[indexContent.field]}`;
+      key = `${indexContent.index_source}${indexContent.key}/${c[indexContent.key]}`;
     } else {
-      key = `${indexContent.key || indexContent.field}${c[indexContent.field]}`;
+      key = `/${indexContent.key}/${c[indexContent.key]}`;
     }
 
     if (!this.index[key]) this.index[key] = [];
@@ -31,9 +73,9 @@ class Registry {
   getIndex(indexContent, value) {
     let key;
     if (indexContent.index_source) {
-      key = `${indexContent.index_source}${indexContent.key || indexContent.field}/${value}`;
+      key = `${indexContent.index_source}${indexContent.key}/${value}`;
     } else {
-      key = `${indexContent.key || indexContent.field}/${value}`;
+      key = `/${indexContent.key}/${value}`;
     }
     return this.index[key] || [];
   }
@@ -62,28 +104,29 @@ class Registry {
 
   setSubscription(c) {
     if (!this.subscriptions[c.event]) this.subscriptions[c.event] = {};
-    if (!this.subscriptions[c.event][c.event_source]) this.subscriptions[c.event] = [];
+    if (!this.subscriptions[c.event][c.event_source]) this.subscriptions[c.event][c.event_source] = [];
     this.subscriptions[c.event][c.event_source].push(c.id);
   }
 
-  getSubscription(event, entityId) {
-    const entity = this.data[entityId];
+  getSubscriptions(event, entity) {
     const events = this.subscriptions[event] || {};
-    const subscriptions = events[entity.source] || [];
+    const subscriptionIds = events[entity.source] || [];
 
     const output = [];
-    for (const subscription of subscriptions) {
+    for (const subscriptionId of subscriptionIds) {
+      const subscription = this.data[subscriptionId];
       if (subscription.unique_key) {
         const commandEntity = this.data[entity[subscription.unique_key]];
-        output.push([subscription.action, commandEntity]);
+        output.push([subscription.command, commandEntity]);
         continue;
       }
       for (const id of this.index[subscription.index_key]) {
         const commandEntity = this.data[id];
         if (subscription.filter_key && commandEntity[subscription.filter_key] !== subscription.filter_value) continue;
-        output.push([subscription.action, commandEntity]);
+        output.push([subscription.command, commandEntity]);
       }
     }
+    return output || [];
   }
 
   setDatum(args) {

@@ -1,0 +1,66 @@
+const HUD_COMPONENTS = [
+  {
+    id: "/app",
+    source: "/app"
+  },
+  {
+    id: "/left",
+    source: "/panel",
+    parent_id: "/app",
+    configuration_id: "/left_control",
+    top: "5vh",
+    left: "5vh",
+    height: "90vh",
+    width: "90vh",
+  },
+  {
+    id: "/right",
+    source: "/panel",
+    parent_id: "/app",
+    configuration_id: "/right_control",
+    top: "5vh",
+    left: "105vh",
+    height: "90vh",
+    width: "90vh",
+  },
+  {
+    id: "/left_slide_input",
+    source: "/slide_input",
+    parent_id: "/left_control",
+    group_index: 0,
+  },
+  {
+    id: "/button_input_2",
+    source: "/button_input",
+    parent_id: "/left_control",
+    group_index: 1,
+    title: "Shift",
+  },
+  {
+    id: "/button_input_3",
+    source: "/button_input",
+    parent_id: "/left_control",
+    group_index: 1,
+    title: "Control",
+  },
+  {
+    id: "/right_slide_input",
+    source: "/slide_input",
+    parent_id: "/right_control",
+    group_index: 0,
+  },
+  {
+    id: "/button_input_0",
+    source: "/button_input",
+    parent_id: "/right_control",
+    group_index: 1,
+    title: "Meta",
+  },
+  {
+    id: "/button_input_1",
+    source: "/button_input",
+    parent_id: "/right_control",
+    group_index: 1,
+    title: "Command",
+  },
+];

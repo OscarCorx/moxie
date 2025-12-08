@@ -5,11 +5,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <!--<script src="https://cdn.jsdelivr.net/npm/animejs/dist/bundles/anime.umd.min.js"></script>-->
         <!--<script src="https://d3js.org/d3.v7.min.js"></script>-->
-        <!--<script src="https://hammerjs.github.io/dist/hammer.js"></script>-->
+        <script src="https://hammerjs.github.io/dist/hammer.js"></script>
         <title>Moxie - Planche</title>
         <link rel="stylesheet" href="style.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <script src="./common/constants.js"></script>
+        <script src="./content/data.js"></script>
+        <script src="./content/planche.js"></script>
+        <script src="./moxie/registry.js"></script>
+        <script src="./moxie/publisher.js"></script>
+        <script src="./moxie/actor.js"></script>
+        <script src="./moxie/load.js"></script>
+        <script src="./common/style.js"></script>
+        <script src="./common/navigate.js"></script>
+        <script src="./common/user_input.js"></script>
+        <script src="./planche/outline.js"></script>
+        <script src="./planche/detail.js"></script>
+        <script src="./moxie/moxie.js"></script>
+        <script src="./planche/planche.js"></script>
     </head>
-    <body>
+    <body id="body">
+        <button id="/fullscreen">FULLSCREEN</button>
+        <div id="/hud"></div>
+        <div id="/app">
+            THIS SHOULD NOT BE VISIBLE
+        </div>
     </body>
 </html>

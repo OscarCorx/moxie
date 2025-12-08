@@ -14,8 +14,12 @@ class Detail extends Actor {
     "/card": (c) => {
       document.getElementById(c.id).textContent = c.id;
     },
-    "/slide_input": (c) => { },
-    "/swipe_input": (c) => { },
+    "/slide_input": (c) => {
+      document.getElementById(c.id).textContent = c.id;
+    },
+    "/swipe_input": (c) => {
+      document.getElementById(c.id).textContent = c.id;
+    },
     "/button_input": (c) => {
       document.getElementById(c.id).textContent = c.title;
     },

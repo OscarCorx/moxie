@@ -1,28 +1,31 @@
 class Load extends Actor {
-  action = "/load";
-  reaction = "/loaded";
+  event = "/loaded";
 
   COMMANDS = {
     "default": (c) => {
       this.registry.loadData(c);
-      for (const indexContent of this.getIndex({
-        field: "/source",
-      })) {
+      for (const indexId of this.registry.getIndex({
+        key: "source",
+      }, "/index")) {
+        const indexContent = this.registry.getData(indexId);
         this.registry.setIndex(indexContent, c);
       }
       return {};
     },
     "/index": (c) => {
-      this.registry.setData(c);
+      this.registry.loadData(c);
       this.registry.setIndex({
-        field: "/source",
+        key: "source",
       }, c);
       return {};
     },
     "/subscription": (c) => {
-      this.registry.setData(c);
+      this.registry.loadData(c);
       this.registry.setSubscription(c);
       return {};
     },
+    "/initialize": (c) => {
+      this.registry.initialize(c);
+    }
   };
 }
