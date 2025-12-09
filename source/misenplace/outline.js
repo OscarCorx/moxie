@@ -49,7 +49,6 @@ class Outline extends Actor {
       while (app.firstChild) {
         app.firstChild.remove();
       }
-      console.log("OUTLINE APP", c.id);
     },
     "/hud": (c) => {
       const panel = this.outlineComponent(c.id, c.parent_id);
@@ -77,17 +76,9 @@ class Outline extends Actor {
       });
     },
     "/screen": (c) => {
+      const parent = document.getElementById(c.parent_id);
+      while (parent.firstChild) parent.firstChild.remove();
       const screen = this.outlineComponent(c.id, c.parent_id);
-      Object.assign(screen.style, {
-        position: "absolute",
-        top: "12vh",
-        left: "1vw",
-        width: "98vw",
-        height: "75vh",
-      });
-      Object.assign(screen.style, {
-        border: "2px solid black",
-      });
       screen.textContent = c.id;
     },
     "/slide_input": (c) => {

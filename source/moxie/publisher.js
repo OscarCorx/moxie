@@ -63,8 +63,10 @@ class Publisher {
       ];
       return contents;
     },
-    "/outline/card": (e, a, c) => {
+    "/outline/deck": (e, a, c) => {
       const card = this.registry.card;
+      if (card.screen_index === card.screens.length) card.screen_index = 0;
+      if (card.screen_index < 0) card.screen_index = card.screens.length - 1;
       const contents = [
         {
           id: this.registry.card.navigation_id,
@@ -74,7 +76,7 @@ class Publisher {
         {
           id: card.screens[card.screen_index],
           source: "/screen",
-          parent_id: "/app",
+          parent_id: "/screen",
         },
         {
           id: this.registry.card.control_id,
@@ -85,6 +87,43 @@ class Publisher {
       contents.push(...this.childQuery(e, card.navigation_id, c));
       // contents.push(...this.childQuery(e, this.card.screens[card.screen_], c));
       contents.push(...this.childQuery(e, card.control_id, c));
+      return contents;
+    },
+    "/outline/card": (e, a, c) => {
+      const card = this.registry.card;
+      if (card.screen_index === card.screens.length) card.screen_index = 0;
+      if (card.screen_index < 0) card.screen_index = card.screens.length - 1;
+      const contents = [
+        {
+          id: this.registry.card.navigation_id,
+          source: "/panel",
+          parent_id: "/navigation",
+        },
+        {
+          id: card.screens[card.screen_index],
+          source: "/screen",
+          parent_id: "/screen",
+        },
+        {
+          id: this.registry.card.control_id,
+          source: "/panel",
+          parent_id: "/control",
+        },
+      ];
+      contents.push(...this.childQuery(e, card.navigation_id, c));
+      contents.push(...this.childQuery(e, this.registry.screen.id, c));
+      contents.push(...this.childQuery(e, card.control_id, c));
+      return contents;
+    },
+    "/outline/screen": (e, a, c) => {
+      const card = this.registry.card;
+      const contents = [
+        {
+          id: card.screens[card.screen_index],
+          source: "/screen",
+          parent_id: "/screen",
+        },
+      ];
       return contents;
     },
     "/outline/panel": (e, a, c) => {
@@ -126,6 +165,13 @@ class Publisher {
           ...a,
         },
       ];
+      return contents;
+    },
+    "/detail/deck": (e, a, c) => {
+      const contents = [];
+      contents.push(...this.childQuery(e, this.registry.card.navigation_id, c));
+      contents.push(...this.childQuery(e, this.registry.card.screen_id, c));
+      contents.push(...this.childQuery(e, this.registry.card.control_id, c));
       return contents;
     },
     "/detail/card": (e, a, c) => {

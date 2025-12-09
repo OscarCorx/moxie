@@ -13,6 +13,15 @@ const HUD = [
     width: "98vw",
   },
   {
+    id: "/screen",
+    source: "/hud",
+    parent_id: "/app",
+    top: "12vh",
+    left: "1vw",
+    width: "98vw",
+    height: "75vh",
+  },
+  {
     id: "/control",
     source: "/hud",
     parent_id: "/app",
@@ -80,22 +89,27 @@ const SCREENS = [
   {
     id: "/expectations_list",
     source: "/screen",
+    component_index: 0,
   },
   {
     id: "/expectation_screen",
     source: "/screen",
+    component_index: 0,
   },
   {
     id: "/assertion_screen",
     source: "/screen",
+    component_index: 0,
   },
   {
     id: "/statement_screen",
     source: "/screen",
+    component_index: 0,
   },
   {
     id: "/message_screen",
     source: "/screen",
+    component_index: 0,
   },
 ];
 
@@ -123,7 +137,7 @@ const COMPONENTS = [
     group_index: 0,
     title: "Previous",
     event: "/previous",
- },
+  },
   {
     id: "/next",
     source: "/button_input",
@@ -131,7 +145,7 @@ const COMPONENTS = [
     group_index: 0,
     title: "Next",
     event: "/next",
-},
+  },
   {
     id: "/back",
     source: "/button_input",
@@ -139,7 +153,7 @@ const COMPONENTS = [
     group_index: 0,
     title: "Back",
     event: "/back",
- },
+  },
   {
     id: "/forward",
     source: "/button_input",
@@ -147,7 +161,7 @@ const COMPONENTS = [
     group_index: 0,
     title: "Forward",
     event: "/back",
- },
+  },
   {
     id: "/flip",
     source: "/button_input",
@@ -155,7 +169,7 @@ const COMPONENTS = [
     group_index: 0,
     title: "Flip",
     event: "/flip",
- },
+  },
   {
     id: "/reverse",
     source: "/button_input",
@@ -163,7 +177,7 @@ const COMPONENTS = [
     group_index: 0,
     title: "Reverse",
     event: "/reverse",
- },
+  },
   {
     id: "/draw",
     source: "/button_input",
@@ -171,7 +185,7 @@ const COMPONENTS = [
     group_index: 0,
     title: "Draw",
     event: "/draw",
- },
+  },
   {
     id: "/replace",
     source: "/button_input",
@@ -179,5 +193,13 @@ const COMPONENTS = [
     group_index: 0,
     title: "Replace",
     event: "/replace",
- },
+  },
+  {
+    id: "/first",
+    source: "/button_input",
+    parent_id: "/expectation_screen",
+    group_index: 0,
+    title: "Replace",
+    event: "/replace",
+  },
 ];

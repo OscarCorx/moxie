@@ -43,6 +43,22 @@ class Registry {
       c.deck_id,
     )[this.deck.card_index];
     this.card = this.data[cardId];
+    const screenId = this.card.screens[this.card.screen_index];
+    this.screen = this.data[screenId];
+  }
+
+  incrementCard(increment) {
+    this.deck.card_index += increment;
+    const cardList = this.getIndex(
+      {
+        key: "deck_id",
+      },
+      this.deck.id,
+    );
+    if (this.deck.card_index === cardList.length) this.deck.card_index = 0;
+    if (this.deck.card_index < 0) this.deck.card_index = cardList.length - 1;
+    const cardId = cardList[this.deck.card_index];
+    this.card = this.data[cardId];
   }
 
   isActive(id) {

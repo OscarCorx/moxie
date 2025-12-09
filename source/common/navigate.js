@@ -66,17 +66,19 @@ class Navigate extends Actor {
     );
   }
   draw(m) {
+    this.registry.incrementCard(1);
     this.publisher.publish(
       "/drawn",
-      this.registry.card.id,
+      this.registry.deck.id,
       m[0].id,
       m[0].init_id,
     );
   }
   replace(m) {
+    this.registry.incrementCard(-1);
     this.publisher.publish(
       "/replaced",
-      this.registry.card.id,
+      this.registry.deck.id,
       m[0].id,
       m[0].init_id,
     );
