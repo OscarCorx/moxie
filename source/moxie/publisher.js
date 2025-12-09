@@ -33,12 +33,7 @@ class Publisher {
 
   childQuery(eventEntity, parentId, content) {
     const contents = [];
-    for (const childId of this.registry.getIndex(
-      {
-        key: "parent_id",
-      },
-      parentId,
-    )) {
+    for (const childId of this.registry.getIndex("parent_id", parentId)) {
       const childEntity = this.registry.data[childId];
       contents.push(...this.publishContent(eventEntity, childEntity, content));
     }

@@ -36,12 +36,7 @@ class Registry {
 
   initialize(c) {
     this.deck = this.data[c.deck_id];
-    const cardId = this.getIndex(
-      {
-        key: "deck_id",
-      },
-      c.deck_id,
-    )[this.deck.card_index];
+    const cardId = this.getIndex("deck_id", c.deck_id)[this.deck.card_index];
     this.card = this.data[cardId];
     const screenId = this.card.screens[this.card.screen_index];
     this.screen = this.data[screenId];
@@ -49,12 +44,7 @@ class Registry {
 
   incrementCard(increment) {
     this.deck.card_index += increment;
-    const cardList = this.getIndex(
-      {
-        key: "deck_id",
-      },
-      this.deck.id,
-    );
+    const cardList = this.getIndex("deck_id", this.deck.id);
     if (this.deck.card_index === cardList.length) this.deck.card_index = 0;
     if (this.deck.card_index < 0) this.deck.card_index = cardList.length - 1;
     const cardId = cardList[this.deck.card_index];
@@ -73,27 +63,27 @@ class Registry {
     return this.data[id] || {};
   }
 
-  setIndex(indexContent, c) {
-    if (!c[indexContent.key]) return;
-    let key;
-    if (indexContent.index_source) {
-      key = `${indexContent.index_source}${indexContent.key}/${c[indexContent.key]}`;
+  setIndex(key, c, source) {
+    if (!c[key]) return;
+    let _key;
+    if (source) {
+      _key = `/${source}/${key}/${c[key]}`;
     } else {
-      key = `/${indexContent.key}/${c[indexContent.key]}`;
+      _key = `/${key}/${c[key]}`;
     }
 
-    if (!this.index[key]) this.index[key] = [];
-    this.index[key].push(c.id);
+    if (!this.index[_key]) this.index[_key] = [];
+    this.index[_key].push(c.id);
   }
 
-  getIndex(indexContent, value) {
-    let key;
-    if (indexContent.index_source) {
-      key = `${indexContent.index_source}${indexContent.key}/${value}`;
+  getIndex(key, value, source) {
+    let _key;
+    if (source) {
+      _key = `${source}${key}/${value}`;
     } else {
-      key = `/${indexContent.key}/${value}`;
+      _key = `/${key}/${value}`;
     }
-    return this.index[key] || [];
+    return this.index[_key] || [];
   }
 
   toggleIndex(indexContent) {
