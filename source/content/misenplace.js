@@ -5,118 +5,146 @@ const HUD = [
   },
   {
     id: "/navigation",
-    source: "/hud",
-    parent_id: "/app",
-    top: "1vh",
-    left: "1vw",
-    height: "10vh",
-    width: "98vw",
+    source: "/misenplace/hud",
   },
   {
     id: "/screen",
-    source: "/hud",
-    parent_id: "/app",
-    top: "12vh",
-    left: "1vw",
-    width: "98vw",
-    height: "75vh",
+    source: "/misenplace/hud",
   },
   {
     id: "/control",
-    source: "/hud",
-    parent_id: "/app",
-    top: "89vh",
-    left: "1vw",
-    height: "10vh",
-    width: "98vw",
+    source: "/misenplace/hud",
   },
 ];
 
-const NAVIGATION = [
+const DECKS = [
+  {
+    id: "/dashboards_deck",
+    source: "/misenplace/deck",
+    cards: [],
+    card_index: 0,
+    screen_index: 0,
+    component_index: 0,
+    focus_index: 0,
+  },
   {
     id: "/expectations_deck",
-    source: "/deck",
+    source: "/misenplace/deck",
+    cards: [],
     card_index: 0,
-  },
-  {
-    id: "/expectation_card_0",
-    source: "/card",
-    deck_id: "/expectations_deck",
-    screen_index: 2,
-    screens: [
-      "/expectation_screen",
-      "/assertion_screen",
-      "/statement_screen",
-      "/message_screen",
-    ],
-    channels_id: "/",
-    navigation_id: "/navigation_default",
-    control_id: "/control_default",
-  },
-  {
-    id: "/expectation_card_1",
-    source: "/card",
-    deck_id: "/expectations_deck",
     screen_index: 0,
-    screens: [
-      "/expectation_screen",
-      "/assertion_screen",
-      "/statement_screen",
-      "/message_screen",
-    ],
-    channels_id: "/",
+    component_index: 0,
+    focus_index: 0,
+  },
+];
+
+const CARDS = [
+  {
+    id: "/expectations_0",
+    source: "/misenplace/card",
+    deck_id: "/",
+    primary: "/",
+    secondary: "/",
+  },
+  {
+    id: "/expectation_0",
+    source: "/misenplace/card",
+    deck_id: "/",
+    primary: "/",
+    secondary: "/",
+  },
+  {
+    id: "/expectation_1",
+    source: "/misenplace/card",
+    deck_id: "/",
+    primary: "/",
+    secondary: "/",
+  },
+  {
+    id: "/expectation_2",
+    source: "/misenplace/card",
+    deck_id: "/",
+    card_id: "/",
+    primary: "/",
+    secondary: "/",
+  },
+];
+
+const FORMS = [
+  {
+    id: "/expectations_form",
+    source: "/misenplace/form",
+    children: ["/expectations_screen"],
     navigation_id: "/navigation_default",
     control_id: "/control_default",
   },
   {
-    id: "/expectation_card_2",
-    source: "/card",
-    deck_id: "/expectations_deck",
-    screen_index: 0,
-    screens: [
+    id: "/expectation_form",
+    source: "/misenplace/form",
+    children: ["/expectation_screen"],
+    navigation_id: "/",
+    control_id: "/",
+  },
+  {
+    id: "/assertion_form",
+    source: "/misenplace/form",
+    children: ["/expectation_screen", "/assertion_screen"],
+    navigation_id: "/",
+    control_id: "/",
+  },
+  {
+    id: "/statement_form",
+    source: "/misenplace/form",
+    children: ["/expectation_screen", "/assertion_screen", "/statement_screen"],
+    navigation_id: "/",
+    control_id: "/",
+  },
+  {
+    id: "/message_form",
+    source: "/misenplace/form",
+    children: [
       "/expectation_screen",
       "/assertion_screen",
       "/statement_screen",
       "/message_screen",
     ],
-    channels_id: "/",
-    navigation_id: "/navigation_default",
-    control_id: "/control_default",
+    navigation_id: "/",
+    control_id: "/",
   },
 ];
 
 const SCREENS = [
   {
     id: "/expectations_list",
-    source: "/screen",
-    component_index: 0,
+    source: "/misenplace/screen",
+    children: [],
   },
   {
     id: "/expectation_screen",
-    source: "/screen",
-    component_index: 0,
+    source: "/misenplace/screen",
+    children: [],
   },
   {
     id: "/assertion_screen",
-    source: "/screen",
-    component_index: 0,
+    source: "/misenplace/screen",
+    children: [],
   },
   {
     id: "/statement_screen",
-    source: "/screen",
-    component_index: 0,
+    source: "/misenplace/screen",
+    children: [],
   },
   {
     id: "/message_screen",
-    source: "/screen",
-    component_index: 0,
+    source: "/misenplace/screen",
+    children: [],
   },
 ];
 
 const COMPONENTS = [
   {
     id: "/exit",
-    source: "/button_input",
+    source: "/misenplace/button_input",
     parent_id: "/navigation_default",
     group_index: 0,
     title: "Exit",
@@ -124,7 +152,7 @@ const COMPONENTS = [
   },
   {
     id: "/enter",
-    source: "/button_input",
+    source: "/misenplace/button_input",
     parent_id: "/navigation_default",
     group_index: 0,
     title: "Enter",
@@ -132,7 +160,7 @@ const COMPONENTS = [
   },
   {
     id: "/previous",
-    source: "/button_input",
+    source: "/misenplace/button_input",
     parent_id: "/control_default",
     group_index: 0,
     title: "Previous",
@@ -140,7 +168,7 @@ const COMPONENTS = [
   },
   {
     id: "/next",
-    source: "/button_input",
+    source: "/misenplace/button_input",
     parent_id: "/control_default",
     group_index: 0,
     title: "Next",
@@ -148,7 +176,7 @@ const COMPONENTS = [
   },
   {
     id: "/back",
-    source: "/button_input",
+    source: "/misenplace/button_input",
     parent_id: "/control_default",
     group_index: 0,
     title: "Back",
@@ -156,7 +184,7 @@ const COMPONENTS = [
   },
   {
     id: "/forward",
-    source: "/button_input",
+    source: "/misenplace/button_input",
     parent_id: "/control_default",
     group_index: 0,
     title: "Forward",
@@ -164,7 +192,7 @@ const COMPONENTS = [
   },
   {
     id: "/flip",
-    source: "/button_input",
+    source: "/misenplace/button_input",
     parent_id: "/control_default",
     group_index: 0,
     title: "Flip",
@@ -172,7 +200,7 @@ const COMPONENTS = [
   },
   {
     id: "/reverse",
-    source: "/button_input",
+    source: "/misenplace/button_input",
     parent_id: "/control_default",
     group_index: 0,
     title: "Reverse",
@@ -180,7 +208,7 @@ const COMPONENTS = [
   },
   {
     id: "/draw",
-    source: "/button_input",
+    source: "/misenplace/button_input",
     parent_id: "/navigation_default",
     group_index: 0,
     title: "Draw",
@@ -188,7 +216,7 @@ const COMPONENTS = [
   },
   {
     id: "/replace",
-    source: "/button_input",
+    source: "/misenplace/button_input",
     parent_id: "/navigation_default",
     group_index: 0,
     title: "Replace",
@@ -196,10 +224,19 @@ const COMPONENTS = [
   },
   {
     id: "/first",
-    source: "/button_input",
+    source: "/misenplace/button_input",
     parent_id: "/expectation_screen",
     group_index: 0,
     title: "Replace",
     event: "/replace",
   },
+];
+
+const MISENPLACE_COMPONENTS = [
+  ...HUD,
+  ...DECKS,
+  ...CARDS,
+  ...FORMS,
+  ...SCREENS,
+  ...COMPONENTS,
 ];

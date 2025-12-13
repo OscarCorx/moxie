@@ -1,16 +1,13 @@
-/product/application/system?project=id@v1&entity=id@v2
-/product/application/system?project=id@v1&entity=id@v2&form=id@v3
-/product?project=id@v1&system=id@v4&entity=id@v2&form=id@v3
+ten.ant/product/application/system?project=id@v1&entity=id@v2
+ten.ant/product/application/system?project=id@v1&entity=id@v2&form=id@v3
+ten.ant/product?project=id@v1&system=id@v4&entity=id@v2&form=id@v3
 
 
-:Options
- - Dashboard
- - Presentation
- -----
-:Collections
- - Queue
- - Table
- -----
-:Members
- - Wizard
- - Easel
+/misenplace/component
+/misenplace/component/parent/component
+/misenplace/component/text_entry
+/misenplace/component/category_toggle
+
+/virgil/schema
+/virgil/schema/entity_data
+/virgil/schema/content_datum

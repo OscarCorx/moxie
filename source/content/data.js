@@ -1,24 +1,35 @@
+const MISENPLACE_SCHEMA = [{
+  application: "/virgil",
+  source: "/subscription",
+}];
+
 const SCHEMA = [
-  {
-    id: "/source_index",
-    source: "/index",
-    key: "source",
-  },
-  {
-    id: "/parent_index",
-    source: "/index",
-    key: "parent_id",
-  },
   {
     id: "/deck_id_index",
     source: "/index",
     key: "deck_id",
   },
   {
-    id: "/card_id_index",
-    source: "/index",
-    key: "card_id",
+    id: "/initialize_subscription",
+    source: "/subscription",
+    key: "source",
+    event: "/load",
+    event_source: "/misenplace/app",
+    command: "/outline",
+    unique_key: "id",
   },
+  {
+    id: "/outline_detail_app_subscription",
+    source: "/subscription",
+    key: "source",
+    event: "/outline",
+    event_source: "/misenplace/app",
+    command: "/detail",
+    unique_key: "id",
+  },
+];
+
+const NAVIGATION_SUBSCRIPTIONS = [
   {
     id: "/forward_subscription",
     source: "/subscription",
@@ -98,16 +109,4 @@ const SCHEMA = [
     command: "/detail",
     unique_key: "id",
   },
-  {
-    id: "/deck_outline_detail",
-    source: "/subscription",
-    event: "/outlined",
-    event_source: "/deck",
-    command: "/detail",
-    unique_key: "id",
-  }
 ];
-const EXPECTATION_0 = [];
-const EXPECTATION_1 = [];
-const EXPECTATION_2 = [];
-const EXPECTATION_3 = [];
