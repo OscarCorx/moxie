@@ -1,65 +1,80 @@
 class Actor {
-  constructor(writer) {
-    this.writer = writer;
+  constructor(process) {
+    this.process = process;
   }
 
-  enact(m) {
+  transition(m) {
     const metadata = m[0];
-    const contents = [];
-    for (const c of m.slice(1)) {
-      const feature = `${metadata.verb}${c.source}`
-      const command = this.COMMANDS[feature];
-      if (!command) {
-        console.log("MISSING COMMAND", feature);
-        continue;
-      }
-      command(c, this.writer);
-    }
-    this.writer.emit(
-      "/event",
-      metadata.verb,
-      metadata.entity_id,
+    const transition =
+      TRANSITIONS[`${metadata.module}${metadata.protocol}${metadata.state}`] ||
+      TRANSITIONS[`${metadata.module}${metadata.protocol}/default`];
+    const contents = transition(m, this.process) || [];
+    setState(metadata);
+
+    this.process.emit(
+      "/query",
       metadata,
       contents,
     );
   }
 
-  COMMANDS = {
-    "/virgil/load/subscription": (c) => {
-      w.setData(c);
-      w.setSubscription(c);
-    },
-    "/virgil/load/content": (_) => {
-      for (const c of CONTENTS) {
-        w.setData(c);
-        for (const key of Object.keys(c)) {
-          if (!key.endsWith("_id")) continue;
-          if (!w.data[c.key]) w.data[c.key] = {};
-          if (!w.data[c.key][c.source]) w.data[c.key][c.source] = [];
-          w.data[c.key][c.source].push(c.id);
-        }
-      }
-    },
-    "/misenplace/outline/app": (c) => {
+  event(m) {
+    const metadata = m[0];
+    const event =
+      EVENTS[`${metadata.module}${metadata.protocol}${metadata.state}`] ||
+      EVENTS[`${metadata.module}${metadata.protocol}/default`];
+    const contents = event(m, this.process) || [];
+    setState(metadata);
 
-    },
-    "/misenplace/outline/hud": (c) => {
+    this.process.emit(
+      "/query",
+      metadata,
+      contents,
+    );
+  }
 
-    },
-    "/misenplace/outline/panel": (c) => {
+  query(m) {
+    const contents = [];
+    for (const c of m.slice(1)) {
+      const query =
+        QUERIES[`${c.module}${c.system}${c.source}`] ||
+        QUERIES[`${c.module}${c.system}/default`];
+      const result = query(c, this.process) || [];
+      contents.push(...result);
+    }
+    this.process.emit(
+      "/command",
+      m[0],
+      contents,
+    );
+  }
 
-    },
-    "/misenplace/outline/screen": (c) => {
+  command(m) {
+    const contents = [];
+    for (const c of m.slice(1)) {
+      const command =
+        COMMANDS[`${c.module}${c.system}${c.source}`] ||
+        COMMANDS[`${c.module}${c.system}/default`];
+      command(c, this.process);
+    }
+    this.process.emit(
+      "/event",
+      m[0],
+      contents,
+    );
+  }
 
-    },
-    "/misenplace/outline/component": (c) => {
+  reaction(m) {
+    const metadata = m[0];
+    const reaction =
+      REACTIONS[`${metadata.module}${metadata.protocol}${metadata.state}`] ||
+      REACTIONS[`${metadata.module}${metadata.protocol}/default`];
+    const contents = reaction(metadata, this.process) || [];
 
-    },
-    "/misenplace/outline/text_entry": (c) => {
-
-    },
-    "/misenplace/outline/markdown_entry": (c) => {
-
-    },
-  };
+    this.process.emit(
+      "/query",
+      metadata,
+      contents,
+    );
+  }
 }
