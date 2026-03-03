@@ -33,3 +33,21 @@ Compression
  - Represent data as a composition of different queries on an existing knowledge graph
  - Composition should provide exponential performance on compression
  - Compare to LZ76, Huffman encodings, etc
+
+
+1  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    2  echo >> /Users/b/.zprofile
+    3  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/b/.zprofile
+    4  eval "$(/opt/homebrew/bin/brew shellenv)"
+    5  brew install -cask zed
+    6  brew install --cask zed
+    7  brew install --cask docker
+    8  python -version
+    9  brew install python
+   10  brew install python
+   11  python -version
+   12  python3 -version
+   13  python3 --version
+   14  brew install --cask docker
+   15  brew uninstall docker
+   16  brew install --cask docker
