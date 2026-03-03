@@ -32,3 +32,4 @@ Compression
  - Create different knowledge graphs
  - Represent data as a composition of different queries on an existing knowledge graph
  - Composition should provide exponential performance on compression
+ - Compare to LZ76, Huffman encodings, etc
