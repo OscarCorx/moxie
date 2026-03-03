@@ -1,4 +1,5 @@
 class Process {
+  t = Date.now();
   data = {};
   change = {};
 
@@ -40,10 +41,5 @@ class Process {
     } else {
       this.data[id][key] = value;
     }
-    this.change[id] = true;
-  }
-
-  getChanges() {
-    return Object.keys(this.change);
   }
 }

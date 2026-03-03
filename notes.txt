@@ -1,8 +1,34 @@
- - Continuous Glucose
- - Diet
- - Heart test
- - Supplements
- - Lipitor
- - ketoacidosis
- - Feel weird
- - Repair damage
+Composition
+ - Find a way to compose / decompose a data stream
+ - The self-learning should be a function of frequency and anomalies
+
+Procedural
+ - Create classifiers for quick computation
+Declarative
+ - Create defined procedures for precise calculation
+
+Vision
+ - Find simple convolutions that are easy to compute for classifiers
+    - Haar basis
+ - Compare performance of general algorithm to existing algorithms
+    - Edge detection, etc
+ - Counting
+    - Create images with random number of pixels
+    - Train the procedural algorithm to identify the number of pixels
+    - Train a declarative algorithm to count the number of pixels
+
+Knowledge Graph vs Vector Database
+ - Should be able to represent both ways
+ - How do we translate between one and another
+ - Kowledge graph as a graph of the internet
+   - Graph of wikipedia
+   - Graph of books?
+
+Mathematics
+ - Determine argument patterns
+ - Determine new ways to find arguments from the perspective of knowledge graphs
+
+Compression
+ - Create different knowledge graphs
+ - Represent data as a composition of different queries on an existing knowledge graph
+ - Composition should provide exponential performance on compression

@@ -4,5 +4,7 @@ ten.ant/<product>/<application>/<feature>?id=<project_id>&v=<feature_version>
 /* Procedure */
 /query/<module>/<system>/<entity>?{ metadata }
 /command/<module>/<system>/<entity>?{ metadata }
-/action/<module>/<protocol>/<state>?{ metadata }
-/event/<module>/<protocol>/<state>?{ metadata }
+
+/reaction/<application>/<protocol>/<state>?{ metadata }
+/transition/<application>/<protocol>/<state>?{ metadata }
+/event/<module>/<application>/<state>?{ metadata }

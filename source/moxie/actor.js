@@ -3,28 +3,9 @@ class Actor {
     this.process = process;
   }
 
-  transition(m) {
-    const metadata = m[0];
-    const transition =
-      TRANSITIONS[`${metadata.module}${metadata.protocol}${metadata.state}`] ||
-      TRANSITIONS[`${metadata.module}${metadata.protocol}/default`];
-    const contents = transition(m, this.process) || [];
-    setState(metadata);
-
-    this.process.emit(
-      "/query",
-      metadata,
-      contents,
-    );
-  }
-
   event(m) {
-    const metadata = m[0];
-    const event =
-      EVENTS[`${metadata.module}${metadata.protocol}${metadata.state}`] ||
-      EVENTS[`${metadata.module}${metadata.protocol}/default`];
-    const contents = event(m, this.process) || [];
-    setState(metadata);
+    const event = ACTIONS[`/event${metadata.module}${metadata.procedure_id}${metadata.state}`];
+    const [metadata, contents] = event(m, this.process) || [];
 
     this.process.emit(
       "/query",
@@ -36,9 +17,7 @@ class Actor {
   query(m) {
     const contents = [];
     for (const c of m.slice(1)) {
-      const query =
-        QUERIES[`${c.module}${c.system}${c.source}`] ||
-        QUERIES[`${c.module}${c.system}/default`];
+      const query = ACTIONS[`/query${c.module}${c.system}${c.source}${c.state || ''}`];
       const result = query(c, this.process) || [];
       contents.push(...result);
     }
@@ -50,29 +29,35 @@ class Actor {
   }
 
   command(m) {
-    const contents = [];
     for (const c of m.slice(1)) {
-      const command =
-        COMMANDS[`${c.module}${c.system}${c.source}`] ||
-        COMMANDS[`${c.module}${c.system}/default`];
+      const command = ACTIONS[`/command${c.module}${c.system}${c.source}${c.state || ''}`];
       command(c, this.process);
     }
     this.process.emit(
-      "/event",
+      "/reaction",
       m[0],
-      contents,
+      [],
     );
   }
 
   reaction(m) {
     const metadata = m[0];
-    const reaction =
-      REACTIONS[`${metadata.module}${metadata.protocol}${metadata.state}`] ||
-      REACTIONS[`${metadata.module}${metadata.protocol}/default`];
+    const reaction = ACTIONS[`/reaction${metadata.module}${metadata.procedure_id}${metadata.state}`];
     const contents = reaction(metadata, this.process) || [];
 
     this.process.emit(
-      "/query",
+      "/transition",
+      metadata,
+      contents,
+    );
+  }
+
+  transition(m) {
+    const transition = ACTIONS[`/transition${metadata.module}${metadata.procedure_id}${metadata.state}`];
+    const [metadata, contents] = transition(m, this.process) || [];
+
+    this.process.emit(
+      "/event",
       metadata,
       contents,
     );
