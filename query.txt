@@ -1,5 +1,0 @@
-QUERY
-  application:
-  source:
-  key:
-  value:
