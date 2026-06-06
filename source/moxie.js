@@ -1,105 +1,89 @@
 const ENDPOINT = "/target";
-
-const SCHEMA_KEY = "/schema";
-const INDEX_KEY = "/index";
-const EVENT_KEY = "/event";
-const MAP_KEY = "/map";
-
-const PROCEDURE_SUBSCRIPTION_ID = "/procedure_subscriptions";
+const PROCEDURE = "/procedure/subscription";
+const METHOD = "/method/definition";
 
 class Model {
   constructor() {
-    this.currentId = 0;
-    this._model = {};
-    this.d = document;
-    this.w = window;
+    this._currentId = 0;
+    this._model = {
+      "/schema/field": {
+        "/fields": [
+          {
+            parent: "/schema/field",
+            schema: "/schema/field",
+            kind: "/entity",
+            key: "parent",
+            as: "/fields",
+            collection: true,
+          },
+        ],
+      },
+    };
+    this._document = document;
+    this._window = window;
   }
 
   setComponent(c) {
-    if (!c.id) {
-      c.id = this.getId();
-    }
-    for (const k of Object.keys(c)) {
-      /* Bidirectional Relation */
-      if (k.endsWith("_id")) {
-        const key = `${c.source}/${k}`;
-        if (!this.procedure[key]) {
-          this._model[key] = {};
-        }
-        if (this._model[key][c.id]) {
-          Object.update(this._model[key][c.id], c);
-        } else {
-          this._model[key][c.id] = c;
-        }
-      }
-      /* Unidirectional Relation */
-      if (k.endsWith("_key")) {
-      }
-    }
+    if (!c.id) c.id = this.getId();
     const schema = this._model[c.source];
-    if (!schema) return c.id;
-    /* Entity Level Lookup */
-    const indices = this._model[INDEX_KEY] || [];
-    for (const index of indices) {
+    for (const f of schema["/fields"]) {
+      if (!c[f.key]) continue;
+      switch (f.kind) {
+        case "/function":
+          c[f.key] = this._model[c[f.key]][METHOD].code;
+          break;
+        case "/entity":
+          if (!this._model[c[f.key]]) this._model[c[f.key]] = { id: c[f.key] };
+          const key = f.as || c.source;
+          if (f.collection) {
+            if (!this._model[c[f.key]][key]) this._model[c[f.key]][key] = [];
+            this._model[c[f.key]][key].push(c);
+          } else {
+            this._model[c[f.key]][key] = c;
+          }
+          break;
+      }
     }
-    /* Component Level Lookup */
-    const maps = this._model[MAP_KEY] || [];
-    for (const map of maps) {
-    }
-    return c.id;
   }
 
   getId() {
-    return this.currentId++;
+    return this._currentId++;
   }
 }
 
 class Process {
-  emit(kind, m, contents) {
-    const metadata = {
-      ...m,
-      id: this.model.getId(),
-      prior_id: m.id,
-      kind,
-      timestamp: Date.now(),
-    };
-    const event = [metadata, ...contents];
-    this.d.dispatchEvent(new CustomEvent(ENDPOINT, { detail: event }));
-  }
-
   start() {
-    this.d.addEventListener(ENDPOINT, (event) => {
+    this.model._document.addEventListener(ENDPOINT, (event) => {
       setTimeout(() => {
-        this.processEvent(event);
-      }, event[0].timeout || 0);
+        this.processMessage(event.detail);
+      }, event.detail[0].timeout || 0);
     });
   }
-
+  emit(message) {
+    document.dispatchEvent(new CustomEvent(ENDPOINT, { detail: message }));
+  }
   /* PROCESS ROUTINE */
-  processEvent(e) {
+  processMessage(message) {
     const resultIds = [];
-    const procedureIds = this.queryProcedures(e[0].kind);
 
-    for (const procedureId of procedureIds) {
+    if (!this.model._model[message[0].event]) return;
+    for (const procedure of this.model._model[message[0].event][PROCEDURE]) {
       const resultId = this.model.getId();
       resultIds.push(resultId);
+      if (!procedure.action || !procedure.reaction) continue;
 
-      const routines = this.queryRoutines(procedureId, e[0].kind);
-      if (!routines.action || !routines.reaction) continue;
-
-      routines.action(procedureId, this.model, e, resultId);
-      routines.reaction(procedureId, this.model, resultId);
+      procedure.action(message, this.model, resultId);
+      procedure.reaction(message, this.model, resultId);
     }
     for (const resultId of resultIds) {
-      for (const event of this.queryResults(resultId)) {
-        this.emit(event[0].kind, e[0], e.slice(1));
+      if (!this.model._model[resultId]) continue;
+      for (const m of this.model._model[resultId]["/message/header"]) {
+        m.prior_id = message[0].id;
+        m.timestamp = Date.now();
+        this.emit([m]);
       }
     }
   }
-
-  queryProcedures(eventKind) {}
-
-  queryRoutines(procedureId, eventKind) {}
 
   queryResults(resultId) {}
 
@@ -111,21 +95,25 @@ class Process {
 const PROCESS = new Process();
 PROCESS.start();
 
-function load(source) {
-  const script = document.createElement("script");
-  script.setAttribute("src", source);
-  script.onload = () => {
-    console.log(`[${source}] LOADED.`);
-  };
-  script.onerror = () => {
-    console.log(`[${source}] FAILED.`);
-  };
-  document.head.appendChild(script);
-}
-
 window.addEventListener("load", () => {
-  console.log("WINDOW LOAD");
-  // load("./moxie/moxie.js");
+  window.addEventListener("keydown", (event) => {
+    PROCESS.emit([
+      {
+        id: "keydown",
+        event: "/event/key_down",
+        value: event.key,
+      },
+    ]);
+  });
+  window.addEventListener("keyup", (event) => {
+    PROCESS.emit([
+      {
+        id: "keyup",
+        event: "/event/key_up",
+        value: event.key,
+      },
+    ]);
+  });
 });
 
 // PROCESS.emit("kind", { foo: "bar" }, [1, 2, 3]);

@@ -1,5 +1,1 @@
-Object.assign(PROCESS.methods, {
-  "/moxie/start": () => {
-    console.log("STARTING MOXIE");
-  },
-});
+[].forEach((c) => PROCESS.setComponent(c));
