@@ -1,0 +1,58 @@
+[
+  {
+    source: "/procedure/subscription",
+    procedure: "/user_input",
+    event: "/user_input/next",
+    action: NAVIGATION.next,
+    reaction: NAVIGATION.transition,
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/user_input",
+    event: "/user_input/previous",
+    action: NAVIGATION.previous,
+    reaction: NAVIGATION.transition,
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/user_input",
+    event: "/user_input/forward",
+    action: NAVIGATION.forward,
+    reaction: NAVIGATION.transition,
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/user_input",
+    event: "/user_input/back",
+    action: NAVIGATION.back,
+    reaction: NAVIGATION.transition,
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/user_input",
+    event: "/user_input/flip",
+    action: NAVIGATION.flip,
+    reaction: NAVIGATION.transition,
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/user_input",
+    event: "/user_input/reverse",
+    action: NAVIGATION.reverse,
+    reaction: NAVIGATION.transition,
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/user_input",
+    event: "/user_input/draw",
+    action: NAVIGATION.draw,
+    reaction: NAVIGATION.transition,
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/user_input",
+    event: "/user_input/replace",
+    action: NAVIGATION.replace,
+    reaction: NAVIGATION.transition,
+  },
+].forEach((c) => PROCESS.model.set(c));

@@ -23,15 +23,12 @@ class Model {
     this._window = window;
   }
 
-  setComponent(c) {
+  set(c) {
     if (!c.id) c.id = this.getId();
     const schema = this._model[c.source];
     for (const f of schema["/fields"]) {
       if (!c[f.key]) continue;
       switch (f.kind) {
-        case "/function":
-          c[f.key] = this._model[c[f.key]][METHOD].code;
-          break;
         case "/entity":
           if (!this._model[c[f.key]]) this._model[c[f.key]] = { id: c[f.key] };
           const key = f.as || c.source;
@@ -44,6 +41,21 @@ class Model {
           break;
       }
     }
+  }
+
+  get(entityId, property) {
+    return this._model[entityId][property];
+  }
+
+  getElement(id, parentId, tagName) {
+    let element = this._document.getElementById(id);
+    if (!element) {
+      const parent = this._document.getElementById(parentId);
+      element = this._document.createElement(tagName || "div");
+      element.setAttribute("id", id);
+      parent.appendChild(element);
+    }
+    return element;
   }
 
   getId() {

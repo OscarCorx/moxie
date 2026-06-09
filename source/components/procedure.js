@@ -6,4 +6,4 @@
     shift: false,
     meta: false,
   },
-].forEach((c) => PROCESS.model.setComponent(c));
+].forEach((c) => PROCESS.model.set(c));
