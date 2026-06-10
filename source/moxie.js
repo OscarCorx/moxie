@@ -70,15 +70,23 @@ class Process {
         this.processMessage(event.detail);
       }, event.detail[0].timeout || 0);
     });
+    this.model._window.addEventListener("load", () => {
+      this.emit([
+        {
+          id: "/load",
+          event: "/moxie/load",
+        },
+      ]);
+    });
   }
   emit(message) {
     document.dispatchEvent(new CustomEvent(ENDPOINT, { detail: message }));
   }
   /* PROCESS ROUTINE */
   processMessage(message) {
-    const resultIds = [];
-
     if (!this.model._model[message[0].event]) return;
+
+    const resultIds = [];
     for (const procedure of this.model._model[message[0].event][PROCEDURE]) {
       const resultId = this.model.getId();
       resultIds.push(resultId);
@@ -89,7 +97,7 @@ class Process {
     }
     for (const resultId of resultIds) {
       if (!this.model._model[resultId]) continue;
-      for (const m of this.model._model[resultId]["/message/header"]) {
+      for (const m of this.model.get(resultId, "/message/header")) {
         m.prior_id = message[0].id;
         m.timestamp = Date.now();
         this.emit([m]);
@@ -108,24 +116,12 @@ const PROCESS = new Process();
 PROCESS.start();
 
 window.addEventListener("load", () => {
-  window.addEventListener("keydown", (event) => {
-    PROCESS.emit([
-      {
-        id: "keydown",
-        event: "/event/key_down",
-        value: event.key,
-      },
-    ]);
-  });
-  window.addEventListener("keyup", (event) => {
-    PROCESS.emit([
-      {
-        id: "keyup",
-        event: "/event/key_up",
-        value: event.key,
-      },
-    ]);
-  });
+  PROCESS.emit([
+    {
+      id: "/load",
+      event: "/moxie/load",
+    },
+  ]);
 });
 
 // PROCESS.emit("kind", { foo: "bar" }, [1, 2, 3]);

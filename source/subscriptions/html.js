@@ -55,4 +55,11 @@
     action: HTML.outline,
     reaction: HTML.transition,
   },
+  {
+    source: "/procedure/subscription",
+    procedure: "/html",
+    event: "/moxie/load",
+    action: HTML.load,
+    reaction: HTML.transition,
+  },
 ].forEach((c) => PROCESS.model.set(c));

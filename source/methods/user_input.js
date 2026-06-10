@@ -69,4 +69,24 @@ const USER_INPUT = {
     }
   },
   transition: () => {},
+  load: () => {
+    window.addEventListener("keydown", (event) => {
+      PROCESS.emit([
+        {
+          id: "keydown",
+          event: "/event/key_down",
+          value: event.key,
+        },
+      ]);
+    });
+    window.addEventListener("keyup", (event) => {
+      PROCESS.emit([
+        {
+          id: "keyup",
+          event: "/event/key_up",
+          value: event.key,
+        },
+      ]);
+    });
+  },
 };
