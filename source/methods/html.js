@@ -1,7 +1,6 @@
 const HTML = {
   outline: (message, model, resultId) => {
-    const element = model.getElement("outline", "/app");
-    STYLE.add(element, C.element);
+    const element = model.getElement("outline", "/card");
 
     element.textContent = message[0].event;
   },
@@ -11,10 +10,18 @@ const HTML = {
   },
   transition: () => {},
   load: (message, model, resultId) => {
-    const element = model.getElement("outline", "/app");
-    STYLE.add(element, C.element);
+    const navigation = model.getElement("/navigation", "/app");
+    STYLE.add(navigation, STYLE.element);
+    navigation.textContent = "NAVIGATION";
 
-    element.textContent = message[0].event;
+    const card = model.getElement("/card", "/app");
+    STYLE.add(card, STYLE.element);
+    card.textContent = "CARD";
+    model.getElement("outline", "/card");
+
+    const control = model.getElement("control", "/app");
+    STYLE.add(control, STYLE.element);
+    control.textContent = "CONTROL";
   },
 };
 
