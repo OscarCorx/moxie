@@ -7,14 +7,49 @@ class Model {
     this._currentId = 0;
     this._model = {
       "/schema/field": {
-        "/fields": [
+        "/schema/field": [
           {
             parent: "/schema/field",
             schema: "/schema/field",
             kind: "/entity",
             key: "parent",
-            as: "/fields",
             collection: true,
+          },
+          {
+            parent: "/schema/field",
+            schema: "/schema/field",
+            kind: "/string",
+            key: "kind",
+          },
+          {
+            parent: "/schema/field",
+            schema: "/schema/field",
+            kind: "/string",
+            key: "key",
+          },
+          {
+            parent: "/schema/field",
+            schema: "/schema/field",
+            kind: "/boolean",
+            key: "collection",
+          },
+          {
+            parent: "/schema/field",
+            schema: "/schema/field",
+            kind: "/sting",
+            key: "name",
+          },
+          {
+            parent: "/schema/field",
+            schema: "/schema/field",
+            kind: "/sting",
+            key: "icon",
+          },
+          {
+            parent: "/schema/field",
+            schema: "/schema/field",
+            kind: "/sting",
+            key: "description",
           },
         ],
       },
@@ -26,17 +61,17 @@ class Model {
   set(c) {
     if (!c.id) c.id = this.getId();
     const schema = this._model[c.source];
-    for (const f of schema["/fields"]) {
+    for (const f of schema["/schema/field"]) {
       if (!c[f.key]) continue;
       switch (f.kind) {
         case "/entity":
           if (!this._model[c[f.key]]) this._model[c[f.key]] = { id: c[f.key] };
-          const key = f.as || c.source;
           if (f.collection) {
-            if (!this._model[c[f.key]][key]) this._model[c[f.key]][key] = [];
-            this._model[c[f.key]][key].push(c);
+            if (!this._model[c[f.key]][c.source])
+              this._model[c[f.key]][c.source] = [];
+            this._model[c[f.key]][c.source].push(c);
           } else {
-            this._model[c[f.key]][key] = c;
+            this._model[c[f.key]][c.source] = c;
           }
           break;
       }
@@ -47,11 +82,15 @@ class Model {
     return this._model[entityId][property];
   }
 
+  getEntity(entityId) {
+    return this._model[entityId];
+  }
+
   getElement(id, parentId, tagName) {
     let element = this._document.getElementById(id);
     if (!element) {
       const parent = this._document.getElementById(parentId);
-      element = this._document.createElement(tagName || "div");
+      element = this._document.createElement("div");
       element.setAttribute("id", id);
       parent.appendChild(element);
     }
@@ -104,8 +143,6 @@ class Process {
       }
     }
   }
-
-  queryResults(resultId) {}
 
   constructor() {
     this.model = new Model();

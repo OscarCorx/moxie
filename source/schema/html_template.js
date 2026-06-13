@@ -1,38 +1,39 @@
+/* CARD */
 [
   {
-    parent: "/misenplace/template/relation",
+    parent: "/html/template/card",
     source: "/schema/field",
     kind: "/entity",
-    key: "parent",
+    key: "card",
   },
   {
-    parent: "/misenplace/template/relation",
+    parent: "/html/template/card",
     source: "/schema/field",
     kind: "/entity",
-    key: "child",
+    key: "left_panel",
   },
   {
-    parent: "/misenplace/template/card",
+    parent: "/html/template/card",
     source: "/schema/field",
     kind: "/entity",
-    key: "entity",
+    key: "right_panel",
   },
+].forEach((c) => PROCESS.model.set(c));
+/* PANEL */
+[
   {
-    parent: "/misenplace/template/card",
-    source: "/schema/field",
-    kind: "/function",
-    key: "outline_query",
-  },
-  {
-    parent: "/misenplace/template/panel",
+    parent: "/html/template/panel",
     source: "/schema/field",
     kind: "/entity",
-    key: "entity",
+    key: "panel",
   },
+].forEach((c) => PROCESS.model.set(c));
+/* ENTRY */
+[
   {
-    parent: "/misenplace/template/entry",
+    parent: "/html/template/entry",
     source: "/schema/field",
     kind: "/entity",
-    key: "entity",
+    key: "panel",
   },
 ].forEach((c) => PROCESS.model.set(c));
