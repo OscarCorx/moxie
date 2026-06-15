@@ -1,6 +1,6 @@
 const USER_INPUT = {
   key_down: (message, model, resultId) => {
-    const state = model.get("/user_input", "/procedure/state");
+    const state = model.getComponent("/user_input", "/procedure/state");
     const value = message[0].value;
     let event;
     switch (value) {
@@ -54,7 +54,7 @@ const USER_INPUT = {
     }
   },
   key_up: (message, model, resultId) => {
-    const state = model.get("/user_input", "/procedure/state");
+    const state = model.getComponent("/user_input", "/procedure/state");
     const value = message[0].value;
     switch (value) {
       case "Meta":

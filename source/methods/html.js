@@ -4,13 +4,21 @@ function detail() {}
 
 const HTML = {
   outline: (message, model, resultId) => {
-    const element = model.getElement("outline", "/card");
-
-    element.textContent = message[0].event;
+    const head = model.getComponent("/head", "/navigation/stack");
+    const cardTemplate = model.getComponent(
+      head.template,
+      "/html/template/card",
+    );
+    cardTemplate.outline(cardTemplate, model, head);
+    cardTemplate.detail(cardTemplate, model, head);
   },
   detail: (message, model, resultId) => {
-    const element = model.getElement("detail", "outline");
-    element.textContent = message[0].event;
+    const head = model.getComponent("/head", "/navigation/stack");
+    const cardTemplate = model.getComponent(
+      head.template,
+      "/html/template/card",
+    );
+    cardTemplate.detail(cardTemplate, model, head);
   },
   transition: () => {},
   load: (message, model, resultId) => {
@@ -26,8 +34,11 @@ const HTML = {
     STYLE.add(control, STYLE.element);
     control.textContent = "CONTROL";
 
-    const head = model.get("/head", "/navigation/stack");
-    const cardTemplate = model.get(head.template, "/html/template/card");
+    const head = model.getComponent("/head", "/navigation/stack");
+    const cardTemplate = model.getComponent(
+      head.template,
+      "/html/template/card",
+    );
     cardTemplate.outline(cardTemplate, model, head);
   },
 };

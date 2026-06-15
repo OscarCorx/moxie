@@ -1,5 +1,8 @@
 const NAVIGATION = {
   next: (message, model, resultId) => {
+    const head = model.getComponent("/head", "/navigation/stack");
+    const components = model.getComponent(head.entity, head.component_source);
+    if (!head.component) head.component = components[0];
     model.set({
       source: "/message/header",
       result: resultId,

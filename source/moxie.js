@@ -78,7 +78,7 @@ class Model {
     }
   }
 
-  get(entityId, property) {
+  getComponent(entityId, property) {
     return this._model[entityId][property];
   }
 
@@ -136,7 +136,7 @@ class Process {
     }
     for (const resultId of resultIds) {
       if (!this.model._model[resultId]) continue;
-      for (const m of this.model.get(resultId, "/message/header")) {
+      for (const m of this.model.getComponent(resultId, "/message/header")) {
         m.prior_id = message[0].id;
         m.timestamp = Date.now();
         this.emit([m]);
