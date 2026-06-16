@@ -35,11 +35,9 @@ const HTML = {
     control.textContent = "CONTROL";
 
     const head = model.getComponent("/head", "/navigation/stack");
-    const cardTemplate = model.getComponent(
-      head.template,
-      "/html/template/card",
-    );
-    cardTemplate.outline(cardTemplate, model, head);
+    const template = model.getComponent(head.template, "/html/template/card");
+    template.outline(template, head, model);
+    template.detail(template, head, model);
   },
 };
 

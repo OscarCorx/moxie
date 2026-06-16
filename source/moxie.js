@@ -9,47 +9,12 @@ class Model {
       "/schema/field": {
         "/schema/field": [
           {
+            id: this.getId(),
             parent: "/schema/field",
-            schema: "/schema/field",
+            source: "/schema/field",
             kind: "/entity",
             key: "parent",
             collection: true,
-          },
-          {
-            parent: "/schema/field",
-            schema: "/schema/field",
-            kind: "/string",
-            key: "kind",
-          },
-          {
-            parent: "/schema/field",
-            schema: "/schema/field",
-            kind: "/string",
-            key: "key",
-          },
-          {
-            parent: "/schema/field",
-            schema: "/schema/field",
-            kind: "/boolean",
-            key: "collection",
-          },
-          {
-            parent: "/schema/field",
-            schema: "/schema/field",
-            kind: "/sting",
-            key: "name",
-          },
-          {
-            parent: "/schema/field",
-            schema: "/schema/field",
-            kind: "/sting",
-            key: "icon",
-          },
-          {
-            parent: "/schema/field",
-            schema: "/schema/field",
-            kind: "/sting",
-            key: "description",
           },
         ],
       },
