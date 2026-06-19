@@ -28,18 +28,18 @@
     source: "/schema/field",
     kind: "/entity",
     key: "event",
-    collection: true,
+    access: "/collection",
   },
-  {
-    parent: "/procedure/subscription",
-    source: "/schema/field",
-    kind: "/function",
-    key: "action",
-  },
-  {
-    parent: "/procedure/subscription",
-    source: "/schema/field",
-    kind: "/function",
-    key: "reaction",
-  },
+  // {
+  //   parent: "/procedure/subscription",
+  //   source: "/schema/field",
+  //   kind: "/function",
+  //   key: "action",
+  // },
+  // {
+  //   parent: "/procedure/subscription",
+  //   source: "/schema/field",
+  //   kind: "/function",
+  //   key: "reaction",
+  // },
 ].forEach((c) => PROCESS.model.set(c));

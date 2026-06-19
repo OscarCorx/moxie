@@ -28,16 +28,17 @@ const HTML = {
 
     const card = model.getElement("/card", "/app");
     STYLE.add(card, STYLE.element);
-    model.getElement("outline", "/card");
-
+    while (card.firstChild) {
+      card.firstChild.remove();
+    }
     const control = model.getElement("control", "/app");
     STYLE.add(control, STYLE.element);
     control.textContent = "CONTROL";
 
     const head = model.getComponent("/head", "/navigation/stack");
     const template = model.getComponent(head.template, "/html/template/card");
-    template.outline(template, head, model);
-    template.detail(template, head, model);
+
+    template.render(template, head, model);
   },
 };
 
@@ -47,5 +48,25 @@ const STYLE = {
   },
   element: {
     border: "1px solid black",
+  },
+  card: {
+    display: "flex",
+    "flex-direction": "row",
+  },
+  panel: {
+    flex: "auto",
+    width: "45vw",
+  },
+  entry_column: {
+    display: "flex",
+    "flex-direction": "column",
+  },
+  entry: {
+    display: "flex",
+    "flex-direction": "row",
+    flex: "auto",
+  },
+  entry_part: {
+    flex: "auto",
   },
 };

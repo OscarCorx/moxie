@@ -14,7 +14,7 @@ class Model {
             source: "/schema/field",
             kind: "/entity",
             key: "parent",
-            collection: true,
+            access: "/collection",
           },
         ],
       },
@@ -23,23 +23,41 @@ class Model {
     this._window = window;
   }
 
+  setField(f, c) {
+    if (!c[f.key]) return;
+    switch (f.kind) {
+      case "/entity":
+        if (!this._model[c[f.key]]) {
+          this._model[c[f.key]] = { id: c[f.key], components: [] };
+        }
+        this._model[c.id] = c;
+        if (f.access === "/collection") {
+          if (!this._model[c[f.key]][c.source]) {
+            this._model[c[f.key]][c.source] = [];
+          }
+          this._model[c[f.key]][c.source].push(c);
+        } else {
+          this._model[c[f.key]][c.source] = c;
+        }
+        break;
+    }
+  }
+
   set(c) {
     if (!c.id) c.id = this.getId();
+    // this.setField(
+    //   {
+    //     parent: c.source,
+    //     source: "/schema/field",
+    //     kind: "/entity",
+    //     key: "source",
+    //     access: "/collection",
+    //   },
+    //   c,
+    // );
     const schema = this._model[c.source];
     for (const f of schema["/schema/field"]) {
-      if (!c[f.key]) continue;
-      switch (f.kind) {
-        case "/entity":
-          if (!this._model[c[f.key]]) this._model[c[f.key]] = { id: c[f.key] };
-          if (f.collection) {
-            if (!this._model[c[f.key]][c.source])
-              this._model[c[f.key]][c.source] = [];
-            this._model[c[f.key]][c.source].push(c);
-          } else {
-            this._model[c[f.key]][c.source] = c;
-          }
-          break;
-      }
+      this.setField(f, c);
     }
   }
 
@@ -55,7 +73,7 @@ class Model {
     let element = this._document.getElementById(id);
     if (!element) {
       const parent = this._document.getElementById(parentId);
-      element = this._document.createElement("div");
+      element = this._document.createElement(tagName || "div");
       element.setAttribute("id", id);
       parent.appendChild(element);
     }
@@ -64,6 +82,10 @@ class Model {
 
   getId() {
     return this._currentId++;
+  }
+
+  emit(message) {
+    document.dispatchEvent(new CustomEvent(ENDPOINT, { detail: message }));
   }
 }
 
@@ -75,7 +97,7 @@ class Process {
       }, event.detail[0].timeout || 0);
     });
     this.model._window.addEventListener("load", () => {
-      this.emit([
+      this.model.emit([
         {
           id: "/load",
           event: "/moxie/load",
@@ -83,9 +105,7 @@ class Process {
       ]);
     });
   }
-  emit(message) {
-    document.dispatchEvent(new CustomEvent(ENDPOINT, { detail: message }));
-  }
+
   /* PROCESS ROUTINE */
   processMessage(message) {
     if (!this.model._model[message[0].event]) return;
@@ -104,7 +124,7 @@ class Process {
       for (const m of this.model.getComponent(resultId, "/message/header")) {
         m.prior_id = message[0].id;
         m.timestamp = Date.now();
-        this.emit([m]);
+        this.model.emit([m]);
       }
     }
   }
@@ -116,14 +136,5 @@ class Process {
 
 const PROCESS = new Process();
 PROCESS.start();
-
-window.addEventListener("load", () => {
-  PROCESS.emit([
-    {
-      id: "/load",
-      event: "/moxie/load",
-    },
-  ]);
-});
 
 // PROCESS.emit("kind", { foo: "bar" }, [1, 2, 3]);

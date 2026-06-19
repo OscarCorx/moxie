@@ -15,8 +15,8 @@
   {
     parent: "/schema/field",
     source: "/schema/field",
-    kind: "/boolean",
-    key: "collection",
+    kind: "/string",
+    key: "access",
   },
   {
     parent: "/schema/field",

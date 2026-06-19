@@ -4,7 +4,7 @@
     source: "/schema/field",
     kind: "/entity",
     key: "result",
-    collection: true,
+    access: "/collection",
   },
   {
     parent: "/message/header",

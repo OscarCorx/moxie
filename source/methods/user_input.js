@@ -71,7 +71,7 @@ const USER_INPUT = {
   transition: () => {},
   load: () => {
     window.addEventListener("keydown", (event) => {
-      PROCESS.emit([
+      PROCESS.model.emit([
         {
           id: "keydown",
           event: "/event/key_down",
@@ -80,7 +80,7 @@ const USER_INPUT = {
       ]);
     });
     window.addEventListener("keyup", (event) => {
-      PROCESS.emit([
+      PROCESS.model.emit([
         {
           id: "keyup",
           event: "/event/key_up",
