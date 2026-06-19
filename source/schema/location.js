@@ -1,5 +1,11 @@
 [
   {
+    parent: "/components",
+    source: "/schema/field",
+    kind: "/entity",
+    key: "entity",
+  },
+  {
     parent: "/location",
     source: "/schema/field",
     kind: "/entity",

@@ -32,7 +32,7 @@
     procedure: "/user_input",
     event: "/user_input/flip",
     action: NAVIGATION.flip,
-    reaction: NAVIGATION.transition,
+    reaction: HTML.load,
   },
   {
     source: "/procedure/subscription",

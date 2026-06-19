@@ -1,5 +1,11 @@
 [
   {
+    source: "/components",
+    entity: "/person",
+    "/demographics": "/location",
+    "/location": "/demographics",
+  },
+  {
     source: "/location",
     entity: "/person",
     address_1: "123 Easy Street",

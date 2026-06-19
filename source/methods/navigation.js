@@ -31,11 +31,10 @@ const NAVIGATION = {
     });
   },
   flip: (message, model, resultId) => {
-    model.set({
-      source: "/message/header",
-      result: resultId,
-      event: "/navigate/flip",
-    });
+    console.log(message);
+    const head = model.getComponent("/head", "/navigation/stack");
+    const components = model._model[head.entity]["/components"];
+    head.component_source = components[head.component_source];
   },
   reverse: (message, model, resultId) => {
     model.set({
