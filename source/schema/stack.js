@@ -1,50 +1,28 @@
-[
-  {
-    parent: "/navigation/stack",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "pop",
-  },
-  {
-    parent: "/navigation/stack",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "push",
-  },
-  {
-    parent: "/navigation/stack",
-    source: "/schema/field",
-    kind: "/string",
-    key: "card",
-  },
-  {
-    parent: "/navigation/stack",
-    source: "/schema/field",
-    kind: "/string",
-    key: "select_panel",
-  },
-  {
-    parent: "/navigation/stack",
-    source: "/schema/field",
-    kind: "/string",
-    key: "viewer_panel",
-  },
-  {
-    parent: "/navigation/stack",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "template",
-  },
-  {
-    parent: "/navigation/stack",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "entity",
-  },
-  {
-    parent: "/navigation/stack",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "component",
-  },
-].forEach((c) => PROCESS.model.set(c));
+COMPONENTS.push(
+  ...[
+    {
+      parent: "/navigation/state",
+      source: "/schema/field",
+      kind: "/entity",
+      key: "stack",
+    },
+    {
+      parent: "/navigation/state",
+      source: "/schema/field",
+      kind: "/entity",
+      key: "entity",
+    },
+    {
+      parent: "/navigation/state",
+      source: "/schema/field",
+      kind: "/entity",
+      key: "template",
+    },
+    {
+      parent: "/navigation/state",
+      source: "/schema/field",
+      kind: "/entity",
+      key: "archetype",
+    },
+  ],
+);

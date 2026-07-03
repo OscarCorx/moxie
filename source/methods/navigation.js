@@ -1,57 +1,64 @@
 const NAVIGATION = {
   next: (message, model, resultId) => {
-    const head = model.getComponent("/head", "/navigation/stack");
-    const components = model.getComponent(head.entity, head.component_source);
-    if (!head.component) head.component = components[0];
-    model.set({
-      source: "/message/header",
-      result: resultId,
-      event: "/navigate/next",
-    });
+    // const head = model.getComponent("/head", "/navigation/stack");
+    // const components = model._model[head.entity].components;
+    // const components = model.getComponent(
+    //   head.entity,
+    //   components[head.card_index || 0],
+    // );
+    // model.setComponent({
+    //   source: "/message/header",
+    //   result: resultId,
+    //   event: "/navigate/next",
+    // });
   },
   previous: (message, model, resultId) => {
-    model.set({
+    model.setComponent({
       source: "/message/header",
       result: resultId,
       event: "/navigate/previous",
     });
   },
   forward: (message, model, resultId) => {
-    model.set({
+    model.setComponent({
       source: "/message/header",
       result: resultId,
       event: "/navigate/forward",
     });
   },
   back: (message, model, resultId) => {
-    model.set({
+    model.setComponent({
       source: "/message/header",
       result: resultId,
       event: "/navigate/back",
     });
   },
   flip: (message, model, resultId) => {
-    console.log(message);
-    const head = model.getComponent("/head", "/navigation/stack");
-    const components = model._model[head.entity]["/components"];
-    head.component_source = components[head.component_source];
+    const head = model.getComponent("/head", "/navigation/stack", 0);
+    head.card_index = head.card_index || 0;
+    const components = model._model[head.entity].components;
+    if (components.length === head.card_index) {
+      head.card_index = 0;
+    } else {
+      head.card_index += 1;
+    }
   },
   reverse: (message, model, resultId) => {
-    model.set({
+    model.setComponent({
       source: "/message/header",
       result: resultId,
       event: "/navigate/reverse",
     });
   },
   draw: (message, model, resultId) => {
-    model.set({
+    model.setComponent({
       source: "/message/header",
       result: resultId,
       event: "/navigate/draw",
     });
   },
   replace: (message, model, resultId) => {
-    model.set({
+    model.setComponent({
       source: "/message/header",
       result: resultId,
       event: "/navigate/replace",
