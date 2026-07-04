@@ -59,6 +59,11 @@ const P = {
     "grid-column-end": 12,
     "grid-row-start": 4,
     "grid-row-end": 12,
+    display: "flex",
+    "flex-direction": "column",
+  },
+  view_entry: {
+    fled: "auto",
   },
 };
 

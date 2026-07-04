@@ -29,20 +29,38 @@ COMPONENTS.push(
       source: "/procedure/subscription",
       procedure: "/crud",
       event: "/message/retrieve",
-      action: (model, message, resultId) => {},
-      reaction: (model, message, resultId) => {},
+      action: (model, message, resultId) => {
+        const head = model.accessComponent("/head", "/navigation/state", 0);
+        head.component = message.component;
+      },
+      reaction: (model, message, resultId) => {
+        model.setComponent({
+          source: "/message/header",
+          result: resultId,
+          event: "/event/retrieve",
+        });
+      },
     },
     {
       source: "/procedure/subscription",
       procedure: "/crud",
-      kind: "/message/update",
-      action: (model, message, resultId) => {},
-      reaction: (model, message, resultId) => {},
+      event: "/message/update",
+      action: (model, message, resultId) => {
+        const component = model.getComponent(message[0].component);
+        component[message[0].field] = message[0].value;
+      },
+      reaction: (model, message, resultId) => {
+        model.setComponent({
+          source: "/message/header",
+          result: resultId,
+          event: "/event/update",
+        });
+      },
     },
     {
       source: "/procedure/subscription",
       procedure: "/crud",
-      kind: "/message/destroy",
+      event: "/message/destroy",
       action: (model, message, resultId) => {},
       reaction: (model, message, resultId) => {},
     },

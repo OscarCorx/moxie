@@ -30,6 +30,24 @@ class Misenplace {
     }
   }
 
+  static detailSelect(model, header, resultId) {
+    const local = model.accessComponent("/head", "/navigation/state", 0);
+    for (const c of this.getSelect(model, local)) {
+      this.detailContent(c);
+    }
+    for (const c of this.getView(model, local)) {
+      this.outlineContent(c);
+      this.detailContent(c);
+    }
+  }
+
+  static detailView(model, header, resultId) {
+    const local = model.accessComponent("/head", "/navigation/state", 0);
+    for (const c of this.getView(model, local)) {
+      this.detailContent(c);
+    }
+  }
+
   static outlineContent(c) {
     // console.log("outlineContent", c.source);
     let e;
@@ -74,10 +92,26 @@ class Misenplace {
       case "/select/entry":
         e = this.getElement(c.entry, c.panel);
         style(e, P.element);
+        e.addEventListener("click", () => {
+          this.emit({
+            source: "/message/header",
+            event: "/message/retrieve",
+            component: c.component,
+          });
+        });
         break;
       case "/view/entry":
-        e = this.getElement(c.entry, c.panel);
-        style(e, P.element);
+        e = this.getElement(c.entry, c.panel, "input");
+        style(e, P.view_entry);
+        e.addEventListener("input", (e) => {
+          this.emit({
+            source: "/message/header",
+            event: "/message/update",
+            component: c.component,
+            field: c.field,
+            value: e.target.value,
+          });
+        });
         break;
       default:
         break;
@@ -113,7 +147,7 @@ class Misenplace {
         break;
       case "/view/entry":
         e = this.getElement(c.entry, c.panel);
-        e.textContent = `${c.field}: ${c.value}`;
+        e.setAttribute("value", c.value);
         break;
       default:
         break;
@@ -190,12 +224,7 @@ class Misenplace {
       "/archetype/property",
       local.archetype_index,
     ).property;
-    const component = model.accessComponent(
-      local.entity,
-      property,
-      local.property_index,
-    );
-    const components = model.getComponentIds(local.entity, component.source);
+    const components = model.getComponentIds(local.entity, property);
     for (const id of components) {
       contents.push({
         source: "/select/entry",
@@ -203,6 +232,7 @@ class Misenplace {
         entry: `/select/entry/${id}`,
         icon: "I",
         name: id,
+        component: id,
       });
     }
     return contents;
@@ -228,6 +258,7 @@ class Misenplace {
         panel: "/view/panel",
         entry: `/view/entry/${id}`,
         icon: "I",
+        component: component.id,
         field: field.key,
         value: component[field.key],
       });
