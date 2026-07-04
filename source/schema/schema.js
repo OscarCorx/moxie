@@ -40,32 +40,44 @@ COMPONENTS.push(
     },
   ],
 );
-/* DESCRIPTION */
+/* DISPLAY */
 COMPONENTS.push(
   ...[
     {
-      parent: "/description",
+      parent: "/display",
+      source: "/schema/field",
+      kind: "/entity",
+      key: "entity",
+    },
+    {
+      parent: "/display",
       source: "/schema/field",
       kind: "/string",
       key: "key",
     },
     {
-      parent: "/description",
+      parent: "/display",
       source: "/schema/field",
       kind: "/sting",
       key: "name",
     },
     {
-      parent: "/description",
+      parent: "/display",
       source: "/schema/field",
       kind: "/sting",
       key: "icon",
     },
     {
-      parent: "/description",
+      parent: "/display",
       source: "/schema/field",
       kind: "/sting",
       key: "description",
+    },
+    {
+      parent: "/display",
+      source: "/schema/field",
+      kind: "/sting",
+      key: "name",
     },
   ],
 );

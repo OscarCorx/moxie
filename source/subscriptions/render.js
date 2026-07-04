@@ -18,7 +18,9 @@ COMPONENTS.push(
       source: "/procedure/subscription",
       procedure: "/misenplace/render",
       event: "/event/flip",
-      action: (model, header, resultId) => {},
+      action: (model, header, resultId) => {
+        Misenplace.renderMisenplace(model, header, resultId);
+      },
       reaction: (model, header, resultId) => {},
     },
     {
@@ -61,8 +63,7 @@ COMPONENTS.push(
       procedure: "/misenplace/render",
       event: "/event/load",
       action: (model, header, resultId) => {
-        const local = model.accessComponent("/head", "/navigation/state", 0);
-        Misenplace.renderMisenplace(model, local);
+        Misenplace.renderMisenplace(model, header, resultId);
       },
       reaction: (model, header, resultId) => {},
     },

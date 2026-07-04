@@ -1,12 +1,8 @@
-function addStyle(element, style) {
-  Object.assign(element.style, style);
-}
-
 class Misenplace {
   static getElement(id, parentId, tagName, clear) {
-    if (clear) element.remove();
     let element = document.getElementById(id);
-    if (!element) {
+    if (clear && element) element.remove();
+    if (!element || clear) {
       const parent = document.getElementById(parentId);
       element = document.createElement(tagName || "div");
       element.setAttribute("id", id);
@@ -19,60 +15,99 @@ class Misenplace {
     document.dispatchEvent(new CustomEvent("/target", { detail: signal }));
   }
 
-  static renderMisenplace(model, local, resultId) {
-    let contents = this.getMisenplace(model, local);
+  static renderMisenplace(model, header, resultId) {
+    const local = model.accessComponent("/head", "/navigation/state", 0);
+    let contents = [];
+    contents.push(...this.getMisenplace(model, local));
+    contents.push(...this.getArchetypeCard(model, local));
+    contents.push(...this.getEntityPanel(model, local));
+    contents.push(...this.getComponentPanel(model, local));
+    contents.push(...this.getSelect(model, local));
+    contents.push(...this.getView(model, local));
     for (const c of contents) {
-      this.renderContent(c);
+      this.outlineContent(c);
+      this.detailContent(c);
     }
   }
 
-  static renderArchetypeCard(model, local, procedure) {
-    let contents = this.getArchetypeCard(model, local);
-    for (const c of contents) {
-      this.renderContent(c);
+  static outlineContent(c) {
+    console.log("outlineContent", c.source);
+    let e;
+    switch (c.source) {
+      case "/misenplace":
+        e = this.getElement("/navigation", "/app");
+        e.textContent = c.navigation;
+        style(e, P.element);
+        e = this.getElement("/card", "/app");
+        style(e, P.element);
+        e = this.getElement("/control", "/app");
+        e.textContent = c.control;
+        style(e, P.element);
+        break;
+      case "/archetype/card":
+        e = this.getElement(c.card, "/card", "div", true);
+        style(e, P.card);
+        e = this.getElement("/component/panel", c.card);
+        style(e, P.component_panel);
+        e = this.getElement("/entity/panel", c.card);
+        style(e, P.entity_panel);
+        e = this.getElement(c.select_panel, c.card);
+        style(e, P.select_panel);
+        e = this.getElement(c.view_panel, c.card);
+        style(e, P.view_panel);
+        break;
+      case "/component/panel":
+        e = this.getElement("/component/title", "/component/panel");
+        e = this.getElement("/component/description", "/component/panel");
+        e = this.getElement("/component/add", "/component/panel");
+        break;
+      case "/entity/panel":
+        e = this.getElement("/entity/title", "/entity/panel");
+        e = this.getElement("/entity/description", "/entity/panel");
+        break;
+      case "/select/entry":
+        e = this.getElement(c.entry, c.panel);
+        style(e, P.element);
+        break;
+      case "/view/entry":
+        e = this.getElement(c.entry, c.panel);
+        style(e, P.element);
+        break;
+      default:
+        break;
     }
   }
 
-  static renderSelect(model, local, resultId) {
-    let contents = this.getSelect(model, local);
-    for (const c of contents) {
-      this.renderContent(c);
-    }
-  }
-
-  static renderView(model, local, resultId) {
-    let contents = this.getSelect(model, local);
-    for (const c of contents) {
-      this.renderContent(c);
-    }
-  }
-
-  static renderContent(content) {
-    console.log("renderContent", content.source);
-    switch (content.source) {
-      case "/render/navigation/panel":
+  static detailContent(c) {
+    // console.log("detailContent", c.source);
+    let e;
+    switch (c.source) {
+      case "/misenplace":
         break;
-      case "/render/control/entry":
+      case "/archetype/card":
         break;
-      case "/outline/archetype/card":
+      case "/component/panel":
+        this.getElement("/component/title", "/component/panel").textContent =
+          c.title;
+        this.getElement(
+          "/component/description",
+          "/component/panel",
+        ).textContent = c.description;
+        this.getElement("/component/add", "/component/panel").textContent =
+          "Add Record";
         break;
-      case "/outline/select/panel":
+      case "/entity/panel":
+        this.getElement("/entity/title", "/entity/panel").textContent = c.title;
+        this.getElement("/entity/description", "/entity/panel").textContent =
+          c.description;
         break;
-      case "/outline/select/entry":
+      case "/select/entry":
+        e = this.getElement(c.entry, c.panel);
+        e.textContent = c.name;
         break;
-      case "/outline/view/panel":
-        break;
-      case "/outline/view/entry":
-        break;
-      case "/detail/archetype/card":
-        break;
-      case "/detail/select/panel":
-        break;
-      case "/detail/select/entry":
-        break;
-      case "/detail/view/panel":
-        break;
-      case "/detail/view/entry":
+      case "/view/entry":
+        e = this.getElement(c.entry, c.panel);
+        e.textContent = `${c.field}: ${c.value}`;
         break;
       default:
         break;
@@ -80,91 +115,111 @@ class Misenplace {
   }
 
   static getMisenplace(model, local) {
-    const contents = [
-      /* OUTLINE NAVIGATION */
-      /* DETAIL NAVIGATION */
-      /* OUTLINE CARD */
-      /* OUTLINE CONTROL */
-      /* OUTLINE CONTROL */
+    return [
+      {
+        source: "/misenplace",
+        navigation: "Navigation Panel",
+        card: "Card Card",
+        control: "Control Panel",
+      },
     ];
-    contents.push(...this.getArchetypeCard(model, local));
-    return contents;
   }
 
   static getArchetypeCard(model, local) {
-    const component = model.accessComponent(
-      local.entity,
-      local.property,
-      local.property_index,
-    );
-    const contents = [
+    return [
       {
-        source: "/outline/archetype/card",
-        title_panel: "/title/panel",
+        source: "/archetype/card",
+        card: "/archetype/card/id",
+        component_panel: "/component/panel",
+        entity_panel: "/entity/panel",
         select_panel: "/select/panel",
         view_panel: "/view/panel",
         title: "/This is the title card",
       },
     ];
-    const components = model.getComponentIds(local.entity, component.source);
-    for (const id of components) {
-      contents.push({
-        source: "/outline/select/entry",
-        panel: "/select",
-        group: "/select/entry",
-        entry: `/select/entry/${id}`,
-        icon: "I",
-        name: id,
-      });
-    }
-    contents.push(...this.getSelect(model, local));
-    return contents;
+  }
+
+  static getEntityPanel(model, local) {
+    const display = model.accessComponent(local.entity, "/display", 0) || {
+      title: "MISSING TITLE",
+      description: "MISSING DESCRIPTION",
+    };
+    return [
+      {
+        source: "/entity/panel",
+        title: display.title,
+        description: display.description,
+      },
+    ];
+  }
+
+  static getComponentPanel(model, local) {
+    const property = model.accessComponent(
+      local.archetype,
+      "/archetype/property",
+      local.archetype_index,
+    ).property;
+    const component = model.accessComponent(
+      local.entity,
+      property,
+      local.property_index,
+    );
+    const display = model.accessComponent(component.source, "/display", 0) || {
+      title: "MISSING TITLE",
+      description: "MISSING DESCRIPTION",
+    };
+    return [
+      {
+        source: "/component/panel",
+        title: display.title,
+        description: display.description,
+      },
+    ];
   }
 
   static getSelect(model, local) {
     const contents = [];
+    const property = model.accessComponent(
+      local.archetype,
+      "/archetype/property",
+      local.archetype_index,
+    ).property;
     const component = model.accessComponent(
       local.entity,
-      local.property,
+      property,
       local.property_index,
     );
     const components = model.getComponentIds(local.entity, component.source);
     for (const id of components) {
       contents.push({
-        source: "/detail/select/entry",
-        group: "/select/entry",
+        source: "/select/entry",
+        panel: "/select/panel",
         entry: `/select/entry/${id}`,
         icon: "I",
         name: id,
       });
     }
-    const schema = model.getComponentIds(component.source, "/schema/field");
-    for (const id of schema) {
-      const field = model.getComponent(id);
-      contents.push({
-        source: "/outline/view/entry",
-        entry: `/view/entry/${id}`,
-        icon: "I",
-        field: field.key,
-        value: component[field.key],
-      });
-    }
-    contents.push(...this.getView(model, local));
     return contents;
   }
 
   static getView(model, local) {
     const contents = [];
+    const property = model.accessComponent(
+      local.archetype,
+      "/archetype/property",
+      local.archetype_index,
+    ).property;
     const component = model.accessComponent(
       local.entity,
-      local.property,
+      property,
       local.property_index,
     );
     const schema = model.getComponentIds(component.source, "/schema/field");
     for (const id of schema) {
       const field = model.getComponent(id);
       contents.push({
-        source: "/detail/view/entry",
+        source: "/view/entry",
+        panel: "/view/panel",
         entry: `/view/entry/${id}`,
         icon: "I",
         field: field.key,
@@ -179,186 +234,4 @@ class Misenplace {
     addStyle(navigation, P.element);
     navigation.textContent = "NAVIGATION";
   }
-
-  static outlineNavigationEntry(content) {}
-
-  static detailNavigationEntry(content) {}
-
-  static outlineSpace(content) {}
-
-  static outlineControlPanel(content) {
-    const control = global.getElement("control", "/app");
-    addStyle(control, P.element);
-    control.textContent = "CONTROL";
-  }
-
-  static outlineControlEntry(content) {}
-
-  static detailControlEntry(content) {}
-
-  static outlineArchetypeCard(content) {}
-
-  static detailArchetypeCard(content) {}
-
-  static outlineSelectPanel(content) {
-    // let e;
-    // content.component_index = global.nextIndex(
-    //   content.archetype,
-    //   "/archetype/property",
-    //   content.component_index,
-    // );
-    // const componentSource = global.getComponent(
-    //   content.archetype,
-    //   "/archetype/property",
-    //   content.component_index,
-    // );
-    // global.getElement("/select_panel", "/card_id");
-    // e = global.getElement("/select_panel/title", "/select_panel");
-    // e.textContent = `SELECT PANEL: ${componentSource.property}`;
-    // addStyle(e, P.panel);
-    // const addButton = global.getElement(`/select_entry/add`, "/select_panel");
-    // addButton.textContent = "ADD +";
-    // addButton.addEventListener("click", () => {
-    //   global.emit([
-    //     {
-    //       event: "/message/create",
-    //       entity: content.entity,
-    //       component_source: componentSource,
-    //     },
-    //   ]);
-    // });
-    // const columnId = "/select_panel/selection";
-    // global.getElement(columnId, "/select_panel");
-    // const componentIds = global.getComponentIds(
-    //   content.entity,
-    //   componentSource,
-    //   0,
-    // );
-    // let component = global.getComponentById(componentIds[0]);
-    // for (const componentIds of componentIds) {
-    //   if (c.id === content.component_id) component = c;
-    //   e = global.getElement(`/select_entry/${c.id}`, columnId);
-    //   e.addEventListener("click", () => {
-    //     global.emit([
-    //       {
-    //         event: "/select",
-    //         component_id: c.id,
-    //       },
-    //     ]);
-    //   });
-    // }
-  }
-
-  static detailSelectPanel(content) {
-    // let e;
-    // const sourceIds = global.getComponentIds(
-    //   content.archetype,
-    //   "/archetype/property",
-    // );
-    // const componentSource = sourceIds[content.component_index];
-    // const columnId = "/select_panel/selection";
-    // global.getElement(columnId, "/select_panel");
-    // const componentIds = global.getComponentIds(content.entity, componentSource);
-    // let component = componentIds[0];
-    // for (const componentId of componentIds) {
-    //   e = global.getElement(`/select_entry/${c.id}`, columnId);
-    //   e.textContent = c.id;
-    // }
-  }
-
-  static outlineViewPanel(content) {
-    // let e;
-    // const componentSources = global.getComponentIds(
-    //   content.archetype,
-    //   "/archetype/property",
-    // );
-    // const componentSource = componentSources[content.component_index];
-    // const components = global.getComponent(content.entity, componentSource);
-    // let component = components[0];
-    // addStyle(global.getElement("/view_panel", "/card_id"), P.panel);
-    // e = global.getElement("/view_panel/title", "/view_panel");
-    // e.textContent = "VIEW PANEL";
-    // e = global.getElement("/view_panel/selection", "/view_panel");
-    // addStyle(e, P.entry_column);
-    // const fields = global.getComponent(componentSource, "/schema/field");
-    // for (const f of fields) {
-    //   const entryId = `/view_entry/${f.id}`;
-    //   e = global.getElement(entryId, "/view_panel/selection");
-    //   addStyle(e, P.entry);
-    //   e = global.getElement(`/view_entry/${f.id}/icon`, entryId);
-    //   addStyle(e, P.entry_part);
-    //   e = global.getElement(`/view_entry/${f.id}/key`, entryId);
-    //   addStyle(e, P.entry_part);
-    //   e = global.getElement(`/view_entry/${f.id}/value`, entryId, "input");
-    //   addStyle(e, P.entry_part);
-    //   e.addEventListener("input", (e) => {
-    //     global.emit([
-    //       {
-    //         event: "/update",
-    //         component_id: component.id,
-    //         key: f.key,
-    //         value: e.target.value,
-    //       },
-    //     ]);
-    //   });
-    // }
-  }
-
-  static detailViewPanel(content) {
-    // let e;
-    // const componentSources = global.getComponent(
-    //   content.archetype,
-    //   "/archetype/property",
-    // );
-    // const componentSource = componentSources[content.component_index];
-    // const components = global.getComponent(content.entity, componentSource);
-    // let component = components[0];
-    // const fields = global.getComponent(componentSource, "/schema/field");
-    // for (const f of fields) {
-    //   const entryId = `/view_entry/${f.id}`;
-    //   e = global.getElement(entryId, "/view_panel/selection");
-    //   e = global.getElement(`/view_entry/${f.id}/icon`, entryId);
-    //   e.textContent = "I";
-    //   e = global.getElement(`/view_entry/${f.id}/key`, entryId);
-    //   e.textContent = f.key;
-    //   e = global.getElement(`/view_entry/${f.id}/value`, entryId, "input");
-    //   e.setAttribute("value", component[f.key]);
-    // }
-  }
-
-  static outlineSelectEntry(content) {}
-
-  static detailSelectEntry(content) {}
-
-  static outlineViewEntry(content) {}
-
-  static detailViewEntry(content) {}
 }
-
-const P = {
-  element: {
-    border: "1px solid black",
-  },
-  card: {
-    display: "flex",
-    "flex-direction": "row",
-  },
-  panel: {
-    flex: "auto",
-    width: "45vw",
-  },
-  entry_column: {
-    display: "flex",
-    "flex-direction": "column",
-  },
-  entry: {
-    display: "flex",
-    "flex-direction": "row",
-    flex: "auto",
-  },
-  entry_part: {
-    flex: "auto",
-  },
-};
-
-const S = {};

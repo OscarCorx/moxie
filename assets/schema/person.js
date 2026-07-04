@@ -2,10 +2,12 @@ const ASSETS = [];
 ASSETS.push(
   ...[
     {
-      parent: "/components",
-      source: "/schema/field",
-      kind: "/entity",
-      key: "entity",
+      source: "/display",
+      entity: "/location",
+      title: "Location",
+      key: "location",
+      icon: "[L]",
+      description: "This component gives location information",
     },
     {
       parent: "/location",
@@ -49,6 +51,14 @@ ASSETS.push(
 
 COMPONENTS.push(
   ...[
+    {
+      source: "/display",
+      entity: "/demographics",
+      title: "Demographics",
+      key: "demographics",
+      icon: "[D]",
+      description: "This component gives demographic information",
+    },
     {
       parent: "/demographics",
       source: "/schema/field",

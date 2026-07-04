@@ -6,7 +6,7 @@ COMPONENTS.push(
       template: "/entity_viewer",
       entity: "/person",
       archetype: "/archetype/person",
-      property: "/demographics",
+      archetype_index: 0,
       property_index: 0,
     },
   ],

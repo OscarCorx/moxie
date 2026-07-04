@@ -17,7 +17,7 @@ class Model {
   }
 
   accessComponent(entity, source, index) {
-    const componentIds = this._model[entity][source];
+    const componentIds = this._model[entity][source] || [];
     return this._model[componentIds[index]];
   }
 

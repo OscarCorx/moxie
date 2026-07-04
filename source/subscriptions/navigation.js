@@ -32,8 +32,22 @@ COMPONENTS.push(
       source: "/procedure/subscription",
       procedure: "/navigation",
       event: "/message/flip",
-      action: (model, message, resultId) => {},
-      reaction: (model, message, resultId) => {},
+      action: (model, message, resultId) => {
+        const head = model.accessComponent("/head", "/navigation/state", 0);
+        head.archetype_index = model.nextIndex(
+          head.archetype,
+          "/archetype/property",
+          head.archetype_index,
+        );
+        head.property_index = 0;
+      },
+      reaction: (model, message, resultId) => {
+        model.setComponent({
+          source: "/message/header",
+          result: resultId,
+          event: "/event/flip",
+        });
+      },
     },
     {
       source: "/procedure/subscription",
@@ -45,7 +59,7 @@ COMPONENTS.push(
     {
       source: "/procedure/subscription",
       procedure: "/navigation",
-      event: "/user_input/draw",
+      event: "/message/draw",
       result: "/message/draw",
       action: (model, message, resultId) => {},
       reaction: (model, message, resultId) => {},
@@ -53,7 +67,7 @@ COMPONENTS.push(
     {
       source: "/procedure/subscription",
       procedure: "/navigation",
-      event: "/user_input/replace",
+      event: "/message/replace",
       result: "/message/replace",
       action: (model, message, resultId) => {},
       reaction: (model, message, resultId) => {},

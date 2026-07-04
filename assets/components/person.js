@@ -1,6 +1,14 @@
 ASSETS.push(
   ...[
     {
+      source: "/display",
+      entity: "/person",
+      title: "Joe Average",
+      key: "joe_average",
+      icon: "JA",
+      description: "This is Joseph Average, a lovely example.",
+    },
+    {
       source: "/location",
       entity: "/person",
       address_1: "123 Easy Street",

@@ -1,11 +1,10 @@
-Signal: An abstract trigger for logic, consisting of a header and contents
- - Event: General signal to be listened to by any procedure
- - Message: Direct signal to be listened to by a specific procedure
+Message: An abstract trigger for logic, consisting of a [header] and [contents]
+ - Action: Direct signal to be listened to by a specific procedure
+ - Reaction: General signal to be listened to by any procedure
 
 Procedure: State maching driven by signals
-- Routine: A function taking in the model, signal, and procedure
-  - Action: Part of the routine that computes
-  - Reaction: Part of the routine that transitions the state
+- Routine: Part of the routine that computes
+- Transition: Part of the routine that transitions the state
 - Method: Functions that take content and spits out content
 
 Entity: Access
