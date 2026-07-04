@@ -61,6 +61,15 @@ COMPONENTS.push(
     {
       source: "/procedure/subscription",
       procedure: "/misenplace/render",
+      event: "/event/create",
+      action: (model, header, resultId) => {
+        Misenplace.renderMisenplace(model, header, resultId);
+      },
+      reaction: (model, header, resultId) => {},
+    },
+    {
+      source: "/procedure/subscription",
+      procedure: "/misenplace/render",
       event: "/event/load",
       action: (model, header, resultId) => {
         Misenplace.renderMisenplace(model, header, resultId);

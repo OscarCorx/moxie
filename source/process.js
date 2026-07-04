@@ -13,7 +13,7 @@ class Process {
   /* PROCESS ROUTINE */
   processMessage(h) {
     const resultIds = [];
-    console.log(h);
+    // console.log(h);
     const procedureIds = this.model.getComponentIds(
       h.event,
       "/procedure/subscription",

@@ -31,7 +31,7 @@ class Misenplace {
   }
 
   static outlineContent(c) {
-    console.log("outlineContent", c.source);
+    // console.log("outlineContent", c.source);
     let e;
     switch (c.source) {
       case "/misenplace":
@@ -60,6 +60,12 @@ class Misenplace {
         e = this.getElement("/component/title", "/component/panel");
         e = this.getElement("/component/description", "/component/panel");
         e = this.getElement("/component/add", "/component/panel");
+        e.addEventListener("click", () => {
+          this.emit({
+            source: "/message/header",
+            event: "/message/create",
+          });
+        });
         break;
       case "/entity/panel":
         e = this.getElement("/entity/title", "/entity/panel");
