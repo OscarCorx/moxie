@@ -85,14 +85,5 @@ COMPONENTS.push(
       },
       transition: (model, header, resultId) => {},
     },
-    {
-      source: "/procedure/subscription",
-      procedure: "/misenplace/render",
-      event: "/event/load",
-      routine: (model, header, resultId) => {
-        Misenplace.renderMisenplace(model, header, resultId);
-      },
-      transition: (model, header, resultId) => {},
-    },
   ],
 );

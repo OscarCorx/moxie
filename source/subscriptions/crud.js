@@ -7,14 +7,10 @@ COMPONENTS.push(
       routine: (model, message, resultId) => {
         // console.log("create");
         const head = model.accessComponent("/head", "/navigation/state");
-        const source = model.accessComponent(
-          head.archetype,
-          "/archetype/property",
-          head.archetype_index,
-        ).property;
+        const property = model.getComponent(head.property).property;
         model.setComponent({
           entity: head.entity,
-          source: source,
+          source: property,
         });
       },
       transition: (model, message, resultId) => {
@@ -31,7 +27,7 @@ COMPONENTS.push(
       event: "/message/retrieve",
       routine: (model, message, resultId) => {
         const head = model.accessComponent("/head", "/navigation/state");
-        head.property_index = message[0].index;
+        head.component = message[0].component;
       },
       transition: (model, message, resultId) => {
         model.setComponent({

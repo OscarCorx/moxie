@@ -34,12 +34,13 @@ COMPONENTS.push(
       event: "/message/flip",
       routine: (model, message, resultId) => {
         const head = model.accessComponent("/head", "/navigation/state", 0);
-        head.archetype_index = model.nextIndex(
+        head.property = model.nextId(
           head.archetype,
           "/archetype/property",
-          head.archetype_index,
+          head.property,
         );
-        head.property_index = 0;
+        const property = model.getComponent(head.property);
+        head.component = model.nextId(head.entity, property.property);
       },
       transition: (model, message, resultId) => {
         model.setComponent({
@@ -71,6 +72,22 @@ COMPONENTS.push(
       result: "/message/replace",
       routine: (model, message, resultId) => {},
       transition: (model, message, resultId) => {},
+    },
+    {
+      source: "/procedure/subscription",
+      procedure: "/navigation",
+      event: "/event/load",
+      routine: (model, header, resultId) => {
+        const head = model.accessComponent("/head", "/navigation/state", 0);
+        head.property = model.nextId(
+          head.archetype,
+          "/archetype/property",
+          head.property,
+        );
+        const property = model.getComponent(head.property);
+        head.component = model.nextId(head.entity, property.property);
+      },
+      transition: (model, header, resultId) => {},
     },
   ],
 );

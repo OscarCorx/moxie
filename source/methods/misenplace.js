@@ -99,7 +99,7 @@ class Misenplace {
           this.emit({
             source: "/message/header",
             event: "/message/retrieve",
-            index: c.index,
+            component: c.id,
           });
         });
         break;
@@ -198,16 +198,7 @@ class Misenplace {
   }
 
   static getComponentPanel(model, local) {
-    const property = model.accessComponent(
-      local.archetype,
-      "/archetype/property",
-      local.archetype_index,
-    ).property;
-    const component = model.accessComponent(
-      local.entity,
-      property,
-      local.property_index,
-    );
+    const component = model.getComponent(local.component);
     const display = model.accessComponent(component.source, "/display") || {
       title: "MISSING TITLE",
       description: "MISSING DESCRIPTION",
@@ -223,11 +214,7 @@ class Misenplace {
 
   static getSelect(model, local) {
     const contents = [];
-    const property = model.accessComponent(
-      local.archetype,
-      "/archetype/property",
-      local.archetype_index,
-    ).property;
+    const property = model.getComponent(local.property).property;
     const components = model.getComponentIds(local.entity, property);
     let i = 0;
     for (const id of components) {
@@ -236,6 +223,7 @@ class Misenplace {
         panel: "/select/panel",
         entry: `/select/entry/${id}`,
         icon: "I",
+        id: id,
         name: id,
         index: i,
       });
@@ -246,16 +234,7 @@ class Misenplace {
 
   static getView(model, local) {
     const contents = [];
-    const property = model.accessComponent(
-      local.archetype,
-      "/archetype/property",
-      local.archetype_index,
-    ).property;
-    const component = model.accessComponent(
-      local.entity,
-      property,
-      local.property_index,
-    );
+    const component = model.getComponent(local.component);
     const schema = model.getComponentIds(component.source, "/schema/field");
     for (const id of schema) {
       const field = model.getComponent(id);

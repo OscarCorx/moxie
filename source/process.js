@@ -7,6 +7,7 @@ class Process {
     });
     window.addEventListener("load", () => {
       this.model.emit({ event: "/event/load" });
+      this.model.emit({ event: "/message/flip" });
     });
   }
 

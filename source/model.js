@@ -57,12 +57,12 @@ class Model {
     return this._model[entity][source].indexOf(id);
   }
 
-  nextIndex(entity, source, index) {
-    let i = index || 0;
+  nextId(entity, source, id) {
     const components = this._model[entity][source];
+    let i = components.indexOf(id);
     i++;
     i %= components.length;
-    return i;
+    return components[i];
   }
 
   previousIndex(entity, source, index) {
