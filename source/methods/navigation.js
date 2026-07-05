@@ -34,7 +34,7 @@ const NAVIGATION = {
     });
   },
   flip: (message, model, resultId) => {
-    const head = model.getComponent("/head", "/navigation/stack", 0);
+    const head = model.getComponent("/head", "/navigation/stack");
     head.card_index = head.card_index || 0;
     const components = model._model[head.entity].components;
     if (components.length === head.card_index) {

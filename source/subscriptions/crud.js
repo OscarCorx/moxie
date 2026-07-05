@@ -4,9 +4,9 @@ COMPONENTS.push(
       source: "/procedure/subscription",
       procedure: "/crud",
       event: "/message/create",
-      action: (model, message, resultId) => {
+      routine: (model, message, resultId) => {
         // console.log("create");
-        const head = model.accessComponent("/head", "/navigation/state", 0);
+        const head = model.accessComponent("/head", "/navigation/state");
         const source = model.accessComponent(
           head.archetype,
           "/archetype/property",
@@ -17,7 +17,7 @@ COMPONENTS.push(
           source: source,
         });
       },
-      reaction: (model, message, resultId) => {
+      transition: (model, message, resultId) => {
         model.setComponent({
           source: "/message/header",
           result: resultId,
@@ -29,11 +29,11 @@ COMPONENTS.push(
       source: "/procedure/subscription",
       procedure: "/crud",
       event: "/message/retrieve",
-      action: (model, message, resultId) => {
-        const head = model.accessComponent("/head", "/navigation/state", 0);
-        head.component = message.component;
+      routine: (model, message, resultId) => {
+        const head = model.accessComponent("/head", "/navigation/state");
+        head.property_index = message[0].index;
       },
-      reaction: (model, message, resultId) => {
+      transition: (model, message, resultId) => {
         model.setComponent({
           source: "/message/header",
           result: resultId,
@@ -45,11 +45,11 @@ COMPONENTS.push(
       source: "/procedure/subscription",
       procedure: "/crud",
       event: "/message/update",
-      action: (model, message, resultId) => {
+      routine: (model, message, resultId) => {
         const component = model.getComponent(message[0].component);
         component[message[0].field] = message[0].value;
       },
-      reaction: (model, message, resultId) => {
+      transition: (model, message, resultId) => {
         model.setComponent({
           source: "/message/header",
           result: resultId,
@@ -61,8 +61,8 @@ COMPONENTS.push(
       source: "/procedure/subscription",
       procedure: "/crud",
       event: "/message/destroy",
-      action: (model, message, resultId) => {},
-      reaction: (model, message, resultId) => {},
+      routine: (model, message, resultId) => {},
+      transition: (model, message, resultId) => {},
     },
   ],
 );

@@ -1,8 +1,10 @@
 class Misenplace {
   static getElement(id, parentId, tagName, clear) {
     let element = document.getElementById(id);
-    if (clear && element) element.remove();
-    if (!element || clear) {
+    if (clear && element) {
+      while (element.firstChild) element.firstChild.remove();
+    }
+    if (!element) {
       const parent = document.getElementById(parentId);
       element = document.createElement(tagName || "div");
       element.setAttribute("id", id);
@@ -16,7 +18,7 @@ class Misenplace {
   }
 
   static renderMisenplace(model, header, resultId) {
-    const local = model.accessComponent("/head", "/navigation/state", 0);
+    const local = model.accessComponent("/head", "/navigation/state");
     let contents = [];
     contents.push(...this.getMisenplace(model, local));
     contents.push(...this.getArchetypeCard(model, local));
@@ -31,10 +33,11 @@ class Misenplace {
   }
 
   static detailSelect(model, header, resultId) {
-    const local = model.accessComponent("/head", "/navigation/state", 0);
+    const local = model.accessComponent("/head", "/navigation/state");
     for (const c of this.getSelect(model, local)) {
       this.detailContent(c);
     }
+    this.getElement("/view/panel", "/archetype/card/id", "div", true);
     for (const c of this.getView(model, local)) {
       this.outlineContent(c);
       this.detailContent(c);
@@ -42,7 +45,7 @@ class Misenplace {
   }
 
   static detailView(model, header, resultId) {
-    const local = model.accessComponent("/head", "/navigation/state", 0);
+    const local = model.accessComponent("/head", "/navigation/state");
     for (const c of this.getView(model, local)) {
       this.detailContent(c);
     }
@@ -96,7 +99,7 @@ class Misenplace {
           this.emit({
             source: "/message/header",
             event: "/message/retrieve",
-            component: c.component,
+            index: c.index,
           });
         });
         break;
@@ -147,7 +150,8 @@ class Misenplace {
         break;
       case "/view/entry":
         e = this.getElement(c.entry, c.panel);
-        e.setAttribute("value", c.value);
+        e.value = c.value || "";
+        // e.setAttribute("value", c.value || "a");
         break;
       default:
         break;
@@ -180,7 +184,7 @@ class Misenplace {
   }
 
   static getEntityPanel(model, local) {
-    const display = model.accessComponent(local.entity, "/display", 0) || {
+    const display = model.accessComponent(local.entity, "/display") || {
       title: "MISSING TITLE",
       description: "MISSING DESCRIPTION",
     };
@@ -204,7 +208,7 @@ class Misenplace {
       property,
       local.property_index,
     );
-    const display = model.accessComponent(component.source, "/display", 0) || {
+    const display = model.accessComponent(component.source, "/display") || {
       title: "MISSING TITLE",
       description: "MISSING DESCRIPTION",
     };
@@ -225,6 +229,7 @@ class Misenplace {
       local.archetype_index,
     ).property;
     const components = model.getComponentIds(local.entity, property);
+    let i = 0;
     for (const id of components) {
       contents.push({
         source: "/select/entry",
@@ -232,8 +237,9 @@ class Misenplace {
         entry: `/select/entry/${id}`,
         icon: "I",
         name: id,
-        component: id,
+        index: i,
       });
+      i++;
     }
     return contents;
   }

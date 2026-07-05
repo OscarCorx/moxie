@@ -4,8 +4,8 @@ COMPONENTS.push(
       source: "/procedure/subscription",
       procedure: "/user_input",
       event: "/message/key_down",
-      action: (model, message, resultId) => {
-        const state = model.getComponent("/user_input", "/procedure/state", 0);
+      routine: (model, message, resultId) => {
+        const state = model.getComponent("/user_input", "/procedure/state");
         const value = message[0].value;
         let event;
         switch (value) {
@@ -52,21 +52,21 @@ COMPONENTS.push(
         }
         if (event) {
           model.setComponent({
-            id: `/keydown/${model.getId()}`,
+            id: `/keydown/${model.ID()}`,
             source: "/message/header",
             event: event,
             result: resultId,
           });
         }
       },
-      reaction: (model, message, resultId) => {},
+      transition: (model, message, resultId) => {},
     },
     {
       source: "/procedure/subscription",
       procedure: "/user_input",
       event: "/message/key_up",
-      action: (model, message, resultId) => {
-        const state = model.getComponent("/user_input", "/procedure/state", 0);
+      routine: (model, message, resultId) => {
+        const state = model.getComponent("/user_input", "/procedure/state");
         const value = message[0].value;
         switch (value) {
           case "Meta":
@@ -80,13 +80,13 @@ COMPONENTS.push(
             return;
         }
       },
-      reaction: (model, message, resultId) => {},
+      transition: (model, message, resultId) => {},
     },
     {
       source: "/procedure/subscription",
       procedure: "/user_input",
       event: "/event/load",
-      action: (model, message, resultId) => {
+      routine: (model, message, resultId) => {
         window.addEventListener("keydown", (event) => {
           PROCESS.model.emit({
             id: "keydown",
@@ -96,13 +96,13 @@ COMPONENTS.push(
         });
         window.addEventListener("keyup", (event) => {
           PROCESS.model.emit({
-            id: `/keyup/${model.getId()}`,
+            id: `/keyup/${model.ID()}`,
             event: "/message/key_up",
             value: event.key,
           });
         });
       },
-      reaction: (model, message, resultId) => {},
+      transition: (model, message, resultId) => {},
     },
   ],
 );

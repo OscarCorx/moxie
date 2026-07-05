@@ -1,5 +1,5 @@
 class Model {
-  getId() {
+  ID() {
     return this._currentId++;
   }
 
@@ -18,11 +18,11 @@ class Model {
 
   accessComponent(entity, source, index) {
     const componentIds = this._model[entity][source] || [];
-    return this._model[componentIds[index]];
+    return this._model[componentIds[index || 0]];
   }
 
   setComponent(c) {
-    if (!c.id) c.id = this.getId();
+    if (!c.id) c.id = this.ID();
     this._model[c.id] = c;
     const schema = this._model[c.source];
     for (const fieldId of schema["/schema/field"]) {
@@ -53,11 +53,16 @@ class Model {
     }
   }
   /* INDEX */
+  getIndex(entity, source, id) {
+    return this._model[entity][source].indexOf(id);
+  }
+
   nextIndex(entity, source, index) {
+    let i = index || 0;
     const components = this._model[entity][source];
-    index++;
-    index %= components.length;
-    return index;
+    i++;
+    i %= components.length;
+    return i;
   }
 
   previousIndex(entity, source, index) {
@@ -98,7 +103,7 @@ class Model {
     this._currentId = 0;
     this._model = {
       "/origin": {
-        id: this.getId(),
+        id: this.ID(),
         parent: "/schema/field",
         source: "/schema/field",
         kind: "/entity",

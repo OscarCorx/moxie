@@ -13,19 +13,19 @@ class Process {
   /* PROCESS ROUTINE */
   processMessage(h) {
     const resultIds = [];
-    // console.log(h);
+    console.log(h);
     const procedureIds = this.model.getComponentIds(
       h.event,
       "/procedure/subscription",
     );
     for (const procedureId of procedureIds) {
       const procedure = this.model.getComponent(procedureId);
-      const resultId = this.model.getId();
+      const resultId = this.model.ID();
       resultIds.push(resultId);
-      if (!procedure.action || !procedure.reaction) continue;
+      if (!procedure.routine || !procedure.transition) continue;
 
-      procedure.action(this.model, [h], resultId);
-      procedure.reaction(this.model, [h], resultId);
+      procedure.routine(this.model, [h], resultId);
+      procedure.transition(this.model, [h], resultId);
     }
 
     for (const id of resultIds) {
