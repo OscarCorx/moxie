@@ -94,7 +94,6 @@ class Misenplace {
         break;
       case "/select/entry":
         e = this.getElement(c.entry, c.panel);
-        style(e, P.element);
         e.addEventListener("click", () => {
           this.emit({
             source: "/message/header",
@@ -147,10 +146,12 @@ class Misenplace {
       case "/select/entry":
         e = this.getElement(c.entry, c.panel);
         e.textContent = c.name;
+        style(e, c.focus ? P.focus : P.element);
         break;
       case "/view/entry":
         e = this.getElement(c.entry, c.panel);
         e.value = c.value || "";
+        style(e, c.focus ? P.focus : P.element);
         // e.setAttribute("value", c.value || "a");
         break;
       default:
@@ -215,7 +216,9 @@ class Misenplace {
   static getSelect(model, local) {
     const contents = [];
     const property = model.getComponent(local.property).property;
-    const components = model.getComponentIds(local.entity, property);
+    const components = model.accessComponentIds(local.entity, property);
+    const component = model.getComponent(local.component);
+
     let i = 0;
     for (const id of components) {
       contents.push({
@@ -226,6 +229,7 @@ class Misenplace {
         id: id,
         name: id,
         index: i,
+        focus: id === component.id,
       });
       i++;
     }
@@ -235,7 +239,7 @@ class Misenplace {
   static getView(model, local) {
     const contents = [];
     const component = model.getComponent(local.component);
-    const schema = model.getComponentIds(component.source, "/schema/field");
+    const schema = model.accessComponentIds(component.source, "/schema/field");
     for (const id of schema) {
       const field = model.getComponent(id);
       contents.push({
@@ -246,6 +250,7 @@ class Misenplace {
         component: component.id,
         field: field.key,
         value: component[field.key],
+        focus: local.panel === "/view" && local.field === id,
       });
     }
     return contents;

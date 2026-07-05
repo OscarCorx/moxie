@@ -6,6 +6,9 @@ const P = {
   element: {
     border: "1px solid black",
   },
+  focus: {
+    border: "1px solid red",
+  },
   card: {
     display: "flex",
     "flex-direction": "row",

@@ -40,8 +40,8 @@ COMPONENTS.push(
             break;
           case "e":
           case "E":
-            if (state.control) event = "/message/enter";
-            if (state.shift) event = "/message/exit";
+            if (state.control) event = "/message/action";
+            if (state.shift) event = "/message/action";
             break;
           case "i":
           case "I":

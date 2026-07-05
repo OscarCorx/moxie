@@ -7,7 +7,7 @@ class Model {
     document.dispatchEvent(new CustomEvent("/target", { detail: header }));
   }
   /* MODEL */
-  getComponentIds(entity, source) {
+  accessComponentIds(entity, source) {
     if (!this._model[entity]) return [];
     return this._model[entity][source] || [];
   }
@@ -53,10 +53,6 @@ class Model {
     }
   }
   /* INDEX */
-  getIndex(entity, source, id) {
-    return this._model[entity][source].indexOf(id);
-  }
-
   nextId(entity, source, id) {
     const components = this._model[entity][source];
     let i = components.indexOf(id);
@@ -65,11 +61,12 @@ class Model {
     return components[i];
   }
 
-  previousIndex(entity, source, index) {
+  previousId(entity, source, id) {
     const components = this._model[entity][source];
-    index = index - 1 + components.length;
-    index %= components.length;
-    return index;
+    let i = components.indexOf(id);
+    i = i + components.length - 1;
+    i %= components.length;
+    return components[i];
   }
   /* REFERENCE */
   setReference(e, c) {

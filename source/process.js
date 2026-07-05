@@ -15,7 +15,7 @@ class Process {
   processMessage(h) {
     const resultIds = [];
     console.log(h);
-    const procedureIds = this.model.getComponentIds(
+    const procedureIds = this.model.accessComponentIds(
       h.event,
       "/procedure/subscription",
     );
@@ -30,7 +30,7 @@ class Process {
     }
 
     for (const id of resultIds) {
-      const headerIds = this.model.getComponentIds(id, "/message/header");
+      const headerIds = this.model.accessComponentIds(id, "/message/header");
       for (const headerId of headerIds) {
         const header = this.model.getComponent(headerId);
         if (!header) continue;
