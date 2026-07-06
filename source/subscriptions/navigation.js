@@ -20,11 +20,19 @@ COMPONENTS.push(
       routine: (model, message, resultId) => {
         const head = model.accessComponent("/head", "/navigation/state");
         const property = model.getComponent(head.property);
-        head.component = model.nextId(
-          head.entity,
-          property.property,
-          head.component,
-        );
+        if (head.panel === "/view") {
+          head.field = model.nextId(
+            property.property,
+            "/schema/field",
+            head.field,
+          );
+        } else {
+          head.component = model.nextId(
+            head.entity,
+            property.property,
+            head.component,
+          );
+        }
       },
       transition: (model, message, resultId) => {
         model.setComponent({
@@ -59,15 +67,43 @@ COMPONENTS.push(
       source: "/procedure/subscription",
       procedure: "/navigation",
       event: "/message/forward",
-      routine: (model, message, resultId) => {},
-      transition: (model, message, resultId) => {},
+      routine: (model, message, resultId) => {
+        const head = model.accessComponent("/head", "/navigation/state");
+        head.panel = head.panel === "/select" ? "/view" : "/select";
+        const property = model.getComponent(head.property);
+        head.field = model.accessComponent(
+          property.property,
+          "/schema/field",
+        ).id;
+      },
+      transition: (model, message, resultId) => {
+        model.setComponent({
+          source: "/message/header",
+          result: resultId,
+          event: "/event/forward",
+        });
+      },
     },
     {
       source: "/procedure/subscription",
       procedure: "/navigation",
       event: "/message/back",
-      routine: (model, message, resultId) => {},
-      transition: (model, message, resultId) => {},
+      routine: (model, message, resultId) => {
+        const head = model.accessComponent("/head", "/navigation/state");
+        head.panel = head.panel === "/select" ? "/view" : "/select";
+        const property = model.getComponent(head.property);
+        head.field = model.accessComponent(
+          property.property,
+          "/schema/field",
+        ).id;
+      },
+      transition: (model, message, resultId) => {
+        model.setComponent({
+          source: "/message/header",
+          result: resultId,
+          event: "/event/back",
+        });
+      },
     },
     {
       source: "/procedure/subscription",

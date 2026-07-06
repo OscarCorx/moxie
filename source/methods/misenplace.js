@@ -152,6 +152,7 @@ class Misenplace {
         e = this.getElement(c.entry, c.panel);
         e.value = c.value || "";
         style(e, c.focus ? P.focus : P.element);
+        if (c.focus) e.focus();
         // e.setAttribute("value", c.value || "a");
         break;
       default:

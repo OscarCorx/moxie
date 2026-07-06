@@ -13,7 +13,9 @@ COMPONENTS.push(
       source: "/procedure/subscription",
       procedure: "/misenplace/render",
       event: "/event/forward",
-      routine: (model, header, resultId) => {},
+      routine: (model, header, resultId) => {
+        Misenplace.detailSelect(model, header, resultId);
+      },
       transition: (model, header, resultId) => {},
     },
     {
@@ -45,7 +47,9 @@ COMPONENTS.push(
       source: "/procedure/subscription",
       procedure: "/misenplace/render",
       event: "/event/back",
-      routine: (model, header, resultId) => {},
+      routine: (model, header, resultId) => {
+        Misenplace.detailSelect(model, header, resultId);
+      },
       transition: (model, header, resultId) => {},
     },
     {
