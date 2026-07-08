@@ -1,5 +1,6 @@
 class Misenplace {
   static getElement(id, parentId, tagName, clear) {
+    // console.log(id, parentId);
     let element = document.getElementById(id);
     if (clear && element) {
       while (element.firstChild) element.firstChild.remove();
@@ -21,24 +22,35 @@ class Misenplace {
     const local = model.accessComponent("/head", "/navigation/state");
     let contents = [];
     contents.push(...this.getMisenplace(model, local));
+    contents.push(...this.getNavigationPanel(model, local));
     contents.push(...this.getArchetypeCard(model, local));
-    contents.push(...this.getEntityPanel(model, local));
-    contents.push(...this.getComponentPanel(model, local));
-    contents.push(...this.getSelect(model, local));
-    contents.push(...this.getView(model, local));
+    contents.push(...this.getControlPanel(model, local));
+    contents.push(...this.getSelectPanel(model, local));
+    contents.push(...this.getViewPanel(model, local));
+    contents.push(...this.getSelectEntries(model, local));
+    contents.push(...this.getViewEntries(model, local));
     for (const c of contents) {
       this.outlineContent(c);
       this.detailContent(c);
     }
   }
 
+  static detailPanels(model, header, resultId) {
+    const contents = [];
+    contents.push(...this.getNavigationPanel());
+    contents.push(...this.getControlPanel());
+    for (const c of contents) {
+      this.detailContent(c);
+    }
+  }
+
   static detailSelect(model, header, resultId) {
     const local = model.accessComponent("/head", "/navigation/state");
-    for (const c of this.getSelect(model, local)) {
+    for (const c of this.getSelectEntries(model, local)) {
       this.detailContent(c);
     }
     this.getElement("/view/panel", "/archetype/card/id", "div", true);
-    for (const c of this.getView(model, local)) {
+    for (const c of this.getViewEntries(model, local)) {
       this.outlineContent(c);
       this.detailContent(c);
     }
@@ -46,7 +58,7 @@ class Misenplace {
 
   static detailView(model, header, resultId) {
     const local = model.accessComponent("/head", "/navigation/state");
-    for (const c of this.getView(model, local)) {
+    for (const c of this.getViewEntries(model, local)) {
       this.detailContent(c);
     }
   }
@@ -57,13 +69,29 @@ class Misenplace {
     switch (c.source) {
       case "/misenplace":
         e = this.getElement("/navigation", "/app");
-        e.textContent = c.navigation;
-        style(e, P.element);
+        style(e, P.bound);
         e = this.getElement("/card", "/app");
         style(e, P.element);
         e = this.getElement("/control", "/app");
-        e.textContent = c.control;
-        style(e, P.element);
+        style(e, P.bound);
+        break;
+      case "/navigation/panel":
+        e = this.getElement("/navigation/panel", "/navigation");
+        style(e, P.bound_panel);
+        e = this.getElement("/navigation/left_corner", "/navigation/panel");
+        e = this.getElement("/navigation/left", "/navigation/panel");
+        e = this.getElement("/navigation/center", "/navigation/panel");
+        e = this.getElement("/navigation/right", "/navigation/panel");
+        e = this.getElement("/navigation/right_corner", "/navigation/panel");
+        break;
+      case "/control/panel":
+        e = this.getElement("/control/panel", "/control");
+        e = this.getElement("/control/left_corner", "/control/panel");
+        e = this.getElement("/control/left", "/control/panel");
+        e = this.getElement("/control/center", "/control/panel");
+        e = this.getElement("/control/right", "/control/panel");
+        e = this.getElement("/control/right_corner", "/control/panel");
+        style(e, P.bound_panel);
         break;
       case "/archetype/card":
         e = this.getElement(c.card, "/card", "div", true);
@@ -103,17 +131,20 @@ class Misenplace {
         });
         break;
       case "/view/entry":
-        e = this.getElement(c.entry, c.panel, "input");
+        e = this.getElement(c.entry, c.panel);
         style(e, P.view_entry);
-        e.addEventListener("input", (e) => {
-          this.emit({
-            source: "/message/header",
-            event: "/message/update",
-            component: c.component,
-            field: c.field,
-            value: e.target.value,
-          });
-        });
+        // e.addEventListener("input", (e) => {
+        //   this.emit({
+        //     source: "/message/header",
+        //     event: "/message/update",
+        //     component: c.component,
+        //     field: c.field,
+        //     value: e.target.value,
+        //   });
+        // });
+        break;
+      case "/bound/entry":
+        e = this.getElement(c.entry, c.panel);
         break;
       default:
         break;
@@ -150,10 +181,14 @@ class Misenplace {
         break;
       case "/view/entry":
         e = this.getElement(c.entry, c.panel);
-        e.value = c.value || "";
+        e.textContent = c.value;
         style(e, c.focus ? P.focus : P.element);
         if (c.focus) e.focus();
         // e.setAttribute("value", c.value || "a");
+        break;
+      case "/bound/entry":
+        e = this.getElement(c.entry, c.panel);
+        e.textContent = c.title;
         break;
       default:
         break;
@@ -164,9 +199,12 @@ class Misenplace {
     return [
       {
         source: "/misenplace",
-        navigation: "Navigation Panel",
-        card: "Card Card",
-        control: "Control Panel",
+      },
+      {
+        source: "/navigation/panel",
+      },
+      {
+        source: "/control/panel",
       },
     ];
   }
@@ -185,7 +223,77 @@ class Misenplace {
     ];
   }
 
-  static getEntityPanel(model, local) {
+  static getNavigationPanel(model, local) {
+    return [
+      {
+        source: "/bound/entry",
+        panel: "/navigation/left_corner",
+        entry: "/logo",
+        title: "[L]ogo",
+      },
+      {
+        source: "/bound/entry",
+        panel: "/navigation/left",
+        entry: "/entity",
+        title: "[E]ntity",
+      },
+      {
+        source: "/bound/entry",
+        panel: "/navigation/left",
+        entry: "/component",
+        title: "[C]omponent",
+      },
+      {
+        source: "/bound/entry",
+        panel: "/navigation/center",
+        entry: "/path",
+        title: "[P]ath",
+      },
+      {
+        source: "/bound/entry",
+        panel: "/navigation/right",
+        entry: "/message",
+        title: "[M]essage",
+      },
+      {
+        source: "/bound/entry",
+        panel: "/navigation/right",
+        entry: "/version_control",
+        title: "Re[V]ision",
+      },
+      {
+        source: "/bound/entry",
+        panel: "/navigation/right_corner",
+        entry: "/user",
+        title: "[U]ser",
+      },
+    ];
+  }
+
+  static getControlPanel(model, local) {
+    return [
+      {
+        source: "/bound/entry",
+        panel: "/control/left_corner",
+        entry: "/revert",
+        title: "[R]evert",
+      },
+      {
+        source: "/bound/entry",
+        panel: "/control/center",
+        entry: "/filter",
+        title: "[F]ilter",
+      },
+      {
+        source: "/bound/entry",
+        panel: "/control/right_corner",
+        entry: "/action",
+        title: "[A]ction",
+      },
+    ];
+  }
+
+  static getSelectPanel(model, local) {
     const display = model.accessComponent(local.entity, "/display") || {
       title: "MISSING TITLE",
       description: "MISSING DESCRIPTION",
@@ -199,7 +307,7 @@ class Misenplace {
     ];
   }
 
-  static getComponentPanel(model, local) {
+  static getViewPanel(model, local) {
     const component = model.getComponent(local.component);
     const display = model.accessComponent(component.source, "/display") || {
       title: "MISSING TITLE",
@@ -214,7 +322,7 @@ class Misenplace {
     ];
   }
 
-  static getSelect(model, local) {
+  static getSelectEntries(model, local) {
     const contents = [];
     const property = model.getComponent(local.property).property;
     const components = model.accessComponentIds(local.entity, property);
@@ -237,7 +345,7 @@ class Misenplace {
     return contents;
   }
 
-  static getView(model, local) {
+  static getViewEntries(model, local) {
     const contents = [];
     const component = model.getComponent(local.component);
     const schema = model.accessComponentIds(component.source, "/schema/field");

@@ -11,3 +11,18 @@ Entity: Access
 - Archetype: Pattern for Entity
 Component: Data
 - Schema: Pattern for component
+
+TODO
+- [ ] Tablet
+- [ ] Mobile
+
+Workflows
+- [ ] Archetype
+- [ ] Data Revision Review
+- [ ] Expectations
+- [ ] Code Revision Review
+- [ ] HTML Client
+  - [ ] File Serialization as POST
+- [ ] Component / Table
+- [ ] Secret Management
+- [ ]

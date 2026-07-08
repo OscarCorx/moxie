@@ -20,19 +20,11 @@ COMPONENTS.push(
       routine: (model, message, resultId) => {
         const head = model.accessComponent("/head", "/navigation/state");
         const property = model.getComponent(head.property);
-        if (head.panel === "/view") {
-          head.field = model.nextId(
-            property.property,
-            "/schema/field",
-            head.field,
-          );
-        } else {
-          head.component = model.nextId(
-            head.entity,
-            property.property,
-            head.component,
-          );
-        }
+        head.field = model.nextId(
+          property.property,
+          "/schema/field",
+          head.field,
+        );
       },
       transition: (model, message, resultId) => {
         model.setComponent({
@@ -49,10 +41,10 @@ COMPONENTS.push(
       routine: (model, message, resultId) => {
         const head = model.accessComponent("/head", "/navigation/state");
         const property = model.getComponent(head.property);
-        head.component = model.previousId(
-          head.entity,
+        head.field = model.nextId(
           property.property,
-          head.component,
+          "/schema/field",
+          head.field,
         );
       },
       transition: (model, message, resultId) => {
@@ -71,10 +63,11 @@ COMPONENTS.push(
         const head = model.accessComponent("/head", "/navigation/state");
         head.panel = head.panel === "/select" ? "/view" : "/select";
         const property = model.getComponent(head.property);
-        head.field = model.accessComponent(
+        head.component = model.nextId(
+          head.entity,
           property.property,
-          "/schema/field",
-        ).id;
+          head.component,
+        );
       },
       transition: (model, message, resultId) => {
         model.setComponent({
@@ -90,12 +83,12 @@ COMPONENTS.push(
       event: "/message/back",
       routine: (model, message, resultId) => {
         const head = model.accessComponent("/head", "/navigation/state");
-        head.panel = head.panel === "/select" ? "/view" : "/select";
         const property = model.getComponent(head.property);
-        head.field = model.accessComponent(
+        head.component = model.previousId(
+          head.entity,
           property.property,
-          "/schema/field",
-        ).id;
+          head.component,
+        );
       },
       transition: (model, message, resultId) => {
         model.setComponent({

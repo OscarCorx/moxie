@@ -6,12 +6,19 @@ const P = {
   element: {
     border: "1px solid black",
   },
+  bound: {
+    display: "flex",
+    "align-items": "center",
+    "justify-content": "center",
+  },
+  bound_panel: {
+    flex: "auto",
+    display: "flex",
+    "align-items": "center",
+    "justify-content": "center",
+  },
   focus: {
     border: "1px solid red",
-  },
-  card: {
-    display: "flex",
-    "flex-direction": "row",
   },
   panel: {
     flex: "auto",

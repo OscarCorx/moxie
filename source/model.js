@@ -83,18 +83,6 @@ class Model {
     if (this._model[e][source].indexOf(id) === -1) return;
     this._model[e][source].splice(index);
   }
-  /* DOCUMENT */
-  getElement(id, parentId, tagName, clear) {
-    if (clear) element.remove();
-    let element = document.getElementById(id);
-    if (!element) {
-      const parent = document.getElementById(parentId);
-      element = document.createElement(tagName || "div");
-      element.setAttribute("id", id);
-      parent.appendChild(element);
-    }
-    return element;
-  }
 
   constructor() {
     this._currentId = 0;

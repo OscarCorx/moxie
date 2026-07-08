@@ -5,7 +5,7 @@ COMPONENTS.push(
       procedure: "/user_input",
       control: false,
       shift: false,
-      meta: false,
+      mode: "/move",
     },
   ],
 );
