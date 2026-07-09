@@ -15,14 +15,22 @@ Component: Data
 TODO
 - [ ] Tablet
 - [ ] Mobile
+- [ ] Controller
+  - [ ] Make the background into a game
 
 Workflows
-- [ ] Archetype
+- [ ] Archetype Editor
+- [ ] Schema Editor
 - [ ] Data Revision Review
 - [ ] Expectations
+  - [ ] Theorems
 - [ ] Code Revision Review
-- [ ] HTML Client
+- [ ] HTTP Client
   - [ ] File Serialization as POST
 - [ ] Component / Table
 - [ ] Secret Management
 - [ ]
+
+TODO
+- [ ] Change `parent` to `entity`in `/source/fields`
+- [ ] Add `serial_number`, `id`, `source` and `transaction` as default fields

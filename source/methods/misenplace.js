@@ -69,15 +69,15 @@ class Misenplace {
     switch (c.source) {
       case "/misenplace":
         e = this.getElement("/navigation", "/app");
-        style(e, P.bound);
+        style(e, L.bound);
         e = this.getElement("/card", "/app");
-        style(e, P.element);
+        style(e, L.element);
         e = this.getElement("/control", "/app");
-        style(e, P.bound);
+        style(e, L.bound);
         break;
       case "/navigation/panel":
         e = this.getElement("/navigation/panel", "/navigation");
-        style(e, P.bound_panel);
+        style(e, L.bound_panel);
         e = this.getElement("/navigation/left_corner", "/navigation/panel");
         e = this.getElement("/navigation/left", "/navigation/panel");
         e = this.getElement("/navigation/center", "/navigation/panel");
@@ -91,19 +91,19 @@ class Misenplace {
         e = this.getElement("/control/center", "/control/panel");
         e = this.getElement("/control/right", "/control/panel");
         e = this.getElement("/control/right_corner", "/control/panel");
-        style(e, P.bound_panel);
+        style(e, L.bound_panel);
         break;
       case "/archetype/card":
         e = this.getElement(c.card, "/card", "div", true);
-        style(e, P.card);
+        style(e, L.card);
         e = this.getElement("/component/panel", c.card);
-        style(e, P.component_panel);
+        style(e, L.component_panel);
         e = this.getElement("/entity/panel", c.card);
-        style(e, P.entity_panel);
+        style(e, L.entity_panel);
         e = this.getElement(c.select_panel, c.card);
-        style(e, P.select_panel);
+        style(e, L.select_panel);
         e = this.getElement(c.view_panel, c.card);
-        style(e, P.view_panel);
+        style(e, L.view_panel);
         break;
       case "/component/panel":
         e = this.getElement("/component/title", "/component/panel");
@@ -132,7 +132,7 @@ class Misenplace {
         break;
       case "/view/entry":
         e = this.getElement(c.entry, c.panel);
-        style(e, P.view_entry);
+        style(e, L.view_entry);
         // e.addEventListener("input", (e) => {
         //   this.emit({
         //     source: "/message/header",
@@ -177,12 +177,12 @@ class Misenplace {
       case "/select/entry":
         e = this.getElement(c.entry, c.panel);
         e.textContent = c.name;
-        style(e, c.focus ? P.focus : P.element);
+        style(e, c.focus ? L.focus : L.element);
         break;
       case "/view/entry":
         e = this.getElement(c.entry, c.panel);
         e.textContent = c.value;
-        style(e, c.focus ? P.focus : P.element);
+        style(e, c.focus ? L.focus : L.element);
         if (c.focus) e.focus();
         // e.setAttribute("value", c.value || "a");
         break;
@@ -367,7 +367,7 @@ class Misenplace {
 
   static outlineNavigationPanel(content) {
     const navigation = global.getElement("/navigation", "/app");
-    addStyle(navigation, P.element);
+    addStyle(navigation, L.element);
     navigation.textContent = "NAVIGATION";
   }
 }

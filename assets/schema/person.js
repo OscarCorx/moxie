@@ -1,4 +1,22 @@
 const ASSETS = [];
+
+ASSETS.push(
+  ...[
+    {
+      source: "/archetype/property",
+      property: "/location",
+      archetype: "/archetype/person",
+      access: "/collection",
+    },
+    {
+      source: "/archetype/property",
+      property: "/demographics",
+      archetype: "/archetype/person",
+      access: "/collection",
+    },
+  ],
+);
+
 ASSETS.push(
   ...[
     {
@@ -49,7 +67,7 @@ ASSETS.push(
   ],
 );
 
-COMPONENTS.push(
+ASSETS.push(
   ...[
     {
       source: "/display",
