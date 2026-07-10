@@ -64,34 +64,41 @@ class Misenplace {
   }
 
   static outlineContent(c) {
-    // console.log("outlineContent", c.source);
+    console.log("outlineContent", c.source);
     let e;
     switch (c.source) {
       case "/misenplace":
         e = this.getElement("/navigation", "/app");
-        style(e, L.bound);
         e = this.getElement("/card", "/app");
-        style(e, L.element);
         e = this.getElement("/control", "/app");
-        style(e, L.bound);
         break;
       case "/navigation/panel":
         e = this.getElement("/navigation/panel", "/navigation");
-        style(e, L.bound_panel);
+        style(e, L.bound_top);
         e = this.getElement("/navigation/left_corner", "/navigation/panel");
+        style(e, L.bound_left_corner);
         e = this.getElement("/navigation/left", "/navigation/panel");
+        style(e, L.bound_gap);
         e = this.getElement("/navigation/center", "/navigation/panel");
+        style(e, L.bound_center);
         e = this.getElement("/navigation/right", "/navigation/panel");
+        style(e, L.bound_gap);
         e = this.getElement("/navigation/right_corner", "/navigation/panel");
+        style(e, L.bound_right_corner);
         break;
       case "/control/panel":
         e = this.getElement("/control/panel", "/control");
+        style(e, L.bound_bottom);
         e = this.getElement("/control/left_corner", "/control/panel");
+        style(e, L.bound_left_corner);
         e = this.getElement("/control/left", "/control/panel");
+        style(e, L.bound_gap);
         e = this.getElement("/control/center", "/control/panel");
+        style(e, L.bound_center);
         e = this.getElement("/control/right", "/control/panel");
+        style(e, L.bound_gap);
         e = this.getElement("/control/right_corner", "/control/panel");
-        style(e, L.bound_panel);
+        style(e, L.bound_right_corner);
         break;
       case "/archetype/card":
         e = this.getElement(c.card, "/card", "div", true);
@@ -102,8 +109,10 @@ class Misenplace {
         style(e, L.entity_panel);
         e = this.getElement(c.select_panel, c.card);
         style(e, L.select_panel);
-        e = this.getElement(c.view_panel, c.card);
-        style(e, L.view_panel);
+        e = this.getElement(c.view_panel_0, c.card);
+        style(e, L.view_panel_0);
+        e = this.getElement(c.view_panel_1, c.card);
+        style(e, L.view_panel_1);
         break;
       case "/component/panel":
         e = this.getElement("/component/title", "/component/panel");
@@ -133,18 +142,16 @@ class Misenplace {
       case "/view/entry":
         e = this.getElement(c.entry, c.panel);
         style(e, L.view_entry);
-        // e.addEventListener("input", (e) => {
-        //   this.emit({
-        //     source: "/message/header",
-        //     event: "/message/update",
-        //     component: c.component,
-        //     field: c.field,
-        //     value: e.target.value,
-        //   });
-        // });
+        e = this.getElement(c.entry_icon, c.entry);
+        style(e, L.view_part);
+        e = this.getElement(c.entry_field, c.entry);
+        style(e, L.view_part);
+        e = this.getElement(c.entry_value, c.entry, "input");
+        style(e, L.view_part);
         break;
       case "/bound/entry":
         e = this.getElement(c.entry, c.panel);
+        style(e, L.bound_entry);
         break;
       default:
         break;
@@ -174,6 +181,10 @@ class Misenplace {
         this.getElement("/entity/description", "/entity/panel").textContent =
           c.description;
         break;
+      case "/entity/panel/entry":
+        e = this.getElement(c.entry, c.panel);
+        e.textContent = `VALUE = ${c.value}`;
+        break;
       case "/select/entry":
         e = this.getElement(c.entry, c.panel);
         e.textContent = c.name;
@@ -181,10 +192,20 @@ class Misenplace {
         break;
       case "/view/entry":
         e = this.getElement(c.entry, c.panel);
-        e.textContent = c.value;
-        style(e, c.focus ? L.focus : L.element);
-        if (c.focus) e.focus();
-        // e.setAttribute("value", c.value || "a");
+        style(e, c.focus ? T.focus : T.element);
+        e = this.getElement(c.entry_icon, c.entry);
+        e.textContent = c.icon;
+        e = this.getElement(c.entry_field, c.entry);
+        e.textContent = c.field;
+        e = this.getElement(c.entry_value, c.entry);
+        e.value = c.value;
+        if (c.focus) {
+          e.readOnly = false;
+          e.focus();
+        } else {
+          e.readOnly = true;
+        }
+
         break;
       case "/bound/entry":
         e = this.getElement(c.entry, c.panel);
@@ -217,7 +238,8 @@ class Misenplace {
         component_panel: "/component/panel",
         entity_panel: "/entity/panel",
         select_panel: "/select/panel",
-        view_panel: "/view/panel",
+        view_panel_0: "/view/panel/0",
+        view_panel_1: "/view/panel/1",
         title: "/This is the title card",
       },
     ];
@@ -229,43 +251,50 @@ class Misenplace {
         source: "/bound/entry",
         panel: "/navigation/left_corner",
         entry: "/logo",
-        title: "[L]ogo",
+        title: "Logo",
+        hotkey: "L"
       },
       {
         source: "/bound/entry",
         panel: "/navigation/left",
         entry: "/entity",
         title: "[E]ntity",
+        hotkey: "L"
       },
       {
         source: "/bound/entry",
         panel: "/navigation/left",
         entry: "/component",
         title: "[C]omponent",
+        hotkey: "L"
       },
       {
         source: "/bound/entry",
         panel: "/navigation/center",
         entry: "/path",
         title: "[P]ath",
+        hotkey: "L"
       },
       {
         source: "/bound/entry",
         panel: "/navigation/right",
         entry: "/message",
         title: "[M]essage",
+        hotkey: "L"
       },
       {
         source: "/bound/entry",
         panel: "/navigation/right",
         entry: "/version_control",
         title: "Re[V]ision",
+        hotkey: "L"
       },
       {
         source: "/bound/entry",
         panel: "/navigation/right_corner",
         entry: "/user",
         title: "[U]ser",
+        hotkey: "L"
       },
     ];
   }
@@ -277,18 +306,21 @@ class Misenplace {
         panel: "/control/left_corner",
         entry: "/revert",
         title: "[R]evert",
+        hotkey: "L"
       },
       {
         source: "/bound/entry",
         panel: "/control/center",
         entry: "/filter",
         title: "[F]ilter",
+        hotkey: "L"
       },
       {
         source: "/bound/entry",
         panel: "/control/right_corner",
-        entry: "/action",
-        title: "[A]ction",
+        entry: "/mode",
+        title: "[M]ode",
+        hotkey: "L"
       },
     ];
   }
@@ -353,21 +385,27 @@ class Misenplace {
       const field = model.getComponent(id);
       contents.push({
         source: "/view/entry",
-        panel: "/view/panel",
+        panel: `/view/panel/${id % 2}`,
         entry: `/view/entry/${id}`,
+        entry_icon: `/view/entry/${id}/icon`,
+        entry_field: `/view/entry/${id}/key`,
+        entry_value: `/view/entry/${id}/value`,
         icon: "I",
         component: component.id,
         field: field.key,
         value: component[field.key],
-        focus: local.panel === "/view" && local.field === id,
+        focus: local.field === id,
       });
+      if (local.field === id) {
+        contents.push({
+          source: "/entity/panel/entry",
+          panel: "/entity/panel",
+          entry: "/component/panel/entry",
+          component: component.id,
+          value: component[field.key],
+        });
+      }
     }
     return contents;
-  }
-
-  static outlineNavigationPanel(content) {
-    const navigation = global.getElement("/navigation", "/app");
-    addStyle(navigation, L.element);
-    navigation.textContent = "NAVIGATION";
   }
 }

@@ -62,10 +62,38 @@ const L = {
     source: "/style/layout",
     border: "1px solid black",
   },
-  bound: {
+  bound_top: {
+    position: "absolute",
+    left: "1vw",
+    top: "2vh",
+    height: "10vh",
+    width: "98vw",
+    border: "1px solid black",
     display: "flex",
     "align-items": "center",
     "justify-content": "center",
+  },
+  bound_bottom: {
+    position: "absolute",
+    left: "1vw",
+    top: "88vh",
+    height: "10vh",
+    width: "98vw",
+    border: "1px solid black",
+    display: "flex",
+    "align-items": "center",
+    "justify-content": "center",
+  },
+  card: {
+    position: "absolute",
+    left: "1vw",
+    top: "14vh",
+    height: "72vh",
+    width: "98vw",
+    display: "grid",
+    "grid-template-columns": "8vw",
+    "grid-template-rows": "8vh",
+    gap: "20px",
   },
   bound_panel: {
     flex: "auto",
@@ -73,8 +101,24 @@ const L = {
     "align-items": "center",
     "justify-content": "center",
   },
-  focus: {
-    border: "1px solid red",
+  bound_left_corner: {
+    display: "flex",
+    flex: "auto",
+  },
+  bound_right_corner: {
+    display: "flex",
+    flex: "auto",
+  },
+  bound_gap: {
+    display: "flex",
+    flex: "auto"
+  },
+  bound_center: {
+    display: "flex",
+    flex: "auto"
+  },
+  bound_entry: {
+    flex: "auto"
   },
   panel: {
     flex: "auto",
@@ -92,36 +136,39 @@ const L = {
   entry_part: {
     flex: "auto",
   },
-  card: {
-    display: "grid",
-    "grid-template-columns": "8vw",
-    "grid-template-rows": "8vh",
-    gap: "10px",
-  },
   component_panel: {
     border: "1px solid black",
-    "grid-column-start": 0,
+    "grid-column-start": 1,
     "grid-column-end": 4,
-    "grid-row-start": 0,
+    "grid-row-start": 1,
     "grid-row-end": 4,
   },
   entity_panel: {
     border: "1px solid black",
     "grid-column-start": 4,
     "grid-column-end": 12,
-    "grid-row-start": 0,
+    "grid-row-start": 1,
     "grid-row-end": 4,
   },
   select_panel: {
     border: "1px solid black",
-    "grid-column-start": 0,
+    "grid-column-start": 1,
     "grid-column-end": 4,
     "grid-row-start": 4,
     "grid-row-end": 12,
   },
-  view_panel: {
+  view_panel_0: {
     border: "1px solid black",
     "grid-column-start": 4,
+    "grid-column-end": 8,
+    "grid-row-start": 4,
+    "grid-row-end": 12,
+    display: "flex",
+    "flex-direction": "column",
+  },
+  view_panel_1: {
+    border: "1px solid black",
+    "grid-column-start": 8,
     "grid-column-end": 12,
     "grid-row-start": 4,
     "grid-row-end": 12,
@@ -129,7 +176,14 @@ const L = {
     "flex-direction": "column",
   },
   view_entry: {
-    fled: "auto",
+    flex: "auto",
+    display: "flex"
+  },
+  view_part: {
+    flex: "auto"
+  },
+  focus: {
+    border: "1px solid red",
   },
 };
 /* SPACE */
@@ -147,4 +201,12 @@ const T = {
   text_emphasis: "",
   text_active: "",
   text_passive: "",
+  element: {
+    id: "/element",
+    source: "/style/layout",
+    border: "1px solid black",
+  },
+  focus: {
+    border: "1px solid red",
+  },
 };
