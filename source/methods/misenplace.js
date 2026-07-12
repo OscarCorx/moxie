@@ -35,6 +35,16 @@ class Misenplace {
     }
   }
 
+  static detailBoundPanels(model, header, resultId) {
+    const local = model.accessComponent("/head", "/navigation/state");
+    let contents = [];
+    contents.push(...this.getNavigationPanel(model, local));
+    contents.push(...this.getControlPanel(model, local));
+    for (const c of contents) {
+      this.detailContent(c);
+    }
+  }
+
   static detailPanels(model, header, resultId) {
     const contents = [];
     contents.push(...this.getNavigationPanel());
@@ -49,7 +59,8 @@ class Misenplace {
     for (const c of this.getSelectEntries(model, local)) {
       this.detailContent(c);
     }
-    this.getElement("/view/panel", "/archetype/card/id", "div", true);
+    this.getElement("/view/panel/0", "/archetype/card/id", "div", true);
+    this.getElement("/view/panel/1", "/archetype/card/id", "div", true);
     for (const c of this.getViewEntries(model, local)) {
       this.outlineContent(c);
       this.detailContent(c);
@@ -147,6 +158,15 @@ class Misenplace {
         e = this.getElement(c.entry_field, c.entry);
         style(e, L.view_part);
         e = this.getElement(c.entry_value, c.entry, "input");
+        e.addEventListener("input", (e) => {
+          console.log("INPUT", e.target.value);
+          this.emit({
+            event: "/message/update",
+            component: c.component,
+            field: c.field,
+            value: e.target.value,
+          })
+        });
         style(e, L.view_part);
         break;
       case "/bound/entry":
@@ -188,24 +208,31 @@ class Misenplace {
       case "/select/entry":
         e = this.getElement(c.entry, c.panel);
         e.textContent = c.name;
-        style(e, c.focus ? L.focus : L.element);
+        style(e, L.element);
+        break;
+      case "/select/entry/focus":
+        e = this.getElement(c.entry, c.panel);
+        style(e, L.focus);
         break;
       case "/view/entry":
         e = this.getElement(c.entry, c.panel);
-        style(e, c.focus ? T.focus : T.element);
+        style(e, T.element);
         e = this.getElement(c.entry_icon, c.entry);
         e.textContent = c.icon;
         e = this.getElement(c.entry_field, c.entry);
         e.textContent = c.field;
         e = this.getElement(c.entry_value, c.entry);
         e.value = c.value;
-        if (c.focus) {
-          e.readOnly = false;
-          e.focus();
-        } else {
-          e.readOnly = true;
-        }
+        e.readOnly = true;
+        e.blur();
 
+        break;
+      case "/view/entry/focus":
+        e = this.getElement(c.entry, c.panel);
+        style(e, T.focus);
+        e = this.getElement(c.entry_value, c.entry);
+        e.readOnly = false;
+        if (c.edit) e.focus();
         break;
       case "/bound/entry":
         e = this.getElement(c.entry, c.panel);
@@ -246,81 +273,76 @@ class Misenplace {
   }
 
   static getNavigationPanel(model, local) {
+    const state = model.accessComponent("/user_input", "/procedure/state");
     return [
       {
         source: "/bound/entry",
         panel: "/navigation/left_corner",
         entry: "/logo",
-        title: "Logo",
-        hotkey: "L"
+        title: (state.bind) ? "L" : "Logo",
       },
       {
         source: "/bound/entry",
         panel: "/navigation/left",
         entry: "/entity",
-        title: "[E]ntity",
-        hotkey: "L"
+        title: (state.bind) ? "E" : "Entity",
       },
       {
         source: "/bound/entry",
         panel: "/navigation/left",
         entry: "/component",
-        title: "[C]omponent",
-        hotkey: "L"
+        title: (state.bind) ? "C" : "Component",
       },
       {
         source: "/bound/entry",
         panel: "/navigation/center",
         entry: "/path",
-        title: "[P]ath",
-        hotkey: "L"
+        title: (state.bind) ? "P" : "Path",
       },
       {
         source: "/bound/entry",
         panel: "/navigation/right",
         entry: "/message",
-        title: "[M]essage",
-        hotkey: "L"
+        title: (state.bind) ? "M" : "Message",
       },
       {
         source: "/bound/entry",
         panel: "/navigation/right",
         entry: "/version_control",
-        title: "Re[V]ision",
-        hotkey: "L"
+        title: (state.bind) ? "R" : "Revision",
+
       },
       {
         source: "/bound/entry",
         panel: "/navigation/right_corner",
         entry: "/user",
-        title: "[U]ser",
-        hotkey: "L"
+        title: (state.bind) ? "U" : "User",
+
       },
     ];
   }
 
   static getControlPanel(model, local) {
+    const state = model.accessComponent("/user_input", "/procedure/state");
     return [
       {
         source: "/bound/entry",
         panel: "/control/left_corner",
         entry: "/revert",
-        title: "[R]evert",
-        hotkey: "L"
+        title: (state.bind) ? "R" : "Revert",
       },
       {
         source: "/bound/entry",
         panel: "/control/center",
         entry: "/filter",
-        title: "[F]ilter",
-        hotkey: "L"
+        title: (state.bind) ? "F" : "Filter",
       },
       {
         source: "/bound/entry",
         panel: "/control/right_corner",
         entry: "/mode",
-        title: "[M]ode",
-        hotkey: "L"
+        title: (state.bind) ? "A" : state.mode,
+
       },
     ];
   }
@@ -370,8 +392,18 @@ class Misenplace {
         id: id,
         name: id,
         index: i,
-        focus: id === component.id,
       });
+      if (id === component.id) {
+        contents.push({
+          source: "/select/entry/focus",
+          panel: "/select/panel",
+          entry: `/select/entry/${id}`,
+          icon: "I",
+          id: id,
+          name: id,
+          index: i,
+        });
+      }
       i++;
     }
     return contents;
@@ -394,15 +426,20 @@ class Misenplace {
         component: component.id,
         field: field.key,
         value: component[field.key],
-        focus: local.field === id,
       });
       if (local.field === id) {
+        const state = model.accessComponent("/user_input", "/procedure/state");
         contents.push({
           source: "/entity/panel/entry",
           panel: "/entity/panel",
           entry: "/component/panel/entry",
           component: component.id,
           value: component[field.key],
+        }, {
+          source: "/view/entry/focus",
+          entry: `/view/entry/${id}`,
+          edit: state.mode === "/entry",
+          entry_value: `/view/entry/${id}/value`,
         });
       }
     }

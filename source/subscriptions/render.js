@@ -7,7 +7,7 @@ COMPONENTS.push(
       routine: (model, header, resultId) => {
         Misenplace.detailSelect(model, header, resultId);
       },
-      transition: (model, header, resultId) => {},
+      transition: (model, header, resultId) => { },
     },
     {
       source: "/procedure/subscription",
@@ -16,7 +16,7 @@ COMPONENTS.push(
       routine: (model, header, resultId) => {
         Misenplace.detailSelect(model, header, resultId);
       },
-      transition: (model, header, resultId) => {},
+      transition: (model, header, resultId) => { },
     },
     {
       source: "/procedure/subscription",
@@ -25,14 +25,14 @@ COMPONENTS.push(
       routine: (model, header, resultId) => {
         Misenplace.renderMisenplace(model, header, resultId);
       },
-      transition: (model, header, resultId) => {},
+      transition: (model, header, resultId) => { },
     },
     {
       source: "/procedure/subscription",
       procedure: "/misenplace/render",
       event: "/event/draw",
-      routine: (model, header, resultId) => {},
-      transition: (model, header, resultId) => {},
+      routine: (model, header, resultId) => { },
+      transition: (model, header, resultId) => { },
     },
     {
       source: "/procedure/subscription",
@@ -41,7 +41,7 @@ COMPONENTS.push(
       routine: (model, header, resultId) => {
         Misenplace.detailSelect(model, header, resultId);
       },
-      transition: (model, header, resultId) => {},
+      transition: (model, header, resultId) => { },
     },
     {
       source: "/procedure/subscription",
@@ -50,21 +50,49 @@ COMPONENTS.push(
       routine: (model, header, resultId) => {
         Misenplace.detailSelect(model, header, resultId);
       },
-      transition: (model, header, resultId) => {},
+      transition: (model, header, resultId) => { },
     },
     {
       source: "/procedure/subscription",
       procedure: "/misenplace/render",
       event: "/event/reverse",
-      routine: (model, header, resultId) => {},
-      transition: (model, header, resultId) => {},
+      routine: (model, header, resultId) => { },
+      transition: (model, header, resultId) => { },
     },
     {
       source: "/procedure/subscription",
       procedure: "/misenplace/render",
       event: "/event/replace",
-      routine: (model, header, resultId) => {},
-      transition: (model, header, resultId) => {},
+      routine: (model, header, resultId) => { },
+      transition: (model, header, resultId) => { },
+    },
+    {
+      source: "/procedure/subscription",
+      procedure: "/misenplace/render",
+      event: "/event/mode",
+      routine: (model, header, resultId) => {
+        Misenplace.detailBoundPanels(model, header, resultId);
+        Misenplace.detailView(model, header, resultId);
+      },
+      transition: (model, header, resultId) => { },
+    },
+    {
+      source: "/procedure/subscription",
+      procedure: "/misenplace/render",
+      event: "/event/bind",
+      routine: (model, header, resultId) => {
+        Misenplace.detailBoundPanels(model, header, resultId);
+      },
+      transition: (model, header, resultId) => { },
+    },
+    {
+      source: "/procedure/subscription",
+      procedure: "/misenplace/render",
+      event: "/event/unbind",
+      routine: (model, header, resultId) => {
+        Misenplace.detailBoundPanels(model, header, resultId);
+      },
+      transition: (model, header, resultId) => { },
     },
     {
       source: "/procedure/subscription",
@@ -73,7 +101,7 @@ COMPONENTS.push(
       routine: (model, header, resultId) => {
         Misenplace.renderMisenplace(model, header, resultId);
       },
-      transition: (model, header, resultId) => {},
+      transition: (model, header, resultId) => { },
     },
     {
       source: "/procedure/subscription",
@@ -82,7 +110,7 @@ COMPONENTS.push(
       routine: (model, header, resultId) => {
         Misenplace.detailView(model, header, resultId);
       },
-      transition: (model, header, resultId) => {},
+      transition: (model, header, resultId) => { },
     },
     {
       source: "/procedure/subscription",
@@ -91,7 +119,7 @@ COMPONENTS.push(
       routine: (model, header, resultId) => {
         Misenplace.detailSelect(model, header, resultId);
       },
-      transition: (model, header, resultId) => {},
+      transition: (model, header, resultId) => { },
     },
   ],
 );

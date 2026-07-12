@@ -15,18 +15,21 @@ class Process {
   processMessage(h) {
     const resultIds = [];
     console.log(h);
-    const procedureIds = this.model.accessComponentIds(
+    const subscriptionIds = this.model.accessComponentIds(
       h.event,
       "/procedure/subscription",
     );
-    for (const procedureId of procedureIds) {
-      const procedure = this.model.getComponent(procedureId);
+    for (const subscriptionId of subscriptionIds) {
+      const subscription = this.model.getComponent(subscriptionId);
+      if (subscription.target && subscription.target !== subscription.procedure) continue;
+      const state = this.model.accessComponent(subscription.procedure, "/procedure/state");
+      if (subscription.state && subscription.state !== state.state) continue;
+      if (!subscription.routine || !subscription.transition) continue;
+
       const resultId = this.model.ID();
       resultIds.push(resultId);
-      if (!procedure.routine || !procedure.transition) continue;
-
-      procedure.routine(this.model, [h], resultId);
-      procedure.transition(this.model, [h], resultId);
+      subscription.routine(this.model, [h], resultId);
+      subscription.transition(this.model, [h], resultId);
     }
 
     for (const id of resultIds) {
@@ -40,7 +43,6 @@ class Process {
       }
     }
   }
-
   constructor(endpoint) {
     this.model = new Model();
     this.endpoint = endpoint;

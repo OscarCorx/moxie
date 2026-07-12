@@ -19,7 +19,8 @@ TODO
   - [ ] Make the background into a game
 
 Workflows
-- [ ] Archetype Editor
+- [ ] Query Editor
+  - [ ] Archetypes are queries
 - [ ] Schema Editor
 - [ ] Data Revision Review
 - [ ] Expectations
