@@ -8,8 +8,9 @@ COMPONENTS.push(
         // console.log("create");
         const head = model.accessComponent("/head", "/navigation/state");
         const property = model.getComponent(head.property).property;
+        const reference = model.getComponent(head.entity)[`${property}/reference`];
         model.setComponent({
-          entity: head.entity,
+          [reference]: head.entity,
           source: property,
         });
       },
@@ -57,8 +58,8 @@ COMPONENTS.push(
       source: "/procedure/subscription",
       procedure: "/crud",
       event: "/message/destroy",
-      routine: (model, message, resultId) => {},
-      transition: (model, message, resultId) => {},
+      routine: (model, message, resultId) => { },
+      transition: (model, message, resultId) => { },
     },
   ],
 );

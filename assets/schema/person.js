@@ -14,6 +14,12 @@ ASSETS.push(
       archetype: "/archetype/person",
       access: "/collection",
     },
+    {
+      source: "/archetype/entity",
+      entity: "/person",
+      archetype: "/archetype/person",
+      access: "/collection",
+    },
   ],
 );
 

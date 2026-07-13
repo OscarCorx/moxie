@@ -4,7 +4,7 @@ COMPONENTS.push(
       source: "/procedure/subscription",
       procedure: "/navigation",
       event: "/message/action",
-      routine: (model, message, resultId) => {},
+      routine: (model, message, resultId) => { },
       transition: (model, message, resultId) => {
         model.setComponent({
           source: "/message/header",
@@ -41,7 +41,7 @@ COMPONENTS.push(
       routine: (model, message, resultId) => {
         const head = model.accessComponent("/head", "/navigation/state");
         const property = model.getComponent(head.property);
-        head.field = model.nextId(
+        head.field = model.previousId(
           property.property,
           "/schema/field",
           head.field,
@@ -147,16 +147,16 @@ COMPONENTS.push(
       procedure: "/navigation",
       event: "/message/draw",
       result: "/message/draw",
-      routine: (model, message, resultId) => {},
-      transition: (model, message, resultId) => {},
+      routine: (model, message, resultId) => { },
+      transition: (model, message, resultId) => { },
     },
     {
       source: "/procedure/subscription",
       procedure: "/navigation",
       event: "/message/replace",
       result: "/message/replace",
-      routine: (model, message, resultId) => {},
-      transition: (model, message, resultId) => {},
+      routine: (model, message, resultId) => { },
+      transition: (model, message, resultId) => { },
     },
   ],
 );

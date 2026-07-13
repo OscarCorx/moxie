@@ -75,7 +75,7 @@ class Misenplace {
   }
 
   static outlineContent(c) {
-    console.log("outlineContent", c.source);
+    // console.log("outlineContent", c.source);
     let e;
     switch (c.source) {
       case "/misenplace":
@@ -413,11 +413,12 @@ class Misenplace {
     const contents = [];
     const component = model.getComponent(local.component);
     const schema = model.accessComponentIds(component.source, "/schema/field");
-    for (const id of schema) {
+    for (let i = 0; i < schema.length; i++) {
+      const id = schema[i];
       const field = model.getComponent(id);
       contents.push({
         source: "/view/entry",
-        panel: `/view/panel/${id % 2}`,
+        panel: `/view/panel/${i % 2}`,
         entry: `/view/entry/${id}`,
         entry_icon: `/view/entry/${id}/icon`,
         entry_field: `/view/entry/${id}/key`,

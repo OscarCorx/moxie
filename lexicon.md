@@ -19,6 +19,11 @@ TODO
   - [ ] Make the background into a game
 
 Workflows
+- [ ] Namespaces
+- [ ] Names
+  - [ ] `source` to `schema`
+  - [ ] `as` option for `schema`
+  - [ ] `message`/`event` vs `action`/`reaction` vs `routine`/`transition`
 - [ ] Query Editor
   - [ ] Archetypes are queries
 - [ ] Schema Editor

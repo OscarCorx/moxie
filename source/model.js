@@ -30,7 +30,7 @@ class Model {
       if (!c[f.key]) continue;
       switch (f.kind) {
         case "/entity":
-          this.setReference(c[f.key], c);
+          this.setReference(f.key, c);
           break;
         default:
           break;
@@ -69,9 +69,15 @@ class Model {
     return components[i];
   }
   /* REFERENCE */
-  setReference(e, c) {
+  setReference(k, c) {
+    const e = c[k];
+    /* ENSURE ENTITY */
     if (!this._model[e]) this._model[e] = {};
-    if (!this._model[e][c.source]) this._model[e][c.source] = [];
+    /* ENSURE PROPERTY */
+    if (!this._model[e][c.source]) {
+      this._model[e][`${c.source}/reference`] = k;
+      this._model[e][c.source] = [];
+    }
     if (this._model[e][c.source].indexOf(c.id) !== -1) return;
     this._model[e][c.source].push(c.id);
   }

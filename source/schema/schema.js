@@ -97,5 +97,40 @@ COMPONENTS.push(
       kind: "/string",
       key: "property",
     },
+    {
+      parent: "/archetype/entity",
+      source: "/schema/field",
+      kind: "/entity",
+      key: "entity",
+    },
+    {
+      parent: "/archetype/entity",
+      source: "/schema/field",
+      kind: "/entity",
+      key: "archetype",
+    },
+  ],
+);
+/* ARCHETYPE */
+COMPONENTS.push(
+  ...[
+    {
+      source: "/archetype/property",
+      property: "/archetype/property",
+      archetype: "/archetype",
+      access: "/collection",
+    },
+    {
+      source: "/archetype/property",
+      property: "/archetype/entity",
+      archetype: "/archetype",
+      access: "/collection",
+    },
+    {
+      source: "/archetype/property",
+      property: "/schema/field",
+      archetype: "/archetype/schema",
+      access: "/collection",
+    },
   ],
 );
