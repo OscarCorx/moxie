@@ -136,7 +136,7 @@ const L = {
   entry_part: {
     flex: "auto",
   },
-  component_panel: {
+  info_panel: {
     border: "1px solid black",
     "grid-column-start": 1,
     "grid-column-end": 4,
@@ -145,10 +145,16 @@ const L = {
   },
   entity_panel: {
     border: "1px solid black",
+  },
+  entry_panel: {
+    border: "1px solid black",
     "grid-column-start": 4,
     "grid-column-end": 12,
     "grid-row-start": 1,
     "grid-row-end": 4,
+  },
+  component_panel: {
+    border: "1px solid black",
   },
   select_panel: {
     border: "1px solid black",

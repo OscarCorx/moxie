@@ -35,6 +35,10 @@ class Misenplace {
     }
   }
 
+  static renderMove(model, header, resultId) {
+    console.log(header);
+  }
+
   static detailBoundPanels(model, header, resultId) {
     const local = model.accessComponent("/head", "/navigation/state");
     let contents = [];
@@ -114,10 +118,16 @@ class Misenplace {
       case "/archetype/card":
         e = this.getElement(c.card, "/card", "div", true);
         style(e, L.card);
-        e = this.getElement("/component/panel", c.card);
-        style(e, L.component_panel);
-        e = this.getElement("/entity/panel", c.card);
+        e = this.getElement("/info/panel", c.card);
+        style(e, L.info_panel);
+        e = this.getElement("/entity/panel", "/info/panel");
         style(e, L.entity_panel);
+        e = this.getElement("/component/panel", "/info/panel");
+        style(e, L.component_panel);
+
+
+        e = this.getElement("/entry/panel", c.card);
+        style(e, L.entry_panel);
         e = this.getElement(c.select_panel, c.card);
         style(e, L.select_panel);
         e = this.getElement(c.view_panel_0, c.card);

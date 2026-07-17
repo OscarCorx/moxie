@@ -6,6 +6,7 @@ COMPONENTS.push(
       event: "/event/next",
       routine: (model, header, resultId) => {
         Misenplace.detailSelect(model, header, resultId);
+        Misenplace.renderMove(model, header, resultId);
       },
       transition: (model, header, resultId) => { },
     },
@@ -15,6 +16,7 @@ COMPONENTS.push(
       event: "/event/forward",
       routine: (model, header, resultId) => {
         Misenplace.detailSelect(model, header, resultId);
+        Misenplace.renderMove(model, header, resultId);
       },
       transition: (model, header, resultId) => { },
     },
@@ -24,6 +26,7 @@ COMPONENTS.push(
       event: "/event/flip",
       routine: (model, header, resultId) => {
         Misenplace.renderMisenplace(model, header, resultId);
+        Misenplace.renderMove(model, header, resultId);
       },
       transition: (model, header, resultId) => { },
     },
@@ -57,6 +60,15 @@ COMPONENTS.push(
       procedure: "/misenplace/render",
       event: "/event/reverse",
       routine: (model, header, resultId) => { },
+      transition: (model, header, resultId) => { },
+    },
+    {
+      source: "/procedure/subscription",
+      procedure: "/misenplace/render",
+      event: "/event/exit",
+      routine: (model, header, resultId) => {
+        Misenplace.renderMisenplace(model, header, resultId);
+      },
       transition: (model, header, resultId) => { },
     },
     {

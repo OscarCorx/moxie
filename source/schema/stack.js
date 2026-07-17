@@ -4,7 +4,13 @@ COMPONENTS.push(
       parent: "/navigation/state",
       source: "/schema/field",
       kind: "/entity",
-      key: "stack",
+      key: "enter",
+    },
+    {
+      parent: "/navigation/state",
+      source: "/schema/field",
+      kind: "/entity",
+      key: "exit",
     },
     {
       parent: "/navigation/state",

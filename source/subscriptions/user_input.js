@@ -126,26 +126,61 @@ COMPONENTS.push(
         const value = message[0].value;
         let event;
         switch (value) {
-          case B.mode:
-            state.mode = "/move";
-            model.setComponent({
-              id: `/keydown/${model.ID()}`,
-              source: "/message/header",
-              event: "/event/mode",
-              result: resultId,
-            });
-            break;
           case B.bind:
             state.bind = true;
-            model.setComponent({
-              id: `/keydown/${model.ID()}`,
-              source: "/message/header",
-              event: "/event/bind",
-              result: resultId,
-            });
+            event = "/event/bind";
+            break;
+          case B.big:
+            state.big = true;
+            return;
+          case B.mode:
+            state.mode = "/move";
+            event = "/event/mode";
+            break;
+          case B.next:
+            event = "/message/next";
+            break;
+          case B.previous:
+            event = "/message/previous";
+            break;
+          case B.forward:
+            event = "/message/forward";
+            break;
+          case B.back:
+            event = "/message/back";
+            break;
+          case B.flip:
+            event = "/message/flip";
+            break;
+          case B.reverse:
+            event = "/message/reverse";
+            break;
+          case B.draw:
+            event = "/message/draw";
+            break;
+          case B.replace:
+            event = "/message/replace";
+            break;
+          case B.select:
+            event = "/message/select";
+            break;
+          case B.unselect:
+            event = "/message/unselect";
+            break;
+          case B.enter:
+            event = "/message/enter";
+            break;
+          case B.exit:
+            event = "/message/exit";
             break;
           default:
         }
+        model.setComponent({
+          id: `/keydown/${model.ID()}`,
+          source: "/message/header",
+          event: event,
+          result: resultId,
+        });
       },
       transition: (model, message, resultId) => {
         userInputTransition(model, message, resultId);

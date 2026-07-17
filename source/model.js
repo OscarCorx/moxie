@@ -83,8 +83,8 @@ class Model {
   }
 
   removeReference(e, source, id) {
-    if (!this._model[e]) this._model[e] = {};
-    if (!this._model[e][source]) this._model[e][source] = [];
+    if (!this._model[e]) return;
+    if (!this._model[e][source]) return;
     const index = this._model[e][source].indexOf(id);
     if (this._model[e][source].indexOf(id) === -1) return;
     this._model[e][source].splice(index);

@@ -158,5 +158,23 @@ COMPONENTS.push(
       routine: (model, message, resultId) => { },
       transition: (model, message, resultId) => { },
     },
+    {
+      source: "/procedure/subscription",
+      procedure: "/navigation",
+      event: "/message/exit",
+      routine: (model, message, resultId) => {
+        const head = model.accessComponent("/head", "/navigation/state");
+        model.removeReference("/head", "/navigation/state", head.id);
+        const exit = model.accessComponent(head.exit, "/navigation/state")
+        model.addReference("/head", exit.source, exit.id);
+      },
+      transition: (model, message, resultId) => {
+        model.setComponent({
+          source: "/message/header",
+          result: resultId,
+          event: "/event/exit",
+        });
+      },
+    },
   ],
 );
