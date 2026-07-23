@@ -1,21 +1,23 @@
-/query/component
- - /query/display
- - /query/field
- - /query/filter
- - /query/group
- - /query/order
-
- @query
- - /query/component
- - /query/parameter
-
-
 /archetype
- - flip: entities <=> properties
- - forward: 
- - next: 
+- /archetype/property#archetype
+  - /archetype/property#archetype 
+- /archetype/entity#archetype
+  - [ARCHETYPES]
 
-/entity
- - flip: /archetype/property
- - forward: /entity/component
- - next: /schema/field
+/schema_archetype
+- /archetype/property#archetype
+  - /schema/field#schema
+  - /schema/entity#schema
+- /archetype/entity#entity [LINK TO /archetype]
+- /archetype/entity#archetype
+  - [ENTITIES OF ARCHETYPE]
+
+/person
+- /archetype/entity#entity [LINK TO /archetype]
+- /archetype/entity#archetype
+  - /location
+  - /demographics
+
+/schema_archetype
+
+/location [SCHEMA]

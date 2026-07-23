@@ -31,17 +31,5 @@ COMPONENTS.push(
       key: "event",
       access: "/collection",
     },
-    // {
-    //   parent: "/procedure/subscription",
-    //   source: "/schema/field",
-    //   kind: "/function",
-    //   key: "action",
-    // },
-    // {
-    //   parent: "/procedure/subscription",
-    //   source: "/schema/field",
-    //   kind: "/function",
-    //   key: "reaction",
-    // },
   ],
 );

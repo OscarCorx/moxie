@@ -20,6 +20,8 @@ TODO
 
 Workflows
 - [ ] Namespaces
+  - [ ] Hierarchical
+  - [ ] Only points at `schema`
 - [ ] Names
   - [ ] `source` to `schema`
   - [ ] `as` option for `schema`
