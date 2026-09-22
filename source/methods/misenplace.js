@@ -44,6 +44,8 @@ class Misenplace {
     let contents = [];
     contents.push(...this.getNavigationPanel(model, local));
     contents.push(...this.getControlPanel(model, local));
+    contents.push(...this.getSelectPanel(model, local));
+    contents.push(...this.getViewPanel(model, local));
     for (const c of contents) {
       this.detailContent(c);
     }
@@ -148,6 +150,7 @@ class Misenplace {
         break;
       case "/entity/panel":
         e = this.getElement("/entity/title", "/entity/panel");
+        e = this.getElement("/entity/revert", "/entity/panel");
         e = this.getElement("/entity/description", "/entity/panel");
         break;
       case "/select/entry":
@@ -203,13 +206,14 @@ class Misenplace {
           "/component/description",
           "/component/panel",
         ).textContent = c.description;
-        this.getElement("/component/add", "/component/panel").textContent =
-          "Add Record";
+        this.getElement("/component/add", "/component/panel").textContent = c.add;
         break;
       case "/entity/panel":
         this.getElement("/entity/title", "/entity/panel").textContent = c.title;
         this.getElement("/entity/description", "/entity/panel").textContent =
           c.description;
+        this.getElement("/entity/revert", "/entity/panel").textContent =
+          c.revert;
         break;
       case "/entity/panel/entry":
         e = this.getElement(c.entry, c.panel);
@@ -358,6 +362,7 @@ class Misenplace {
   }
 
   static getSelectPanel(model, local) {
+    const state = model.accessComponent("/user_input", "/procedure/state");
     const display = model.accessComponent(local.entity, "/display") || {
       title: "MISSING TITLE",
       description: "MISSING DESCRIPTION",
@@ -367,11 +372,13 @@ class Misenplace {
         source: "/entity/panel",
         title: display.title,
         description: display.description,
+        revert: (state.bind) ? "R" : "Revert",
       },
     ];
   }
 
   static getViewPanel(model, local) {
+    const state = model.accessComponent("/user_input", "/procedure/state");
     const component = model.getComponent(local.component);
     const display = model.accessComponent(component.source, "/display") || {
       title: "MISSING TITLE",
@@ -382,6 +389,7 @@ class Misenplace {
         source: "/component/panel",
         title: display.title,
         description: display.description,
+        add: (state.bind) ? "N" : "New Record",
       },
     ];
   }

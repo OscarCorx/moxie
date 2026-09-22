@@ -1,23 +1,52 @@
-/archetype
-- /archetype/property#archetype
-  - /archetype/property#archetype 
-- /archetype/entity#archetype
-  - [ARCHETYPES]
+/misenplace
+  - /deck
+  - /controls
+  - /bindings
+  - /primary_design
+  - /secondary_design
+/deck
+  - /cards
+    - /index:int
+    - /card:card
+  - /navigation
+    - /focus:card
+    - /exit:deck
+/card
+  - /deck
+  - /faces
+    - /index:int
+    - /face:face
+  - /navigation
+    - /focus:face
+/face
+  - /card
+  - /inert
+    - /index:int
+    - /entry:entry
+  - /primary
+    - /index:int
+    - /entry:entry
+  - /secondary
+    - /index:int
+    - /entry:entry
+  - /template
+    - /entry:
+    - /entry_template:
+  - /navigation
+    - /primary_focus:boolean
+    - /secondary_focus:boolean
 
-/schema_archetype
-- /archetype/property#archetype
-  - /schema/field#schema
-  - /schema/entity#schema
-- /archetype/entity#entity [LINK TO /archetype]
-- /archetype/entity#archetype
-  - [ENTITIES OF ARCHETYPE]
+/entry/textarea
+  - /entry/textarea/template
+  - /entry/textarea/data
 
-/person
-- /archetype/entity#entity [LINK TO /archetype]
-- /archetype/entity#archetype
-  - /location
-  - /demographics
-
-/schema_archetype
-
-/location [SCHEMA]
+/css
+  - /css/keyword
+/style
+  - /style/element
+/design
+  - /design/theme
+  - /design/position
+  - /design/space
+  - /design/style
+    - /style:style

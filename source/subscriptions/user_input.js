@@ -3,23 +3,25 @@ function userInputTransition(model, message, resultId) {
   state.state = (state.bind) ? `/user_input${state.mode}/bind` : `/user_input${state.mode}`;
 }
 /* BINDINGS */
-const B = {
-  forward: "j",
-  back: "u",
-  next: "f",
-  previous: "t",
-  flip: "k",
-  reverse: "i",
-  draw: "d",
-  replace: "r",
-  enter: "h",
-  exit: "y",
-  select: "g",
-  unselect: "t",
-  mode: "n",
-  big: "Shift",
-  bind: "Control",
-};
+const navigation = {
+  "j": "/message/forward",
+  "u": "/message/back",
+  "f": "/message/next",
+  "t": "/message/previous",
+  "k": "/message/flip",
+  "i": "/message/reverse",
+  "d": "/message/draw",
+  "r": "/message/replace",
+  "h": "/message/enter",
+  "y": "/message/exit",
+  "g": "/message/select",
+  "n": "/event/mode",
+  "Shift": "/event/big",
+  "Control": "/event/bind",
+}
+const binding = {
+  "1": "/"
+}
 
 COMPONENTS.push(
   ...[
@@ -32,56 +34,17 @@ COMPONENTS.push(
       routine: (model, message, resultId) => {
         const state = model.accessComponent("/user_input", "/procedure/state");
         const value = message[0].value;
-        let event;
-        switch (value) {
-          case B.bind:
+        let event = navigation[value];
+        switch (event) {
+          case "/event/bind":
             state.bind = true;
-            event = "/event/bind";
             break;
-          case B.big:
-            state.big = true;
-            return;
-          case B.mode:
+          case "/event/big":
+            state.bind = true;
+            break;
+          case "/event/mode":
             state.mode = "/entry";
-            event = "/event/mode";
             break;
-          case B.next:
-            event = "/message/next";
-            break;
-          case B.previous:
-            event = "/message/previous";
-            break;
-          case B.forward:
-            event = "/message/forward";
-            break;
-          case B.back:
-            event = "/message/back";
-            break;
-          case B.flip:
-            event = "/message/flip";
-            break;
-          case B.reverse:
-            event = "/message/reverse";
-            break;
-          case B.draw:
-            event = "/message/draw";
-            break;
-          case B.replace:
-            event = "/message/replace";
-            break;
-          case B.select:
-            event = "/message/select";
-            break;
-          case B.unselect:
-            event = "/message/unselect";
-            break;
-          case B.enter:
-            event = "/message/enter";
-            break;
-          case B.exit:
-            event = "/message/exit";
-            break;
-          default:
         }
         model.setComponent({
           id: `/keydown/${model.ID()}`,
@@ -103,9 +66,9 @@ COMPONENTS.push(
       routine: (model, message, resultId) => {
         const state = model.accessComponent("/user_input", "/procedure/state");
         const value = message[0].value;
-        let event;
-        switch (value) {
-          case B.bind:
+        let event = navigation[value];
+        switch (event) {
+          case "/event/bind":
             state.bind = true;
             return;
           default:
@@ -124,56 +87,19 @@ COMPONENTS.push(
       routine: (model, message, resultId) => {
         const state = model.accessComponent("/user_input", "/procedure/state");
         const value = message[0].value;
-        let event;
-        switch (value) {
-          case B.bind:
+        let event = navigation[value];
+        switch (event) {
+          case "/event/bind":
             state.bind = true;
             event = "/event/bind";
             break;
-          case B.big:
+          case "/event/big":
             state.big = true;
             return;
-          case B.mode:
+          case "/event/mode":
             state.mode = "/move";
             event = "/event/mode";
             break;
-          case B.next:
-            event = "/message/next";
-            break;
-          case B.previous:
-            event = "/message/previous";
-            break;
-          case B.forward:
-            event = "/message/forward";
-            break;
-          case B.back:
-            event = "/message/back";
-            break;
-          case B.flip:
-            event = "/message/flip";
-            break;
-          case B.reverse:
-            event = "/message/reverse";
-            break;
-          case B.draw:
-            event = "/message/draw";
-            break;
-          case B.replace:
-            event = "/message/replace";
-            break;
-          case B.select:
-            event = "/message/select";
-            break;
-          case B.unselect:
-            event = "/message/unselect";
-            break;
-          case B.enter:
-            event = "/message/enter";
-            break;
-          case B.exit:
-            event = "/message/exit";
-            break;
-          default:
         }
         model.setComponent({
           id: `/keydown/${model.ID()}`,
@@ -194,8 +120,9 @@ COMPONENTS.push(
       routine: (model, message, resultId) => {
         const state = model.accessComponent("/user_input", "/procedure/state");
         const value = message[0].value;
-        switch (value) {
-          case B.bind:
+        let event = navigation[value];
+        switch (event) {
+          case "/event/bind":
             state.bind = false;
             model.setComponent({
               id: `/keydown/${model.ID()}`,
@@ -204,7 +131,7 @@ COMPONENTS.push(
               result: resultId,
             });
             break;
-          case B.big:
+          case "/event/big":
             state.big = false;
             return;
           default:
