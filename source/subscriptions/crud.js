@@ -61,5 +61,17 @@ COMPONENTS.push(
       routine: (model, message, resultId) => { },
       transition: (model, message, resultId) => { },
     },
+    {
+      source: "/procedure/subscription",
+      procedure: "/crud",
+      event: "/message/copy_data",
+      routine: (model, message, resultId) => {
+        const content = "THIS IS SOME TEXT";
+        navigator.clipboard.writeText(content).then(() => {
+          console.log("Text copied to clipboard successfully!")
+        })
+      },
+      transition: (model, message, resultId) => { },
+    },
   ],
 );

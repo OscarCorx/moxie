@@ -184,6 +184,14 @@ class Misenplace {
         break;
       case "/bound/entry":
         e = this.getElement(c.entry, c.panel);
+        if (c.action) {
+          e.addEventListener("click", () => {
+            this.emit({
+              source: "/message/header",
+              event: "/message/copy_data",
+            });
+          })
+        }
         style(e, L.bound_entry);
         break;
       default:
@@ -322,8 +330,9 @@ class Misenplace {
       {
         source: "/bound/entry",
         panel: "/navigation/right",
-        entry: "/version_control",
-        title: (state.bind) ? "R" : "Revision",
+        entry: "/copy_data",
+        action: "/message/copy_data",
+        title: (state.bind) ? "C" : "Copy",
 
       },
       {

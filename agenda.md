@@ -1,19 +1,10 @@
-- Design tests
-- Types of Workspaces
-  - Viewer
-  - Presentation
-  - Dashboard
-  - Diagram
-  - Wizard
-  - Easel
-- Things to configure
+- Interfaces
+  - Mobile
+  - Tablet
+  - Desktop
+- Tests
 - Workflows
-  - Configure Endpoint
-  - Configure Transformer
-  - Write Code
-  - Build Query
-
-- Action
-  - Message Header
-- Message
-  - Message Content
+  - Schema Editor
+  - Style Editor
+  - REST Client
+  - Revisions
