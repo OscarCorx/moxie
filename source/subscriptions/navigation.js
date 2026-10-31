@@ -3,28 +3,9 @@ COMPONENTS.push(
     {
       source: "/procedure/subscription",
       procedure: "/navigation",
-      event: "/message/action",
-      routine: (model, message, resultId) => { },
-      transition: (model, message, resultId) => {
-        model.setComponent({
-          source: "/message/header",
-          result: resultId,
-          event: "/message/create",
-        });
-      },
-    },
-    {
-      source: "/procedure/subscription",
-      procedure: "/navigation",
       event: "/message/next",
       routine: (model, message, resultId) => {
-        const head = model.accessComponent("/head", "/navigation/state");
-        const property = model.getComponent(head.property);
-        head.field = model.nextId(
-          property.property,
-          "/schema/field",
-          head.field,
-        );
+        Navigation.incrementValue(model);
       },
       transition: (model, message, resultId) => {
         model.setComponent({
@@ -39,13 +20,7 @@ COMPONENTS.push(
       procedure: "/navigation",
       event: "/message/previous",
       routine: (model, message, resultId) => {
-        const head = model.accessComponent("/head", "/navigation/state");
-        const property = model.getComponent(head.property);
-        head.field = model.previousId(
-          property.property,
-          "/schema/field",
-          head.field,
-        );
+        Navigation.incrementValue(model, false);
       },
       transition: (model, message, resultId) => {
         model.setComponent({
@@ -60,14 +35,7 @@ COMPONENTS.push(
       procedure: "/navigation",
       event: "/message/forward",
       routine: (model, message, resultId) => {
-        const head = model.accessComponent("/head", "/navigation/state");
-        head.panel = head.panel === "/select" ? "/view" : "/select";
-        const property = model.getComponent(head.property);
-        head.component = model.nextId(
-          head.entity,
-          property.property,
-          head.component,
-        );
+        Navigation.incrementContent(model);
       },
       transition: (model, message, resultId) => {
         model.setComponent({
@@ -82,13 +50,8 @@ COMPONENTS.push(
       procedure: "/navigation",
       event: "/message/back",
       routine: (model, message, resultId) => {
-        const head = model.accessComponent("/head", "/navigation/state");
-        const property = model.getComponent(head.property);
-        head.component = model.previousId(
-          head.entity,
-          property.property,
-          head.component,
-        );
+        Navigation.incrementContent(model, false);
+
       },
       transition: (model, message, resultId) => {
         model.setComponent({
@@ -103,14 +66,7 @@ COMPONENTS.push(
       procedure: "/navigation",
       event: "/message/flip",
       routine: (model, message, resultId) => {
-        const head = model.accessComponent("/head", "/navigation/state");
-        head.property = model.nextId(
-          head.archetype,
-          "/archetype/property",
-          head.property,
-        );
-        const property = model.getComponent(head.property);
-        head.component = model.nextId(head.entity, property.property);
+        Navigation.incrementProperty(model);
       },
       transition: (model, message, resultId) => {
         model.setComponent({
@@ -125,14 +81,7 @@ COMPONENTS.push(
       procedure: "/navigation",
       event: "/message/reverse",
       routine: (model, message, resultId) => {
-        const head = model.accessComponent("/head", "/navigation/state");
-        head.property = model.nextId(
-          head.archetype,
-          "/archetype/property",
-          head.property,
-        );
-        const property = model.getComponent(head.property);
-        head.component = model.previousId(head.entity, property.property);
+        Navigation.incrementProperty(model, false);
       },
       transition: (model, message, resultId) => {
         model.setComponent({
@@ -147,7 +96,9 @@ COMPONENTS.push(
       procedure: "/navigation",
       event: "/message/draw",
       result: "/message/draw",
-      routine: (model, message, resultId) => { },
+      routine: (model, message, resultId) => {
+        Navigation.incrementEntity(model);
+      },
       transition: (model, message, resultId) => { },
     },
     {
@@ -155,7 +106,9 @@ COMPONENTS.push(
       procedure: "/navigation",
       event: "/message/replace",
       result: "/message/replace",
-      routine: (model, message, resultId) => { },
+      routine: (model, message, resultId) => {
+        Navigation.incrementEntity(model, false);
+      },
       transition: (model, message, resultId) => { },
     },
     {
@@ -163,16 +116,58 @@ COMPONENTS.push(
       procedure: "/navigation",
       event: "/message/exit",
       routine: (model, message, resultId) => {
-        const head = model.accessComponent("/head", "/navigation/state");
-        model.removeReference("/head", "/navigation/state", head.id);
-        const exit = model.accessComponent(head.exit, "/navigation/state")
-        model.addReference("/head", exit.source, exit.id);
+        Navigation.incrementBlueprint(model, false);
       },
       transition: (model, message, resultId) => {
         model.setComponent({
           source: "/message/header",
           result: resultId,
           event: "/event/exit",
+        });
+      },
+    },
+    {
+      source: "/procedure/subscription",
+      procedure: "/navigation",
+      event: "/message/drag/start",
+      routine: (model, message, resultId) => {
+        Navigation.dragStart(model, message[0]);
+      },
+      transition: (model, message, resultId) => {
+        model.setComponent({
+          source: "/message/header",
+          result: resultId,
+          event: "/event/drag",
+        });
+      },
+    },
+    {
+      source: "/procedure/subscription",
+      procedure: "/navigation",
+      event: "/event/drag/move",
+      routine: (model, message, resultId) => {
+        Navigation.dragMove(model, message[0]);
+      },
+      transition: (model, message, resultId) => {
+        model.setComponent({
+          source: "/message/header",
+          result: resultId,
+          event: "/event/drag",
+        });
+      },
+    },
+    {
+      source: "/procedure/subscription",
+      procedure: "/navigation",
+      event: "/event/drag/stop",
+      routine: (model, message, resultId) => {
+        Navigation.dragStop(model, message[0]);
+      },
+      transition: (model, message, resultId) => {
+        model.setComponent({
+          source: "/message/header",
+          result: resultId,
+          event: "/event/drag",
         });
       },
     },

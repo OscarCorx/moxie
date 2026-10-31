@@ -1,60 +1,29 @@
-function style(element, style) {
+class Style {
+  static setStyle(model, style, priority) {
+    /* Set Style */
+    /* Compute display */
+  }
+
+  static setDisplay(model, display, priority) {
+    /* Set Display Values */
+    /* Loop through styles and recompile */
+  }
+
+  static getStyle(model, key) {
+
+  }
+
+  DISPLAY = {
+
+  };
+
+
+}
+
+function addStyle(element, style) {
   Object.assign(element.style, style);
 }
 
-const STYLE = {
-  bound_width: 96,
-  bound_height: 10,
-  space_xs: 2,
-  space_s: 2,
-  space_m: 2,
-  space_l: 2,
-  space_xl: 2,
-  glyph_xs: 2,
-  glyph_s: 2,
-  glyph_m: 2,
-  glyph_l: 2,
-  glyph_xl: 2,
-  border_s: 1,
-  border_m: 2,
-  border_l: 3,
-  white: "#ffffff",
-  lightest: "#e6e6e6",
-  lighter: "#b3b3b3",
-  light: "#999999",
-  neutral: "#808080",
-  dark: "#595959",
-  darker: "#404040",
-  darkest: "#262626",
-  black: "#000000",
-  accent_light: "",
-  accent: "",
-  accent_dark: "",
-  primary_light: "#664400",
-  primary: "#4d3300",
-  primary_dark: "#332200",
-  secondary_light: "#ffffff",
-  secondary: "#ffffe6",
-  secondary_dark: "#ffffcc",
-  red_light: "#ffb3b3",
-  red: "#ff0000",
-  red_dark: "#cc0000",
-  blue_light: "#b3b3ff",
-  blue: "#0000ff",
-  blue_dark: "#0000cc",
-  yellow_light: "#ffffb3",
-  yellow: "#ffff00",
-  yellow_dark: "#cccc00",
-  green_light: "#b3ffcc",
-  green: "#00ff55",
-  green_dark: "#009933",
-  purple_light: "#e0b3ff",
-  purple: "#9900ff",
-  purple_dark: "#5c0099",
-  orange_light: "#ffe0b3",
-  orange: "#ff9900",
-  orange_dark: "#cc7a00",
-}
 /* LAYOUT */
 const L = {
   element: {
@@ -215,4 +184,59 @@ const T = {
   focus: {
     border: "1px solid red",
   },
+};
+
+/* DISPLAY */
+const D = {
+  bound_width: 96,
+  bound_height: 10,
+  space_xs: 2,
+  space_s: 2,
+  space_m: 2,
+  space_l: 2,
+  space_xl: 2,
+  glyph_xs: 2,
+  glyph_s: 2,
+  glyph_m: 2,
+  glyph_l: 2,
+  glyph_xl: 2,
+  border_s: 1,
+  border_m: 2,
+  border_l: 3,
+  white: "#ffffff",
+  lightest: "#e6e6e6",
+  lighter: "#b3b3b3",
+  light: "#999999",
+  neutral: "#808080",
+  dark: "#595959",
+  darker: "#404040",
+  darkest: "#262626",
+  black: "#000000",
+  accent_light: "",
+  accent: "",
+  accent_dark: "",
+  primary_light: "#664400",
+  primary: "#4d3300",
+  primary_dark: "#332200",
+  secondary_light: "#ffffff",
+  secondary: "#ffffe6",
+  secondary_dark: "#ffffcc",
+  red_light: "#ffb3b3",
+  red: "#ff0000",
+  red_dark: "#cc0000",
+  blue_light: "#b3b3ff",
+  blue: "#0000ff",
+  blue_dark: "#0000cc",
+  yellow_light: "#ffffb3",
+  yellow: "#ffff00",
+  yellow_dark: "#cccc00",
+  green_light: "#b3ffcc",
+  green: "#00ff55",
+  green_dark: "#009933",
+  purple_light: "#e0b3ff",
+  purple: "#9900ff",
+  purple_dark: "#5c0099",
+  orange_light: "#ffe0b3",
+  orange: "#ff9900",
+  orange_dark: "#cc7a00",
 };

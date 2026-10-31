@@ -1,4 +1,5 @@
 const COMPONENTS = [];
+const ENTITIES = [];
 /* SCHEMA */
 COMPONENTS.push(
   ...[

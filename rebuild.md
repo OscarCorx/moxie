@@ -1,0 +1,16 @@
+Order to complete
+- [ ] Design message structure
+  - [ ] Header
+  - [ ] Content Reference
+- [ ] Design Process Message Loop
+- [ ] Design Archetype / Entity relation
+  - [ ] Archetype defines properties and methods
+  - [ ] Entity defines data
+  - [ ] How do procedures, which have obvious methods, fit in
+- [ ] Remote Clients
+  - [ ] How does data get sent to a remote client
+  - [ ] Can it break down by thin, thick and thicker?
+- [ ] View Breakdown
+  - [ ] Archetype of entity sends data as method is a getter
+  - [ ] View archetype sets data and then displays it
+- [ ]

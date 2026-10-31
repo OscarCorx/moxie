@@ -1,3 +1,14 @@
+DECK -> Fixed Template, List of Entities
+CARD -> FIxed Template, Fixed Entity
+FACE -> Fixed Query, Fixed Entity
+PANEL -> List of Contents
+ENTRY -> List of Entries
+
+Use "channel" instead of context
+- Will include tennancy, etc
+
+
+
 /misenplace
   - /deck
   - /controls

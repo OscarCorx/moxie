@@ -162,6 +162,25 @@ COMPONENTS.push(
             value: event.key,
           });
         });
+        window.addEventListener("mousemove", (event) => {
+          const user_interaction = model.getComponent("/user_interaction");
+          if (!user_interaction.component) return;
+          PROCESS.model.emit({
+            id: model.ID(),
+            event: "/event/drag/move",
+            x: event.clientX,
+            y: event.clientY,
+          });
+        });
+        window.addEventListener("mouseup", (event) => {
+          const user_interaction = model.getComponent("/user_interaction");
+          if (!user_interaction.component) return;
+          PROCESS.model.emit({
+            id: model.ID(),
+            event: "/event/drag/stop",
+            value: event.key,
+          });
+        });
       },
       transition: (model, message, resultId) => { },
     },

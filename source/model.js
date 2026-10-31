@@ -6,6 +6,18 @@ class Model {
   emit(header) {
     document.dispatchEvent(new CustomEvent("/target", { detail: header }));
   }
+
+  setMessage(resultId, action, contents) {
+    this.setComponent({
+      source: "/message/header",
+      action: action,
+      result: resultId,
+    });
+    for (const c of contents) {
+      this.setReference(resultId, c.id);
+    }
+
+  }
   /* MODEL */
   accessComponentIds(entity, source) {
     if (!this._model[entity]) return [];
@@ -25,6 +37,7 @@ class Model {
     if (!c.id) c.id = this.ID();
     this._model[c.id] = c;
     const schema = this._model[c.source];
+    // console.log(c);
     for (const fieldId of schema["/schema/field"]) {
       const f = this.getComponent(fieldId);
       if (!c[f.key]) continue;
@@ -36,6 +49,10 @@ class Model {
           break;
       }
     }
+  }
+
+  setEntity(e) {
+    this._model[e.id] = e;
   }
 
   deleteComponent(id) {
@@ -91,7 +108,9 @@ class Model {
   }
 
   constructor() {
+    /* COMPUTE CURRENT WITH TIMESTAMP */
     this._currentId = 0;
+    /* CREATE _components and _entities */
     this._model = {
       "/origin": {
         id: this.ID(),

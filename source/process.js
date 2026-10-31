@@ -7,16 +7,14 @@ class Process {
     });
     window.addEventListener("load", () => {
       this.model.emit({ event: "/event/load" });
-      this.model.emit({ event: "/message/flip" });
     });
   }
 
   /* PROCESS ROUTINE */
-  processMessage(h) {
+  processMessage(header) {
     const resultIds = [];
-    console.log(h);
     const subscriptionIds = this.model.accessComponentIds(
-      h.event,
+      header.event,
       "/procedure/subscription",
     );
     for (const subscriptionId of subscriptionIds) {
@@ -28,8 +26,8 @@ class Process {
 
       const resultId = this.model.ID();
       resultIds.push(resultId);
-      subscription.routine(this.model, [h], resultId);
-      subscription.transition(this.model, [h], resultId);
+      subscription.routine(this.model, header, resultId);
+      subscription.transition(this.model, header, resultId);
     }
 
     for (const id of resultIds) {
