@@ -107,6 +107,30 @@ COMPONENTS.push(
     parent: "/view/state",
     source: "/schema/field",
     kind: "/entity",
+    key: "default_style",
+  },
+  {
+    parent: "/view/state",
+    source: "/schema/field",
+    kind: "/entity",
+    key: "temp_style",
+  },
+  {
+    parent: "/view/state",
+    source: "/schema/field",
+    kind: "/entity",
+    key: "default_display",
+  },
+  {
+    parent: "/view/state",
+    source: "/schema/field",
+    kind: "/entity",
+    key: "temp_display",
+  },
+  {
+    parent: "/view/state",
+    source: "/schema/field",
+    kind: "/entity",
     key: "exit",
   },
   {

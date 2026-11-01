@@ -28,6 +28,13 @@ class Model {
     return this._model[id];
   }
 
+  getEntity(id) {
+    if (!this._model[id]) this._model[id] = {
+      id: id,
+    };
+    return this._model[id];
+  }
+
   accessComponent(entity, source, index) {
     const componentIds = this._model[entity][source] || [];
     return this._model[componentIds[index || 0]];
@@ -92,7 +99,6 @@ class Model {
     if (!this._model[e]) this._model[e] = {};
     /* ENSURE PROPERTY */
     if (!this._model[e][c.source]) {
-      this._model[e][`${c.source}/reference`] = k;
       this._model[e][c.source] = [];
     }
     if (this._model[e][c.source].indexOf(c.id) !== -1) return;

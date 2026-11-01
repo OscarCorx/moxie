@@ -30,67 +30,81 @@ class Render {
     contents.push(...this.getAlternate(model, version));
     contents.push(...this.getWorkspace(model, version));
     for (const c of contents) {
-      let entry;
-      switch (c.source) {
-        case "/panel/navigation":
-          this.outlineNavigation(model, c);
-          break;
-        case "/panel/control":
-          this.outlineControl(model, c);
-          break;
-        case "/panel/primary":
-          this.outlinePrimary(model, c);
-          break;
-        case "/panel/secondary":
-          this.outlineSecondary(model, c);
-          break;
-        case "/panel/alternate":
-          this.outlineAlternate(model, c);
-          break;
-        case "/panel/workspace":
-          this.outlineWorkspace(model, c);
-          break;
-      }
+      this.outlineElement(model, c);
+    }
+  }
+
+  static outlineElement(model, c) {
+    switch (c.source) {
+      case "/panel/navigation":
+        this.outlineNavigation(model, c);
+        break;
+      case "/panel/control":
+        this.outlineControl(model, c);
+        break;
+      case "/panel/primary":
+        this.outlinePrimary(model, c);
+        break;
+      case "/panel/secondary":
+        this.outlineSecondary(model, c);
+        break;
+      case "/panel/alternate":
+        this.outlineAlternate(model, c);
+        break;
+      case "/panel/workspace":
+        this.outlineWorkspace(model, c);
+        break;
+      case "/info/pane":
+        this.outlineInfoPane(model, c);
+        break;
+      case "/text/pane":
+        break;
+      case "/info/entry":
+        this.outlineInfoEntry(model, c);
+        break;
+      case "/text/entry":
+        this.outlineTextEntry(model, c);
+        break;
     }
   }
 
   static detail(model) {
     return;
-    const local = model.accessComponent("/navigation", "/state/current");
-    const contents = [];
-    contents.push(...this.getLayout(model, local));
-    contents.push(...this.getNavigation(model, local));
-    contents.push(...this.getControl(model, local));
-    contents.push(...this.getPrimary(model, local));
-    contents.push(...this.getSecondary(model, local));
-    contents.push(...this.getAlternate(model, local));
-    contents.push(...this.getWorkspace(model, local));
-    for (const c of contents) {
-      let entry;
-      switch (c.source) {
-        case "/panel/flavor":
-          entry = this.getElement(c.id, "/app");
-          entry.textContent = c.id;
-          this.addStyle(entry, {
-            position: "absolute",
-            top: c.top,
-            left: c.left,
-            height: c.height,
-            width: c.width,
-            cursor: "pointer",
-            border: "1px solid black",
-          });
-          entry.addEventListener("mousedown", (e) => {
-            model.emit({
-              source: "/message/header",
-              event: "/message/drag/start",
-              id: c.id,
-            });
-          });
-          break;
-      }
+
+  }
+
+  static detailElement(model, c) {
+    switch (c.source) {
+      case "/panel/navigation":
+        this.detailNavigation(model, c);
+        break;
+      case "/panel/control":
+        this.detailControl(model, c);
+        break;
+      case "/panel/primary":
+        this.detailPrimary(model, c);
+        break;
+      case "/panel/secondary":
+        this.detailSecondary(model, c);
+        break;
+      case "/panel/alternate":
+        this.detailAlternate(model, c);
+        break;
+      case "/panel/workspace":
+        this.detailWorkspace(model, c);
+        break;
+      case "/info/pane":
+        this.detailInfoPane(model, c);
+        break;
+      case "/info/entry":
+        this.detailTextEntry(model, c);
+        break;
+      case "/text/entry":
+        this.detailTextEntry(model, c);
+        break;
     }
   }
+
 
   static getLayout(model, local) {
     const contents = [];
@@ -160,18 +174,39 @@ class Render {
   static getPrimary(model, local) {
     const contents = [];
     const properties = model.accessComponentIds(local.archetype, "/archetype/property");
-    for (const id of properties) {
-      console.log("PROPERTIES", model.getComponent(id));
-    }
     const components = model.accessComponentIds(local.entity, local.property);
-    for (const id of components) {
-      console.log("COMPONENTS", model.getComponent(id));
-    }
     const component = model.getComponent(local.component);
-    console.log("COMPONENT", component);
-    const fields = model.accessComponentIds(component.source, "/schema/field");
-    for (const id of fields) {
-      console.log("FIELDS", model.getComponent(id));
+    const schema = model.accessComponentIds(component.source, "/schema/field");
+    for (let i = 0; i < schema.length; i++) {
+      const id = schema[i];
+      const field = model.getComponent(id);
+      contents.push({
+        source: "/text/entry",
+        panel: "/primary/panel",
+        entry: `/primary/panel/${id}`,
+        entry_icon: `/view/entry/${id}/icon`,
+        entry_field: `/view/entry/${id}/key`,
+        entry_value: `/view/entry/${id}/value`,
+        icon: "I",
+        component: component.id,
+        field: field.key,
+        value: component[field.key],
+      });
+      if (local.field === id) {
+        const state = model.accessComponent("/user_input", "/procedure/state");
+        contents.push({
+          source: "/entity/panel/entry",
+          panel: "/entity/panel",
+          entry: "/component/panel/entry",
+          component: component.id,
+          value: component[field.key],
+        }, {
+          source: "/view/entry/focus",
+          entry: `/view/entry/${id}`,
+          edit: state.mode === "/entry",
+          entry_value: `/view/entry/${id}/value`,
+        });
+      }
     }
     return contents;
   }
@@ -293,4 +328,44 @@ class Render {
   static detailWorkspace(model, c) {
 
   }
+
+  static outlineInfoPane(model, c) {
+
+  }
+
+  static detailInfoPane(model, c) {
+
+  }
+
+
+  static outlineInfoEntry(model, c) {
+
+  }
+
+  static detailInfoEntry(model, c) {
+
+  }
+
+  static outlineTextEntry(model, c) {
+    const e = this.getElement(c.entry, c.panel);
+    e.textContent = c.field;
+    // style(e, L.view_entry);
+    // e = this.getElement(c.entry_icon, c.entry);
+    // style(e, L.view_part);
+    // e = this.getElement(c.entry_field, c.entry);
+    // style(e, L.view_part);
+    // e = this.getElement(c.entry_value, c.entry, "input");
+    // e.addEventListener("input", (e) => {
+    //   console.log("INPUT", e.target.value);
+    //   this.emit({
+    //     event: "/message/update",
+    //     component: c.component,
+    //     field: c.field,
+    //     value: e.target.value,
+    //   })
+    // });
+    // style(e, L.view_part);
+  }
+
+  static detailTextEntry(model, c) { }
 }

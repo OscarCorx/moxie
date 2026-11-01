@@ -20,6 +20,10 @@ COMPONENTS.push(
     property: "/location",
     component: "/address/0",
     field: "/address_0",
+    default_style: "/style/0",
+    temp_style: "/style/1",
+    default_display: "/display/0",
+    temp_display: "/display/1",
   },
   {
     source: "/view/hud/version",
