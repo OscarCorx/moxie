@@ -25,10 +25,10 @@ class Render {
     /* USE ARCHETYPE TO GET GENERAL VERSIONS OF THESE */
     const contents = [];
     contents.push(...this.getLayout(model, hud));
-    contents.push(...this.getPrimary(model, version));
-    contents.push(...this.getSecondary(model, version));
-    contents.push(...this.getAlternate(model, version));
-    contents.push(...this.getWorkspace(model, version));
+    if (hud.primary) contents.push(...this.getPrimary(model, version));
+    if (hud.secondary) contents.push(...this.getSecondary(model, version));
+    if (hud.alternate) contents.push(...this.getAlternate(model, version));
+    if (hud.workspace) contents.push(...this.getWorkspace(model, version));
     for (const c of contents) {
       this.outlineElement(model, c);
     }
@@ -69,8 +69,20 @@ class Render {
   }
 
   static detail(model) {
-    return;
-
+    const current = model.accessComponent("/current", "/current/view/state");
+    const hud = model.accessComponent(current.hud, "/view/hud/version");
+    const version = model.accessComponent(current.view_state, "/view/state/version");
+    /* USE ARCHETYPE TO GET GENERAL VERSIONS OF THESE */
+    const contents = [];
+    contents.push(...this.getLayout(model, hud));
+    if (hud.primary) contents.push(...this.getPrimary(model, version));
+    if (hud.secondary) contents.push(...this.getSecondary(model, version));
+    if (hud.alternate) contents.push(...this.getAlternate(model, version));
+    if (hud.workspace) contents.push(...this.getWorkspace(model, version));
+    for (const c of contents) {
+      // this.outlineElement(model, c);
+      this.detailElement(model, c)
+    }
   }
 
   static detailElement(model, c) {
@@ -97,7 +109,7 @@ class Render {
         this.detailInfoPane(model, c);
         break;
       case "/info/entry":
-        this.detailTextEntry(model, c);
+        this.detailInfoEntry(model, c);
         break;
       case "/text/entry":
         this.detailTextEntry(model, c);
@@ -132,6 +144,8 @@ class Render {
         left: `10px`,
         width: "10px",
         height: "10px",
+        display: "flex",
+        "flex-direction": "column",
       });
     }
     if (local.secondary) {
@@ -139,9 +153,9 @@ class Render {
         id: "/secondary/panel",
         source: "/panel/secondary",
         top: `300px`,
-        left: `10px`,
-        width: "10px",
-        height: "10px",
+        left: `200px`,
+        display: "flex",
+        "flex-direction": "column",
       });
     }
     if (local.alternate) {
@@ -152,6 +166,8 @@ class Render {
         left: `10px`,
         width: "10px",
         height: "10px",
+        display: "flex",
+        "flex-direction": "column",
       });
     }
     if (local.workspace) {
@@ -172,48 +188,62 @@ class Render {
   static getControl(model, local) { return []; }
 
   static getPrimary(model, local) {
-    const contents = [];
     const properties = model.accessComponentIds(local.archetype, "/archetype/property");
     const components = model.accessComponentIds(local.entity, local.property);
     const component = model.getComponent(local.component);
+    const pane = {
+      source: "/info/pane",
+      parent: "/primary/panel",
+      entry: `/primary${component.id}`,
+      label: local.property,
+      description: "This is a description",
+      grid: "This is a grid"
+    };
+    const contents = [pane];
     const schema = model.accessComponentIds(component.source, "/schema/field");
     for (let i = 0; i < schema.length; i++) {
       const id = schema[i];
       const field = model.getComponent(id);
       contents.push({
         source: "/text/entry",
-        panel: "/primary/panel",
-        entry: `/primary/panel/${id}`,
-        entry_icon: `/view/entry/${id}/icon`,
-        entry_field: `/view/entry/${id}/key`,
-        entry_value: `/view/entry/${id}/value`,
+        parent: "/primary/panel",
+        label: field.key,
+        entry: `/primary${id}`,
         icon: "I",
         component: component.id,
         field: field.key,
         value: component[field.key],
       });
-      if (local.field === id) {
-        const state = model.accessComponent("/user_input", "/procedure/state");
-        contents.push({
-          source: "/entity/panel/entry",
-          panel: "/entity/panel",
-          entry: "/component/panel/entry",
-          component: component.id,
-          value: component[field.key],
-        }, {
-          source: "/view/entry/focus",
-          entry: `/view/entry/${id}`,
-          edit: state.mode === "/entry",
-          entry_value: `/view/entry/${id}/value`,
-        });
-      }
+      pane.grid = component[field.key];
     }
     return contents;
   }
 
-  static getSecondary(model, local) { return []; }
-
-  static getSecondary(model, local) { return []; }
+  static getSecondary(model, local) {
+    const properties = model.accessComponentIds(local.archetype, "/archetype/property");
+    const components = model.accessComponentIds(local.entity, local.property);
+    const component = model.getComponent(local.component);
+    const pane = {
+      source: "/info/pane",
+      parent: "/secondary/panel",
+      entry: `/secondary${local.property}`,
+      label: local.property,
+      description: "This is a description",
+      grid: "This is a grid"
+    };
+    const contents = [pane];
+    for (let i = 0; i < components.length; i++) {
+      const id = components[i];
+      const component = model.getComponent(id);
+      contents.push({
+        source: "/info/entry",
+        parent: "/secondary/panel",
+        label: id,
+        entry: `/secondary${id}`,
+      });
+    }
+    return contents;
+  }
 
   static getAlternate(model, local) { return []; }
 
@@ -262,12 +292,10 @@ class Render {
       position: "absolute",
       top: c.top,
       left: c.left,
-      height: c.height,
-      width: c.width,
-      cursor: "pointer",
       border: "1px solid black",
+      display: "flex",
+      "flex-direction": "column",
     });
-    entry.textContent = "primary";
   }
 
   static detailPrimary(model, c) {
@@ -286,7 +314,6 @@ class Render {
       cursor: "pointer",
       border: "1px solid black",
     });
-    entry.textContent = "secondary";
   }
 
   static detailSecondary(model, c) {
@@ -304,7 +331,6 @@ class Render {
       cursor: "pointer",
       border: "1px solid black",
     });
-    entry.textContent = "alternate";
   }
 
   static detailAlternate(model, c) {
@@ -322,7 +348,6 @@ class Render {
       cursor: "pointer",
       border: "1px solid black",
     });
-    entry.textContent = "workspace";
   }
 
   static detailWorkspace(model, c) {
@@ -330,16 +355,55 @@ class Render {
   }
 
   static outlineInfoPane(model, c) {
+    let e = this.getElement(`${c.entry}/info/pane`, c.parent);
+    e = this.getElement(`${c.entry}/title`, `${c.entry}/info/pane`);
+    this.addStyle(e, {
+      display: "flex",
+      "justify-content": "space-between",
+    });
+    e = this.getElement(`${c.entry}/label`, `${c.entry}/title`);
+    this.addStyle(e, {
+      flex: "auto",
+    });
+    // e.textContent = c.label;
+    e = this.getElement(`${c.entry}/buttons`, `${c.entry}/title`);
+    this.addStyle(e, {
+      flex: "auto",
+    });
+    // e.textContent = "BUTTONS"
+    e = this.getElement(`${c.entry}/description`, `${c.entry}/info/pane`);
+    this.addStyle(e, {
+      flex: "auto",
+    });
+    // e.textContent = c.description;
+    e = this.getElement(`${c.entry}/grid`, `${c.entry}/info/pane`);
+    this.addStyle(e, {
+      flex: "auto",
+    });
+    // e.textContent = c.grid;
 
   }
 
   static detailInfoPane(model, c) {
-
+    let e = this.getElement(`${c.entry}/label`, `${c.entry}/title`);
+    e.textContent = c.label;
+    e = this.getElement(`${c.entry}/buttons`, `${c.entry}/title`);
+    e.textContent = "BUTTONS"
+    e = this.getElement(`${c.entry}/description`, `${c.entry}/info/pane`);
+    e.textContent = c.description;
+    e = this.getElement(`${c.entry}/grid`, `${c.entry}/info/pane`);
+    e.textContent = c.grid;
   }
 
 
   static outlineInfoEntry(model, c) {
-
+    let e = this.getElement(`${c.entry}/text/entry`, c.parent);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "column"
+    });
+    e = this.getElement(`${c.entry}/title`, `${c.entry}/text/entry`);
+    e.textContent = c.label;
   }
 
   static detailInfoEntry(model, c) {
@@ -347,25 +411,59 @@ class Render {
   }
 
   static outlineTextEntry(model, c) {
-    const e = this.getElement(c.entry, c.panel);
-    e.textContent = c.field;
-    // style(e, L.view_entry);
-    // e = this.getElement(c.entry_icon, c.entry);
-    // style(e, L.view_part);
-    // e = this.getElement(c.entry_field, c.entry);
-    // style(e, L.view_part);
-    // e = this.getElement(c.entry_value, c.entry, "input");
-    // e.addEventListener("input", (e) => {
-    //   console.log("INPUT", e.target.value);
-    //   this.emit({
-    //     event: "/message/update",
-    //     component: c.component,
-    //     field: c.field,
-    //     value: e.target.value,
-    //   })
+    let e = this.getElement(`${c.entry}/text/entry`, c.parent);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "column"
+    });
+    e = this.getElement(`${c.entry}/title`, `${c.entry}/text/entry`);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "row",
+      "justify-content": "space-between",
+    });
+    e = this.getElement(`/title${c.entry}/label`, `${c.entry}/title`);
+    this.addStyle(e, {
+
+    });
+    e = this.getElement(`${c.entry}/action`, `${c.entry}/title`);
+    this.addStyle(e, {
+
+    });
+    e = this.getElement(`${c.entry}/entry`, `${c.entry}/text/entry`);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "row",
+      "justify-content": "space-between",
+    });
+    // e = this.getElement(`${c.entry}/tex`, `${c.entry}/entry`);
+    // this.addStyle(e, {
+    //   display: "flex",
+    //   "flex-direction": "row",
     // });
-    // style(e, L.view_part);
+    e = this.getElement(`${c.entry}/value`, `${c.entry}/entry`, "input");
+    this.addStyle(e, {
+      display: "flex",
+      "justify-content": "center",
+      flex: "1",
+    });
+    e.addEventListener("input", (e) => {
+      console.log("HERE WE ARE", e.target.value)
+      model.emit({
+        event: "/message/update",
+        component: c.component,
+        field: c.field,
+        value: e.target.value,
+      });
+    })
   }
 
-  static detailTextEntry(model, c) { }
+  static detailTextEntry(model, c) {
+    let e = this.getElement(`/title${c.entry}/label`, `${c.entry}/title`);
+    e.textContent = c.label;
+    e = this.getElement(`${c.entry}/action`, `${c.entry}/title`);
+    e.textContent = "ACTION";
+    e = this.getElement(`${c.entry}/value`, `${c.entry}/entry`, "input");
+    e.value = c.value;
+  }
 }

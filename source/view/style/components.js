@@ -1,7 +1,14 @@
 /* STYLE DEFINITION */
 COMPONENTS.push(
   {
-    style: "/style/0",
+    style: "/theme/dark_mode",
+    source: "/style/definition",
+    key: "style_class",
+    font_size: "glyph_xs",
+    padding: "space_l",
+  },
+  {
+    style: "/style/light_mode",
     source: "/style/definition",
     key: "style_class",
     font_size: "glyph_xs",
@@ -43,7 +50,7 @@ COMPONENTS.push(
   },
   {
     display: "/display/0",
-    source: "/display/position",
+    source: "/display/layout",
   },
   {
     display: "/display/0",
@@ -52,18 +59,44 @@ COMPONENTS.push(
   {
     display: "/display/0",
     source: "/display/color/neutral",
+    black: "black",
+    white: "white"
   },
   {
     display: "/display/0",
     source: "/display/color/primary",
+    primary: "primary",
+    primary_highlight: "primary_highlight",
+    primary_accent: "primary_accent",
   },
   {
     display: "/display/0",
     source: "/display/color/secondary",
+    secondary: "secondary",
+    secondary_highlight: "secondary_highlight",
+    secondary_accent: "secondary_accent",
   },
   {
     display: "/display/0",
     source: "/display/color/general",
+    red: "red",
+    red_highlight: "red_highlight",
+    red_accent: "red_accent",
+    blue: "blue",
+    blue_highlight: "blue_highlight",
+    blue_accent: "blue_accent",
+    yellow: "yellow",
+    yellow_highlight: "yellow_highlight",
+    yellow_accent: "yellow_accent",
+    green: "green",
+    green_highlight: "green_highlight",
+    green_accent: "green_accent",
+    orange: "orange",
+    orange_highlight: "orange_highlight",
+    orange_accent: "orange_accent",
+    purple: "purple",
+    purple_highlight: "purple_highlight",
+    purple_accent: "purple_accent",
   },
   {
     display: "/display/1",
@@ -75,7 +108,7 @@ COMPONENTS.push(
   },
   {
     display: "/display/1",
-    source: "/display/position",
+    source: "/display/layout",
   },
   {
     display: "/display/1",

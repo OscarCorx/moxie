@@ -56,4 +56,13 @@ COMPONENTS.push(
     },
     transition: (model, header, resultId) => { },
   },
+  {
+    source: "/procedure/subscription",
+    procedure: "/misenplace/render",
+    event: "/event/update",
+    routine: (model, header, resultId) => {
+      Render.detail(model);
+    },
+    transition: (model, header, resultId) => { },
+  },
 );

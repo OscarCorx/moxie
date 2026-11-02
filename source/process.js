@@ -35,7 +35,7 @@ class Process {
       for (const headerId of headerIds) {
         const header = this.model.getComponent(headerId);
         if (!header) continue;
-        header.prior_id = h.id;
+        header.prior_id = header.id;
         header.timestamp = Date.now();
         this.model.emit(header);
       }

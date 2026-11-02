@@ -19,7 +19,7 @@ COMPONENTS.push(
     key: "display",
   },
   {
-    parent: "/display/position",
+    parent: "/display/layout",
     source: "/schema/field",
     kind: "/entity",
     key: "display",
@@ -69,7 +69,7 @@ COMPONENTS.push(
   },
   {
     source: "/archetype/property",
-    property: "/display/position",
+    property: "/display/layout",
     archetype: "/archetype/display",
   },
   {

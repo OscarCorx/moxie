@@ -5,11 +5,6 @@ COMPONENTS.push(
     hud: "/hud",
     view_state: "/initial_view_state",
   },
-  {
-    source: "/view/state/version",
-    version: "/initial_view_state",
-    key: "view_state",
-  },
 );
 COMPONENTS.push(
   {
@@ -20,16 +15,18 @@ COMPONENTS.push(
     property: "/location",
     component: "/address/0",
     field: "/address_0",
-    default_style: "/style/0",
-    temp_style: "/style/1",
-    default_display: "/display/0",
-    temp_display: "/display/1",
+    main_theme: "/theme/dark",
+    stable_theme: "/theme/light",
+    main_layout: "/layout/0",
+    stable_layout: "/layout/1",
+    main_display: "/display/0",
+    stable_display: "/display/1",
   },
   {
     source: "/view/hud/version",
     view_hud: "/hud",
     primary: true,
-    secondary: false,
+    secondary: true,
     alternate: false,
     workspace: false,
   },
