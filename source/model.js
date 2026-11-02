@@ -20,30 +20,30 @@ class Model {
   }
   /* MODEL */
   accessComponentIds(entity, source) {
-    if (!this._model[entity]) return [];
-    return this._model[entity][source] || [];
+    if (!this._entities[entity]) return [];
+    return this._entities[entity][source] || [];
   }
 
   getComponent(id) {
-    return this._model[id];
+    return this._components[id];
   }
 
   getEntity(id) {
-    if (!this._model[id]) this._model[id] = {
+    if (!this._entities[id]) this._entities[id] = {
       id: id,
     };
-    return this._model[id];
+    return this._entities[id];
   }
 
   accessComponent(entity, source, index) {
-    const componentIds = this._model[entity][source] || [];
-    return this._model[componentIds[index || 0]];
+    const componentIds = this._entities[entity][source] || [];
+    return this._components[componentIds[index || 0]];
   }
 
   setComponent(c) {
     if (!c.id) c.id = this.ID();
-    this._model[c.id] = c;
-    const schema = this._model[c.source];
+    this._components[c.id] = c;
+    const schema = this._entities[c.source];
     // console.log(c);
     for (const fieldId of schema["/schema/field"]) {
       const f = this.getComponent(fieldId);
@@ -59,12 +59,12 @@ class Model {
   }
 
   setEntity(e) {
-    this._model[e.id] = e;
+    this._entities[e.id] = e;
   }
 
   deleteComponent(id) {
-    const c = this._model[id];
-    const schema = this._model[c.source];
+    const c = this._components[id];
+    const schema = this._entities[c.source];
     for (const f of schema["/schema/field"]) {
       if (!c[f.key]) return;
       switch (f.kind) {
@@ -78,7 +78,7 @@ class Model {
   }
   /* INDEX */
   nextId(entity, source, id) {
-    const components = this._model[entity][source];
+    const components = this._entities[entity][source];
     let i = components.indexOf(id);
     i++;
     i %= components.length;
@@ -86,7 +86,7 @@ class Model {
   }
 
   previousId(entity, source, id) {
-    const components = this._model[entity][source];
+    const components = this._entities[entity][source];
     let i = components.indexOf(id);
     i = i + components.length - 1;
     i %= components.length;
@@ -96,28 +96,33 @@ class Model {
   setReference(k, c) {
     const e = c[k];
     /* ENSURE ENTITY */
-    if (!this._model[e]) this._model[e] = {};
+    if (!this._entities[e]) this._entities[e] = {};
     /* ENSURE PROPERTY */
-    if (!this._model[e][c.source]) {
-      this._model[e][c.source] = [];
+    if (!this._entities[e][c.source]) {
+      this._entities[e][c.source] = [];
     }
-    if (this._model[e][c.source].indexOf(c.id) !== -1) return;
-    this._model[e][c.source].push(c.id);
+    if (this._entities[e][c.source].indexOf(c.id) !== -1) return;
+    this._entities[e][c.source].push(c.id);
   }
 
   removeReference(e, source, id) {
-    if (!this._model[e]) return;
-    if (!this._model[e][source]) return;
-    const index = this._model[e][source].indexOf(id);
-    if (this._model[e][source].indexOf(id) === -1) return;
-    this._model[e][source].splice(index);
+    if (!this._entities[e]) return;
+    if (!this._entities[e][source]) return;
+    const index = this._entities[e][source].indexOf(id);
+    if (this._entities[e][source].indexOf(id) === -1) return;
+    this._entities[e][source].splice(index);
   }
 
   constructor() {
     /* COMPUTE CURRENT WITH TIMESTAMP */
     this._currentId = 0;
     /* CREATE _components and _entities */
-    this._model = {
+    this._entities = {
+      "/schema/field": {
+        "/schema/field": ["/origin"],
+      },
+    };
+    this._components = {
       "/origin": {
         id: this.ID(),
         parent: "/schema/field",
@@ -125,9 +130,6 @@ class Model {
         kind: "/entity",
         key: "parent",
         access: "/collection",
-      },
-      "/schema/field": {
-        "/schema/field": ["/origin"],
       },
     };
   }
