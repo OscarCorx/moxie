@@ -145,12 +145,6 @@ COMPONENTS.push(
       key: "procedure",
     },
     {
-      parent: "/procedure/state",
-      source: "/schema/field",
-      kind: "/entity",
-      key: "state",
-    },
-    {
       parent: "/procedure/subscription",
       source: "/schema/field",
       kind: "/entity",

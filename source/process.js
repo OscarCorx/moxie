@@ -22,12 +22,11 @@ class Process {
       if (subscription.target && subscription.target !== subscription.procedure) continue;
       const state = this.model.accessComponent(subscription.procedure, "/procedure/state");
       if (subscription.state && subscription.state !== state.state) continue;
-      if (!subscription.routine || !subscription.transition) continue;
-
+      if (!subscription.routine) continue;
+      console.log(subscription.procedure, subscription.event, subscription.state, subscription.action);
       const resultId = this.model.ID();
       resultIds.push(resultId);
       subscription.routine(this.model, header, resultId);
-      subscription.transition(this.model, header, resultId);
     }
 
     for (const id of resultIds) {

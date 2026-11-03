@@ -1,24 +1,37 @@
-/* CURRENT VIEW STATE */
+/* STATE */
 COMPONENTS.push(
   {
-    parent: "/current/view/state",
+    parent: "/view/navigation",
     source: "/schema/field",
-    kind: "/entity",
-    key: "current",
+    kind: "/string",
+    key: "archetype_entity",
   },
   {
-    parent: "/view/state",
+    parent: "/view/navigation",
     source: "/schema/field",
-    kind: "/entity",
-    key: "view_hud",
+    kind: "/string",
+    key: "archetype_property",
   },
   {
-    parent: "/view/state",
+    parent: "/view/navigation",
     source: "/schema/field",
-    kind: "/entity",
-    key: "view_state",
+    kind: "/string",
+    key: "component",
+  },
+  {
+    parent: "/view/navigation",
+    source: "/schema/field",
+    kind: "/string",
+    key: "field",
+  },
+  {
+    parent: "/view/navigation",
+    source: "/schema/field",
+    kind: "/string",
+    key: "exit",
   },
 );
+
 /* HUD */
 COMPONENTS.push(
   {
@@ -64,130 +77,63 @@ COMPONENTS.push(
     key: "workspace",
   },
 );
-
-/* VIEW STATE */
+/* STYLE */
 COMPONENTS.push(
   {
-    parent: "/view/state/version",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "view_state",
-  },
-  {
-    parent: "/view/state",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "archetype",
-  },
-  {
-    parent: "/view/state",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "entity",
-  },
-  {
-    parent: "/view/state",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "property",
-  },
-  {
-    parent: "/view/state",
-    source: "/schema/field",
-    kind: "/string",
-    key: "component",
-  },
-  {
-    parent: "/view/state",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "field",
-  },
-  {
-    parent: "/view/state",
+    parent: "/view/style",
     source: "/schema/field",
     kind: "/entity",
     key: "main_style",
   },
   {
-    parent: "/view/state",
+    parent: "/view/style",
     source: "/schema/field",
     kind: "/entity",
     key: "stable_style",
   },
   {
-    parent: "/view/state",
+    parent: "/view/style",
     source: "/schema/field",
     kind: "/entity",
     key: "main_display",
   },
   {
-    parent: "/view/state",
+    parent: "/view/style",
     source: "/schema/field",
     kind: "/entity",
     key: "stable_display",
   },
-  {
-    parent: "/view/state",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "exit",
-  },
-  {
-    parent: "/view/state",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "flip",
-  },
-  {
-    parent: "/view/state",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "reverse",
-  },
-  {
-    parent: "/view/state",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "draw",
-  },
-  {
-    parent: "/view/state",
-    source: "/schema/field",
-    kind: "/entity",
-    key: "replace",
-  },
 );
-/* VIEW HUD */
+/* USER_INPUT */
 COMPONENTS.push(
   {
-    parent: "/view/hud/version",
+    parent: "/view/user_input",
     source: "/schema/field",
     kind: "/entity",
-    key: "view_hud",
+    key: "user_input",
   },
   {
-    parent: "/view/hud/version",
+    parent: "/view/user_input",
     source: "/schema/field",
     kind: "/boolean",
-    key: "primary",
+    key: "bind",
   },
   {
-    parent: "/view/hud/version",
+    parent: "/view/user_input",
     source: "/schema/field",
     kind: "/boolean",
-    key: "secondary",
+    key: "big",
   },
   {
-    parent: "/view/hud/version",
+    parent: "/view/user_input",
     source: "/schema/field",
-    kind: "/boolean",
-    key: "alternate",
+    kind: "/string",
+    key: "mode",
   },
   {
-    parent: "/view/hud/version",
+    parent: "/view/user_input",
     source: "/schema/field",
-    kind: "/boolean",
-    key: "workspace",
+    kind: "/string",
+    key: "mouse_target",
   },
 );

@@ -13,10 +13,7 @@ class Model {
       action: action,
       result: resultId,
     });
-    for (const c of contents) {
-      this.setReference(resultId, c.id);
-    }
-
+    /* SET CONTENTS TO RESULT*/
   }
   /* MODEL */
   accessComponentIds(entity, source) {
@@ -44,22 +41,25 @@ class Model {
     if (!c.id) c.id = this.ID();
     this._components[c.id] = c;
     const schema = this._entities[c.source];
-    // console.log(c);
+    if (!schema) {
+      console.log("MISSING SCHEMA", c.source);
+      return;
+    }
+    if (c.source == "/procedure/subscription") {
+      // console.log(c.source);
+    }
     for (const fieldId of schema["/schema/field"]) {
       const f = this.getComponent(fieldId);
       if (!c[f.key]) continue;
       switch (f.kind) {
         case "/entity":
-          this.setReference(f.key, c);
+          this.setReference(c[f.key], c.source, c.id);
           break;
         default:
           break;
       }
     }
-  }
-
-  setEntity(e) {
-    this._entities[e.id] = e;
+    return c;
   }
 
   deleteComponent(id) {
@@ -92,17 +92,20 @@ class Model {
     i %= components.length;
     return components[i];
   }
-  /* REFERENCE */
-  setReference(k, c) {
-    const e = c[k];
+
+  setReference(e, k, c, replace) {
     /* ENSURE ENTITY */
     if (!this._entities[e]) this._entities[e] = {};
     /* ENSURE PROPERTY */
-    if (!this._entities[e][c.source]) {
-      this._entities[e][c.source] = [];
+    if (!this._entities[e][k]) {
+      this._entities[e][k] = [];
     }
-    if (this._entities[e][c.source].indexOf(c.id) !== -1) return;
-    this._entities[e][c.source].push(c.id);
+    if (replace) {
+      this._entities[e][k] = [c];
+      return;
+    }
+    if (this._entities[e][k].indexOf(c) !== -1) return;
+    this._entities[e][k].push(c);
   }
 
   removeReference(e, source, id) {

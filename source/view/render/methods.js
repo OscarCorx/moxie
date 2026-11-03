@@ -19,16 +19,15 @@ class Render {
     while (app.firstChild) {
       app.firstChild.remove();
     }
-    const current = model.accessComponent("/current", "/current/view/state");
-    const hud = model.accessComponent(current.hud, "/view/hud/version");
-    const version = model.accessComponent(current.view_state, "/view/state/version");
+    const hud = model.accessComponent("/current", "/view/hud");
+    const navigation = model.accessComponent("/current", "/view/navigation");
     /* USE ARCHETYPE TO GET GENERAL VERSIONS OF THESE */
     const contents = [];
     contents.push(...this.getLayout(model, hud));
-    if (hud.primary) contents.push(...this.getPrimary(model, version));
-    if (hud.secondary) contents.push(...this.getSecondary(model, version));
-    if (hud.alternate) contents.push(...this.getAlternate(model, version));
-    if (hud.workspace) contents.push(...this.getWorkspace(model, version));
+    if (hud.primary) contents.push(...this.getPrimary(model, navigation));
+    if (hud.secondary) contents.push(...this.getSecondary(model, navigation));
+    if (hud.alternate) contents.push(...this.getAlternate(model, navigation));
+    if (hud.workspace) contents.push(...this.getWorkspace(model, navigation));
     for (const c of contents) {
       this.outlineElement(model, c);
     }
@@ -69,16 +68,15 @@ class Render {
   }
 
   static detail(model) {
-    const current = model.accessComponent("/current", "/current/view/state");
-    const hud = model.accessComponent(current.hud, "/view/hud/version");
-    const version = model.accessComponent(current.view_state, "/view/state/version");
+    const hud = model.accessComponent("/current", "/view/hud");
+    const navigation = model.accessComponent("/current", "/view/navigation");
     /* USE ARCHETYPE TO GET GENERAL VERSIONS OF THESE */
     const contents = [];
     contents.push(...this.getLayout(model, hud));
-    if (hud.primary) contents.push(...this.getPrimary(model, version));
-    if (hud.secondary) contents.push(...this.getSecondary(model, version));
-    if (hud.alternate) contents.push(...this.getAlternate(model, version));
-    if (hud.workspace) contents.push(...this.getWorkspace(model, version));
+    if (hud.primary) contents.push(...this.getPrimary(model, navigation));
+    if (hud.secondary) contents.push(...this.getSecondary(model, navigation));
+    if (hud.alternate) contents.push(...this.getAlternate(model, navigation));
+    if (hud.workspace) contents.push(...this.getWorkspace(model, navigation));
     for (const c of contents) {
       // this.outlineElement(model, c);
       this.detailElement(model, c)
@@ -115,6 +113,11 @@ class Render {
         this.detailTextEntry(model, c);
         break;
     }
+  }
+
+  static detailUserInput(model) {
+    const state = View.getUserInput(model);
+
   }
 
 
@@ -194,12 +197,32 @@ class Render {
     const pane = {
       source: "/info/pane",
       parent: "/primary/panel",
-      entry: `/primary${component.id}`,
+      entry: `/primary/info/pane`,
       label: local.property,
       description: "This is a description",
       grid: "This is a grid"
     };
     const contents = [pane];
+    contents.push({
+      source: "/text/entry",
+      parent: "/primary/panel",
+      label: "ID",
+      entry: `/primary/id`,
+      icon: "I",
+      component: component.id,
+      field: "id",
+      value: component.id,
+    });
+    contents.push({
+      source: "/text/entry",
+      parent: "/primary/panel",
+      label: "source",
+      entry: `/primary/source`,
+      icon: "I",
+      component: component.id,
+      field: "source",
+      value: component.source,
+    });
     const schema = model.accessComponentIds(component.source, "/schema/field");
     for (let i = 0; i < schema.length; i++) {
       const id = schema[i];
@@ -226,7 +249,7 @@ class Render {
     const pane = {
       source: "/info/pane",
       parent: "/secondary/panel",
-      entry: `/secondary${local.property}`,
+      entry: `/secondary/info/pane`,
       label: local.property,
       description: "This is a description",
       grid: "This is a grid"
@@ -234,12 +257,14 @@ class Render {
     const contents = [pane];
     for (let i = 0; i < components.length; i++) {
       const id = components[i];
-      const component = model.getComponent(id);
+      const label = (component.id === id) ? "SELECTED" : id;
       contents.push({
         source: "/info/entry",
         parent: "/secondary/panel",
-        label: id,
+        label: label,
         entry: `/secondary${id}`,
+        action: "/message/navigation/component",
+        component: id,
       });
     }
     return contents;
@@ -250,22 +275,34 @@ class Render {
   static getWorkspace(model, local) { return []; }
 
   static outlineNavigation(model, c) {
-    let entry = this.getElement(c.id, "/app");
-    this.addStyle(entry, {
+    let e = this.getElement("/navigation/panel", "/app");
+    this.addStyle(e, {
       position: "absolute",
       top: c.top,
       left: c.left,
-      height: c.height,
-      width: c.width,
-      cursor: "pointer",
       border: "1px solid black",
+      display: "flex",
+      "flex-direction": "column",
+      "align-items": "center"
     });
-    entry.textContent = "navigation";
-    return entry;
+    this.getElement("/navigation/panel/mode", "/navigation/panel");
+    this.getElement("/navigation/panel/bind", "/navigation/panel");
+    this.getElement("/navigation/panel/big", "/navigation/panel");
+    this.getElement("/navigation/panel/action", "/navigation/panel");
   }
 
   static detailNavigation(model, c) {
-
+    const user_input = model.accessComponent("/current", "/view/user_input");
+    let e = this.getElement("/navigation/panel/mode", "/navigation/panel");
+    e.textContent = `MODE: ${user_input.mode}`
+    e = this.getElement("/navigation/panel/bind", "/navigation/panel");
+    e.textContent = `BIND: ${user_input.bind}`
+    e = this.getElement("/navigation/panel/big", "/navigation/panel");
+    e.textContent = `BIG: ${user_input.big}`;
+    if (c.action) {
+      e = this.getElement("/navigation/panel/action", "/navigation/panel");
+      e.textContent = `ACTION: ${c.action}`
+    }
   }
 
   static outlineControl(model, c) {
@@ -287,8 +324,8 @@ class Render {
   }
 
   static outlinePrimary(model, c) {
-    let entry = this.getElement(c.id, "/app");
-    this.addStyle(entry, {
+    let e = this.getElement(c.id, "/app");
+    this.addStyle(e, {
       position: "absolute",
       top: c.top,
       left: c.left,
@@ -296,6 +333,17 @@ class Render {
       display: "flex",
       "flex-direction": "column",
     });
+    e = this.getElement("/primary/row", c.id);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "row",
+      "justify-content": "center",
+    });
+    e = this.getElement("/primary/handle", "/primary/row");
+    this.addStyle(e, {
+      "cursor": "grab",
+    });
+    e.textContent = "HANDLE";
   }
 
   static detailPrimary(model, c) {
@@ -402,12 +450,22 @@ class Render {
       display: "flex",
       "flex-direction": "column"
     });
+    if (c.action) {
+      e.addEventListener("click", (e) => {
+        model.emit({
+          event: c.action,
+          component: c.component,
+          field: c.field,
+          value: e.target.value,
+        });
+      });
+    }
     e = this.getElement(`${c.entry}/title`, `${c.entry}/text/entry`);
-    e.textContent = c.label;
   }
 
   static detailInfoEntry(model, c) {
-
+    let e = this.getElement(`${c.entry}/title`, `${c.entry}/text/entry`);
+    e.textContent = c.label;
   }
 
   static outlineTextEntry(model, c) {

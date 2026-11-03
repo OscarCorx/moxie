@@ -16,26 +16,100 @@ const BINDINGS = {
   "Control": "/event/bind",
 }
 class KeyboardActions {
-  static move(model, message) {
-
+  static move(model, value, resultId) {
+    const state = model.accessComponent("/current", "/view/user_input");
+    let event = BINDINGS[value];
+    switch (event) {
+      case "/event/bind":
+        state.bind = true;
+        break;
+      case "/event/big":
+        state.big = true;
+        break;
+      case "/event/mode":
+        state.mode = "/entry";
+        break;
+    }
+    model.setComponent({
+      id: model.ID(),
+      source: "/message/header",
+      event: event,
+      result: resultId,
+    });
+    model.setComponent({
+      id: model.ID(),
+      source: "/message/header",
+      event: "/event/user/input",
+      result: resultId,
+    });
   }
 
-  static entry(model, message) {
-
+  static entry(model, message, resultId) {
+    const state = model.accessComponent("/current", "/view/user_input");
+    const value = message[0].value;
+    let event = navigation[value];
+    switch (event) {
+      case "/event/bind":
+        state.bind = true;
+        return;
+      default:
+    }
   }
 
-  static bind(model, message) {
-
+  static bind(model, message, resultId) {
+    const state = model.accessComponent("/current", "/view/user_input");
+    const value = message[0].value;
+    let event = navigation[value];
+    switch (event) {
+      case "/event/bind":
+        state.bind = true;
+        event = "/event/bind";
+        break;
+      case "/event/big":
+        state.big = true;
+        return;
+      case "/event/mode":
+        state.mode = "/move";
+        event = "/event/mode";
+        break;
+    }
+    model.setComponent({
+      id: `/keydown/${model.ID()}`,
+      source: "/message/header",
+      event: event,
+      result: resultId,
+    });
   }
 
-  static keyUp(model, message) {
-
-  }
-
-  static updateState(model) {
+  static keyUp(model, message, resultId) {
     const state = model.accessComponent("/user_input", "/procedure/state");
-    state.state = (state.bind) ? `/user_input${state.mode}/bind` : `/user_input${state.mode}`;
+    const value = message[0].value;
+    let event = navigation[value];
+    switch (event) {
+      case "/event/bind":
+        state.bind = false;
+        model.setComponent({
+          id: `/keydown/${model.ID()}`,
+          source: "/message/header",
+          event: "/event/unbind",
+          result: resultId,
+        });
+        break;
+      case "/event/big":
+        state.big = false;
+        return;
+      default:
+
+    }
   }
 }
 
-class MouseActions { }
+class MouseActions {
+  static move(model, x, y, resultId) {
+    console.log("MOUSE MOVE", x, y)
+  }
+
+  static up(model, x, y, resultId) {
+    console.log("MOUSE UP", x, y)
+  }
+}

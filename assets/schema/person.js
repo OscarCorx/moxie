@@ -24,53 +24,43 @@ ASSETS.push(
 );
 
 ASSETS.push(
-  ...[
-    {
-      source: "/display",
-      entity: "/location",
-      title: "Location",
-      key: "location",
-      icon: "[L]",
-      description: "This component gives location information",
-    },
-    {
-      parent: "/location",
-      source: "/schema/field",
-      kind: "/entity",
-      key: "entity",
-      access: "/collection",
-    },
-    {
-      parent: "/location",
-      source: "/schema/field",
-      kind: "/string",
-      key: "address_1",
-    },
-    {
-      parent: "/location",
-      source: "/schema/field",
-      kind: "/string",
-      key: "address_2",
-    },
-    {
-      parent: "/location",
-      source: "/schema/field",
-      kind: "/string",
-      key: "city",
-    },
-    {
-      parent: "/location",
-      source: "/schema/field",
-      kind: "/string",
-      key: "state",
-    },
-    {
-      parent: "/location",
-      source: "/schema/field",
-      kind: "/string",
-      key: "zipcode",
-    },
-  ],
+  {
+    parent: "/location",
+    source: "/schema/field",
+    kind: "/entity",
+    key: "entity",
+    access: "/collection",
+  },
+  {
+    parent: "/location",
+    source: "/schema/field",
+    kind: "/string",
+    key: "address_1",
+  },
+  {
+    parent: "/location",
+    source: "/schema/field",
+    kind: "/string",
+    key: "address_2",
+  },
+  {
+    parent: "/location",
+    source: "/schema/field",
+    kind: "/string",
+    key: "city",
+  },
+  {
+    parent: "/location",
+    source: "/schema/field",
+    kind: "/string",
+    key: "state",
+  },
+  {
+    parent: "/location",
+    source: "/schema/field",
+    kind: "/string",
+    key: "zipcode",
+  },
 );
 
 ASSETS.push(

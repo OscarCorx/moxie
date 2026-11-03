@@ -1,20 +1,16 @@
 COMPONENTS.push(
   {
-    source: "/current/view/state",
-    current: "/current",
-    hud: "/hud",
-    view_state: "/initial_view_state",
-  },
-);
-COMPONENTS.push(
-  {
-    source: "/view/state/version",
-    view_state: "/initial_view_state",
-    archetype: "/archetype/person",
-    entity: "/person/0",
-    property: "/location",
+    id: "/current/navigation",
+    source: "/view/navigation",
+    archetype_entity: "/person_person_0",
+    archetype_property: "/location",
     component: "/address/0",
-    field: "/address_0",
+    schema_field: "/address_0",
+
+  },
+  {
+    id: "/current/style",
+    source: "/view/style",
     main_theme: "/theme/dark",
     stable_theme: "/theme/light",
     main_layout: "/layout/0",
@@ -23,11 +19,21 @@ COMPONENTS.push(
     stable_display: "/display/1",
   },
   {
-    source: "/view/hud/version",
+    id: "/current/hud",
+    source: "/view/hud",
     view_hud: "/hud",
     primary: true,
     secondary: true,
     alternate: false,
     workspace: false,
+  },
+  {
+    id: "/current/user_input",
+    source: "/view/user_input",
+    user_input: "/user_input",
+    big: true,
+    bind: true,
+    mode: "move",
+    // mouse_target: "temp",
   },
 );

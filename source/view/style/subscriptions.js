@@ -1,7 +1,7 @@
 COMPONENTS.push(
   {
     source: "/procedure/subscription",
-    procedure: "/misenplace/render",
+    procedure: "/style",
     event: "/event/load",
     routine: (model, header, resultId) => {
       Style.compile(model);
