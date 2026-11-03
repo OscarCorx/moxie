@@ -219,26 +219,6 @@ class Render {
       grid: "This is a grid"
     };
     const contents = [pane];
-    contents.push({
-      source: "/text/entry",
-      parent: "/primary/panel",
-      label: "ID",
-      entry: `/primary/id`,
-      icon: "I",
-      component: component.id,
-      field: "id",
-      value: component.id,
-    });
-    contents.push({
-      source: "/text/entry",
-      parent: "/primary/panel",
-      label: "source",
-      entry: `/primary/source`,
-      icon: "I",
-      component: component.id,
-      field: "source",
-      value: component.source,
-    });
     const schema = model.accessComponentIds(component.source, "/schema/field");
     for (let i = 0; i < schema.length; i++) {
       const id = schema[i];
@@ -369,6 +349,9 @@ class Render {
     this.addStyle(e, {
       "cursor": "grab",
     });
+    e.addEventListener("mousedown", (event) => {
+      event.preventDefault();
+    })
     e.textContent = "HANDLE";
   }
 
@@ -378,8 +361,8 @@ class Render {
 
 
   static outlineSecondary(model, c) {
-    let entry = this.getElement(c.id, "/app");
-    this.addStyle(entry, {
+    let e = this.getElement(c.id, "/app");
+    this.addStyle(e, {
       position: "absolute",
       top: c.top,
       left: c.left,
@@ -388,6 +371,20 @@ class Render {
       cursor: "pointer",
       border: "1px solid black",
     });
+    e = this.getElement("/secondary/row", c.id);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "row",
+      "justify-content": "center",
+    });
+    e = this.getElement("/secondary/handle", "/secondary/row");
+    this.addStyle(e, {
+      "cursor": "grab",
+    });
+    e.addEventListener("mousedown", (event) => {
+      event.preventDefault();
+    })
+    e.textContent = "HANDLE";
   }
 
   static detailSecondary(model, c) {

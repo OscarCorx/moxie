@@ -1,15 +1,5 @@
-function userInputTransition(model, message, resultId) {
-  const state = model.accessComponent("/user_input", "/procedure/state");
-  state.state = (state.bind) ? `/user_input${state.mode}/bind` : `/user_input${state.mode}`;
-}
-
 /* KEYBOARD */
 COMPONENTS.push(
-  {
-    source: "/procedure/state",
-    procedure: "/user_input",
-    state: "/view/user_input",
-  },
   {
     source: "/procedure/subscription",
     procedure: "/user_input",
@@ -96,6 +86,7 @@ COMPONENTS.push(
         });
       });
       window.addEventListener("mousemove", (event) => {
+        event.preventDefault();
         const state = model.accessComponent(message.entity, "/view/user_input");
         if (!state.mouse_target) return;
         PROCESS.model.emit({
