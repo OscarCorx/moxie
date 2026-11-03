@@ -24,7 +24,7 @@ class Process {
         if (state_component && subscription.state && subscription.state !== state_component[subscription.procedure]) continue;
       }
       if (!subscription.routine) continue;
-      console.log(subscription.procedure, subscription.event, subscription.state, subscription.action);
+      console.log(subscription.event, subscription.procedure, subscription.state, subscription.action);
       const resultId = this.model.ID();
       resultIds.push(resultId);
       subscription.routine(this.model, header, resultId);

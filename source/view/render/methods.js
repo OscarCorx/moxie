@@ -24,10 +24,10 @@ class Render {
     /* USE ARCHETYPE TO GET GENERAL VERSIONS OF THESE */
     const contents = [];
     contents.push(...this.getLayout(model, hud));
+    if (hud.workspace) contents.push(...this.getWorkspace(model, navigation));
     if (hud.primary) contents.push(...this.getPrimary(model, navigation));
     if (hud.secondary) contents.push(...this.getSecondary(model, navigation));
     if (hud.alternate) contents.push(...this.getAlternate(model, navigation));
-    if (hud.workspace) contents.push(...this.getWorkspace(model, navigation));
     for (const c of contents) {
       this.outlineElement(model, c);
     }
@@ -38,8 +38,11 @@ class Render {
       case "/panel/navigation":
         this.outlineNavigation(model, c);
         break;
-      case "/panel/control":
-        this.outlineControl(model, c);
+      case "/panel/setting":
+        this.outlineSetting(model, c);
+        break;
+      case "/panel/action":
+        this.outlineAction(model, c);
         break;
       case "/panel/primary":
         this.outlinePrimary(model, c);
@@ -88,8 +91,11 @@ class Render {
       case "/panel/navigation":
         this.detailNavigation(model, c);
         break;
-      case "/panel/control":
-        this.detailControl(model, c);
+      case "/panel/setting":
+        this.detailSetting(model, c);
+        break;
+      case "/panel/action":
+        this.detailAction(model, c);
         break;
       case "/panel/primary":
         this.detailPrimary(model, c);
@@ -131,14 +137,22 @@ class Render {
       width: "10px",
       height: "10px",
     });
-    contents.push({
-      id: "/control/panel",
-      source: "/panel/control",
-      top: `100px`,
-      left: `10px`,
-      width: "10px",
-      height: "10px",
-    });
+    // contents.push({
+    //   id: "/setting/panel",
+    //   source: "/panel/setting",
+    //   top: `100px`,
+    //   left: `10px`,
+    //   width: "10px",
+    //   height: "10px",
+    // });
+    // contents.push({
+    //   id: "/action/panel",
+    //   source: "/panel/action",
+    //   top: `100px`,
+    //   left: `10px`,
+    //   width: "10px",
+    //   height: "10px",
+    // });
     if (local.primary) {
       contents.push({
         id: "/primary/panel",
@@ -188,7 +202,9 @@ class Render {
 
   static getNavigation(model, local) { return []; }
 
-  static getControl(model, local) { return []; }
+  static getSetting(model, local) { return []; }
+
+  static getAction(model, local) { return []; }
 
   static getPrimary(model, local) {
     const properties = model.accessComponentIds(local.archetype, "/archetype/property");
@@ -307,7 +323,7 @@ class Render {
     }
   }
 
-  static outlineControl(model, c) {
+  static outlineSetting(model, c) {
     let entry = this.getElement(c.id, "/app");
     this.addStyle(entry, {
       position: "absolute",
@@ -318,10 +334,18 @@ class Render {
       cursor: "pointer",
       border: "1px solid black",
     });
-    entry.textContent = "control";
+    entry.textContent = "setting";
   }
 
-  static detailControl(model, c) {
+  static detailSetting(model, c) {
+
+  }
+
+  static outlineAction(model, c) {
+
+  }
+
+  static detailAction(model, c) {
 
   }
 

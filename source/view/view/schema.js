@@ -50,7 +50,13 @@ COMPONENTS.push(
     parent: "/view/hud",
     source: "/schema/field",
     kind: "/entity",
-    key: "control",
+    key: "setting",
+  },
+  {
+    parent: "/view/hud",
+    source: "/schema/field",
+    kind: "/entity",
+    key: "action",
   },
   {
     parent: "/view/hud",

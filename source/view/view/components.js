@@ -1,6 +1,7 @@
 COMPONENTS.push(
   {
     source: "/state",
+    entity: "/current",
     "/navigation": "/default",
     "/style": "/default",
     "/hud": "/default",
