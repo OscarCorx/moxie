@@ -15,8 +15,9 @@ ASSETS.push(
       access: "/collection",
     },
     {
+      id: "/person_person_0",
       source: "/archetype/entity",
-      entity: "/person",
+      entity: "/person/0",
       archetype: "/archetype/person",
       access: "/collection",
     },

@@ -3,7 +3,7 @@ COMPONENTS.push(
     id: "/current/navigation",
     source: "/view/navigation",
     archetype_entity: "/person_person_0",
-    archetype_property: "/location",
+    archetype_property: "/location/0",
     component: "/address/0",
     schema_field: "/address_0",
 
@@ -33,7 +33,7 @@ COMPONENTS.push(
     user_input: "/user_input",
     big: true,
     bind: true,
-    mode: "move",
+    state: "/move",
     // mouse_target: "temp",
   },
 );

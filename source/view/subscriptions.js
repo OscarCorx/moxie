@@ -1,5 +1,10 @@
 COMPONENTS.push(
   {
+    source: "/procedure/state",
+    procedure: "/view",
+    state: "/view",
+  },
+  {
     source: "/procedure/subscription",
     procedure: "/view",
     event: "/event/load",

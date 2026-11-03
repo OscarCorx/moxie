@@ -20,8 +20,11 @@ class Process {
     for (const subscriptionId of subscriptionIds) {
       const subscription = this.model.getComponent(subscriptionId);
       if (subscription.target && subscription.target !== subscription.procedure) continue;
-      const state = this.model.accessComponent(subscription.procedure, "/procedure/state");
-      if (subscription.state && subscription.state !== state.state) continue;
+      if (subscription.state) {
+        const procedure_state = this.model.accessComponent(subscription.procedure, "/procedure/state");
+        const state = this.model.accessComponent("/current", procedure_state.state);
+        if (subscription.state && subscription.state !== state.state) continue;
+      }
       if (!subscription.routine) continue;
       console.log(subscription.procedure, subscription.event, subscription.state, subscription.action);
       const resultId = this.model.ID();

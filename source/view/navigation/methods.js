@@ -9,9 +9,10 @@ class Navigation {
     const state = model.accessComponent("/current", "/view/navigation");
 
     const archetype_entity = model.getComponent(state.archetype_entity);
-    state.archetype_prpperty = model.nextId(archetype_entity.archetype, "/archetype/property", 0);
-    state.component = model.nextId(archetype_entity.entity, state.archetype_prpperty, 0);
-    state.field = model.nextId(state.archetype_prpperty, "/schema/field", 0);
+    state.archetype_property = model.nextId(archetype_entity.archetype, "/archetype/property", 0);
+    const property = model.getComponent(state.archetype_property).property;
+    state.component = model.nextId(archetype_entity.entity, property, 0);
+    state.field = model.nextId(property, "/schema/field", 0);
     if (reverse) {
       state.archetype_entity = model.previousId(archetype_entity.archetype, "/archetype/entity", archetype_entity.id);
     } else {
@@ -23,12 +24,13 @@ class Navigation {
     const state = model.accessComponent("/current", "/view/navigation");
 
     const archetype_entity = model.getComponent(state.archetype_entity);
-    state.component = model.nextId(archetype_entity.entity, state.archetype_prpperty, 0);
-    state.field = model.nextId(state.archetype_prpperty, "/schema/field", 0);
+    const property = model.getComponent(state.archetype_property).property;
+    state.component = model.nextId(archetype_entity.entity, property, 0);
+    state.field = model.nextId(property, "/schema/field", 0);
     if (reverse) {
-      state.archetype_prpperty = model.previousId(archetype_entity.archetype, "/archetype/property", state.archetype_prpperty);
+      state.archetype_property = model.previousId(archetype_entity.archetype, "/archetype/property", state.archetype_property);
     } else {
-      state.archetype_prpperty = model.nextId(archetype_entity.archetype, "/archetype/property", state.archetype_prpperty);
+      state.archetype_property = model.nextId(archetype_entity.archetype, "/archetype/property", state.archetype_property);
     }
   }
 
@@ -37,9 +39,11 @@ class Navigation {
     const archetype_entity = model.getComponent(state.archetype_entity);
 
     if (reverse) {
-      state.component = model.previousId(archetype_entity.entity, state.archetype_property, state.component);
+      const property = model.getComponent(state.archetype_property).property;
+      state.component = model.previousId(archetype_entity.entity, property, state.component);
     } else {
-      state.component = model.nextId(archetype_entity.entity, state.archetype_property, state.component);
+      const property = model.getComponent(state.archetype_property).property;
+      state.component = model.nextId(archetype_entity.entity, property, state.component);
     }
   }
 

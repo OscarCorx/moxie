@@ -1,6 +1,11 @@
 //"/message/navigation/component"
 COMPONENTS.push(
   {
+    source: "/procedure/state",
+    procedure: "/navigation",
+    state: "/view/navigation",
+  },
+  {
     source: "/procedure/subscription",
     procedure: "/navigation",
     event: "/message/navigation/component",

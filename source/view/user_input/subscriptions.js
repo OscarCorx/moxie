@@ -6,15 +6,15 @@ function userInputTransition(model, message, resultId) {
 /* KEYBOARD */
 COMPONENTS.push(
   {
-    source: "/procedure/subscription",
+    source: "/procedure/state",
     procedure: "/user_input",
-    state: "/move",
+    state: "/view/user_input",
   },
   {
     source: "/procedure/subscription",
     procedure: "/user_input",
     event: "/event/key_down",
-    state: "/user_input/move",
+    state: "/move",
     action: "/keyboard/move",
     routine: (model, message, resultId) => {
       return KeyboardActions.move(model, message.value, resultId);
@@ -25,11 +25,10 @@ COMPONENTS.push(
     source: "/procedure/subscription",
     procedure: "/user_input",
     event: "/event/key_down",
-    state: "/user_input/entry",
+    state: "/entry",
     action: "/keyboard/entry",
     routine: (model, message, resultId) => {
       KeyboardActions.entry(model, message.value, resultId);
-      return true;
     },
     transition: (model, message, resultId) => { },
   },
@@ -37,11 +36,10 @@ COMPONENTS.push(
     source: "/procedure/subscription",
     procedure: "/user_input",
     event: "/event/key_down",
-    state: "/user_input/entry/bind",
+    state: "/entry/bind",
     action: "/keyboard/bind",
     routine: (model, message, resultId) => {
       KeyboardActions.bind(model, message.value, resultId);
-      return true;
     },
     transition: (model, message, resultId) => { },
   },
