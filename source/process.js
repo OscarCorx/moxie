@@ -6,7 +6,7 @@ class Process {
       }, event.detail.timeout || 0);
     });
     window.addEventListener("load", () => {
-      this.model.emit({ event: "/event/load" });
+      this.model.emit({ event: "/event/load", entity: "/current" });
     });
   }
 
@@ -19,11 +19,9 @@ class Process {
     );
     for (const subscriptionId of subscriptionIds) {
       const subscription = this.model.getComponent(subscriptionId);
-      if (subscription.target && subscription.target !== subscription.procedure) continue;
       if (subscription.state) {
-        const procedure_state = this.model.accessComponent(subscription.procedure, "/procedure/state");
-        const state = this.model.accessComponent("/current", procedure_state.state);
-        if (subscription.state && subscription.state !== state.state) continue;
+        const state_component = this.model.accessComponent(header.entity, "/state");
+        if (state_component && subscription.state && subscription.state !== state_component[subscription.procedure]) continue;
       }
       if (!subscription.routine) continue;
       console.log(subscription.procedure, subscription.event, subscription.state, subscription.action);
@@ -35,11 +33,12 @@ class Process {
     for (const id of resultIds) {
       const headerIds = this.model.accessComponentIds(id, "/message/header");
       for (const headerId of headerIds) {
-        const header = this.model.getComponent(headerId);
-        if (!header) continue;
-        header.prior_id = header.id;
-        header.timestamp = Date.now();
-        this.model.emit(header);
+        const h = this.model.getComponent(headerId);
+        if (!h) continue;
+        h.prior_id = header.id;
+        h.entity = header.id;
+        h.timestamp = Date.now();
+        this.model.emit(h);
       }
     }
   }

@@ -243,14 +243,16 @@ class Render {
   }
 
   static getSecondary(model, local) {
-    const properties = model.accessComponentIds(local.archetype, "/archetype/property");
-    const components = model.accessComponentIds(local.entity, local.property);
+    const entity = model.getComponent(local.archetype_entity).entity;
+    const property = model.getComponent(local.archetype_property).property;
+    const components = model.accessComponentIds(entity, property);
+
     const component = model.getComponent(local.component);
     const pane = {
       source: "/info/pane",
       parent: "/secondary/panel",
       entry: `/secondary/info/pane`,
-      label: local.property,
+      label: local.archetype_property,
       description: "This is a description",
       grid: "This is a grid"
     };

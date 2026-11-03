@@ -1,12 +1,18 @@
 COMPONENTS.push(
   {
+    source: "/state",
+    "/navigation": "/default",
+    "/style": "/default",
+    "/hud": "/default",
+    "/user_input": "/move",
+  },
+  {
     id: "/current/navigation",
     source: "/view/navigation",
     archetype_entity: "/person_person_0",
     archetype_property: "/location/0",
     component: "/address/0",
     schema_field: "/address_0",
-
   },
   {
     id: "/current/style",
@@ -31,9 +37,9 @@ COMPONENTS.push(
     id: "/current/user_input",
     source: "/view/user_input",
     user_input: "/user_input",
-    big: true,
-    bind: true,
-    state: "/move",
+    big: false,
+    bind: false,
+    mode: "/move",
     // mouse_target: "temp",
   },
 );

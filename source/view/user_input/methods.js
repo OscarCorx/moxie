@@ -44,10 +44,9 @@ class KeyboardActions {
     });
   }
 
-  static entry(model, message, resultId) {
+  static entry(model, value, resultId) {
     const state = model.accessComponent("/current", "/view/user_input");
-    const value = message[0].value;
-    let event = navigation[value];
+    let event = BINDINGS[value];
     switch (event) {
       case "/event/bind":
         state.bind = true;
@@ -56,10 +55,9 @@ class KeyboardActions {
     }
   }
 
-  static bind(model, message, resultId) {
+  static bind(model, value, resultId) {
     const state = model.accessComponent("/current", "/view/user_input");
-    const value = message[0].value;
-    let event = navigation[value];
+    let event = BINDINGS[value];
     switch (event) {
       case "/event/bind":
         state.bind = true;
@@ -81,10 +79,9 @@ class KeyboardActions {
     });
   }
 
-  static keyUp(model, message, resultId) {
-    const state = model.accessComponent("/user_input", "/procedure/state");
-    const value = message[0].value;
-    let event = navigation[value];
+  static keyUp(model, value, resultId) {
+    const state = model.accessComponent("/current", "/view/user_input");
+    let event = BINDINGS[value];
     switch (event) {
       case "/event/bind":
         state.bind = false;
@@ -97,10 +94,15 @@ class KeyboardActions {
         break;
       case "/event/big":
         state.big = false;
-        return;
-      default:
-
+        break;
     }
+    model.setComponent({
+      id: model.ID(),
+      source: "/message/header",
+      event: "/event/user/input",
+      result: resultId,
+    });
+
   }
 }
 

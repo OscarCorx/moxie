@@ -19,7 +19,6 @@ COMPONENTS.push(
     routine: (model, message, resultId) => {
       return KeyboardActions.move(model, message.value, resultId);
     },
-    transition: (model, message, resultId) => { },
   },
   {
     source: "/procedure/subscription",
@@ -30,7 +29,6 @@ COMPONENTS.push(
     routine: (model, message, resultId) => {
       KeyboardActions.entry(model, message.value, resultId);
     },
-    transition: (model, message, resultId) => { },
   },
   {
     source: "/procedure/subscription",
@@ -41,7 +39,6 @@ COMPONENTS.push(
     routine: (model, message, resultId) => {
       KeyboardActions.bind(model, message.value, resultId);
     },
-    transition: (model, message, resultId) => { },
   },
   {
     source: "/procedure/subscription",
@@ -51,7 +48,6 @@ COMPONENTS.push(
     routine: (model, message, resultId) => {
       KeyboardActions.keyUp(model, message.value, resultId);
     },
-    transition: (model, message, resultId) => { },
   },
 );
 /* MOSE ACTION */
@@ -64,7 +60,6 @@ COMPONENTS.push(
     routine: (model, message, resultId) => {
       MouseActions.up(model, message.x, message.y, resultId);
     },
-    transition: (model, message, resultId) => { },
   },
   {
     source: "/procedure/subscription",
@@ -74,7 +69,6 @@ COMPONENTS.push(
     routine: (model, message, resultId) => {
       MouseActions.move(model, message.x, message.y);
     },
-    transition: (model, message, resultId) => { },
   }
 );
 /* PAGE LOAD */
@@ -90,6 +84,7 @@ COMPONENTS.push(
           id: model.ID(),
           event: "/event/key_down",
           value: event.key,
+          entity: message.entity,
         });
       });
       window.addEventListener("keyup", (event) => {
@@ -97,30 +92,31 @@ COMPONENTS.push(
           id: model.ID(),
           event: "/event/key_up",
           value: event.key,
+          entity: message.entity,
         });
       });
       window.addEventListener("mousemove", (event) => {
-        const state = model.accessComponent("/current", "/view/user_input");
+        const state = model.accessComponent(message.entity, "/view/user_input");
         if (!state.mouse_target) return;
         PROCESS.model.emit({
           id: model.ID(),
           event: "/event/mouse/move",
           x: event.clientX,
           y: event.clientY,
+          entity: message.entity,
         });
       });
       window.addEventListener("mouseup", (event) => {
-        const state = model.accessComponent("/current", "/view/user_input");
+        const state = model.accessComponent(message.entity, "/view/user_input");
         if (!state.mouse_target) return;
         PROCESS.model.emit({
           id: model.ID(),
           event: "/event/mouse/up",
           x: event.clientX,
           y: event.clientY,
+          entity: message.entity,
         });
       });
     },
-    transition: (model, message, resultId) => { },
-
   }
 );

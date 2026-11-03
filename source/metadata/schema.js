@@ -139,10 +139,10 @@ COMPONENTS.push(
 COMPONENTS.push(
   ...[
     {
-      parent: "/procedure/state",
+      parent: "/state",
       source: "/schema/field",
       kind: "/entity",
-      key: "procedure",
+      key: "entity",
     },
     {
       parent: "/procedure/subscription",
