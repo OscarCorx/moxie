@@ -45,10 +45,19 @@ COMPONENTS.push(
   {
     source: "/procedure/subscription",
     procedure: "/user_input",
+    event: "/event/mouse/down",
+    action: "/mouse/down",
+    routine: (model, message, resultId) => {
+      MouseActions.down(model, message.x, message.y, resultId);
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/user_input",
     event: "/event/mouse/up",
     action: "/mouse/up",
     routine: (model, message, resultId) => {
-      MouseActions.up(model, message.x, message.y, resultId);
+      MouseActions.up(model, message.panel, message.x, message.y, resultId);
     },
   },
   {

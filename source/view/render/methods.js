@@ -207,8 +207,6 @@ class Render {
   static getAction(model, local) { return []; }
 
   static getPrimary(model, local) {
-    const properties = model.accessComponentIds(local.archetype, "/archetype/property");
-    const components = model.accessComponentIds(local.entity, local.property);
     const component = model.getComponent(local.component);
     const pane = {
       source: "/info/pane",
@@ -351,6 +349,12 @@ class Render {
     });
     e.addEventListener("mousedown", (event) => {
       event.preventDefault();
+      model.emit({
+        event: "/event/mouse/down",
+        panel: c.id,
+        x: event.clientX,
+        y: event.clientY,
+      });
     })
     e.textContent = "HANDLE";
   }
@@ -358,7 +362,6 @@ class Render {
   static detailPrimary(model, c) {
 
   }
-
 
   static outlineSecondary(model, c) {
     let e = this.getElement(c.id, "/app");
@@ -383,6 +386,12 @@ class Render {
     });
     e.addEventListener("mousedown", (event) => {
       event.preventDefault();
+      model.emit({
+        event: "/event/mouse/down",
+        panel: c.id,
+        x: event.clientX,
+        y: event.clientY,
+      });
     })
     e.textContent = "HANDLE";
   }

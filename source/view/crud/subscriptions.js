@@ -3,11 +3,9 @@ COMPONENTS.push(
     source: "/procedure/subscription",
     procedure: "/crud",
     event: "/message/update",
+    action: "/crud/update",
     routine: (model, header, resultId) => {
-      const component = model.getComponent(header.component);
-      component[header.field] = header.value;
-    },
-    transition: (model, message, resultId) => {
+      Crud.update(model, header);
       model.setComponent({
         source: "/message/header",
         result: resultId,

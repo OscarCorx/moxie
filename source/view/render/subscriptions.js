@@ -7,7 +7,6 @@ COMPONENTS.push(
     routine: (model, header, resultId) => {
       Render.detailNavigation(model, {});
     },
-    transition: (model, header, resultId) => { },
   },
   {
     source: "/procedure/subscription",
@@ -17,7 +16,6 @@ COMPONENTS.push(
     routine: (model, header, resultId) => {
       Render.detail(model);
     },
-    transition: (model, header, resultId) => { },
   },
   {
     source: "/procedure/subscription",
@@ -28,7 +26,6 @@ COMPONENTS.push(
       Render.outline(model);
       Render.detail(model);
     },
-    transition: (model, header, resultId) => { },
   },
   {
     source: "/procedure/subscription",
@@ -36,9 +33,20 @@ COMPONENTS.push(
     event: "/event/next",
     action: "/detail",
     routine: (model, header, resultId) => {
+      Render.outline(model);
       Render.detail(model);
     },
-    transition: (model, header, resultId) => { },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
+    event: "/event/next",
+    action: "/detail/navigation",
+    routine: (model, header, resultId) => {
+      Render.detailNavigation(model, {
+        action: "/event/next",
+      });
+    },
   },
   {
     source: "/procedure/subscription",
@@ -46,9 +54,19 @@ COMPONENTS.push(
     event: "/event/forward",
     action: "/detail",
     routine: (model, header, resultId) => {
+      Render.outline(model);
       Render.detail(model);
     },
-    transition: (model, header, resultId) => { },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
+    event: "/event/forward",
+    action: "/detail/navigation",
+    routine: (model, header, resultId) => {
+      Render.detailNavigation(model, {
+        action: "/event/forward",
+      });    },
   },
   {
     source: "/procedure/subscription",
@@ -59,7 +77,16 @@ COMPONENTS.push(
       Render.outline(model);
       Render.detail(model);
     },
-    transition: (model, header, resultId) => { },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
+    event: "/event/flip",
+    action: "/detail/navigation",
+    routine: (model, header, resultId) => {
+      Render.detailNavigation(model, {
+        action: "/event/flip",
+      });    },
   },
   {
     source: "/procedure/subscription",
@@ -70,7 +97,17 @@ COMPONENTS.push(
       Render.outline(model);
       Render.detail(model);
     },
-    transition: (model, header, resultId) => { },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
+    event: "/event/draw",
+    action: "/detail/navigation",
+    routine: (model, header, resultId) => {
+      Render.detailNavigation(model, {
+        action: "/event/draw",
+      });
+    },
   },
   {
     source: "/procedure/subscription",
@@ -80,8 +117,8 @@ COMPONENTS.push(
     routine: (model, header, resultId) => {
       Render.detail(model);
     },
-    transition: (model, header, resultId) => { },
   },
+
   {
     source: "/procedure/subscription",
     procedure: "/render",
@@ -90,6 +127,5 @@ COMPONENTS.push(
     routine: (model, header, resultId) => {
       Render.detail(model);
     },
-    transition: (model, header, resultId) => { },
   },
 );
