@@ -74,7 +74,9 @@ class Render {
       case "/text/table":
         this.outlineTextTable(model, c);
         break;
-
+      case "/info/item":
+        this.outlineInfoItem(model, c);
+        break;
     }
   }
 
@@ -131,6 +133,9 @@ class Render {
         break;
       case "/text/table":
         this.detailTextTable(model, c);
+        break;
+      case "/info/item":
+        this.detailInfoItem(model, c);
         break;
     }
   }
@@ -284,17 +289,22 @@ class Render {
   static getAlternate(model, local) { return []; }
 
   static getWorkspace(model, local) {
-    console.log("GET WORKSPACE")
-    const contents = [];
     const archetype_property = model.getComponent(local.archetype_property);
+    const contents = [
+      {
+        source: "/info/item",
+        parent: "/workspace/banner",
+        item: `TABLE: ${archetype_property.property}`,
+      }
+    ];
     const archetype_entity = model.getComponent(local.archetype_entity);
     const properties = model.accessComponentIds(archetype_property.archetype, "/archetype/property");
     for (const id of properties) {
       const property = model.getComponent(id);
       contents.push({
-        source: "/info/entry",
+        source: "/info/item",
         parent: "/workspace/banner",
-        value: property.property,
+        item: property.property,
       })
     }
     const fields = model.accessComponentIds(archetype_property.property, "/schema/field");
@@ -475,7 +485,6 @@ class Render {
   }
 
   static outlineWorkspace(model, c) {
-    console.log("WOKRSPACE", c.id)
     let e = this.getElement(c.id, "/app");
     this.addStyle(e, {
       position: "absolute",
@@ -493,7 +502,6 @@ class Render {
       "flex-direction": "row"
     });
     e = this.getElement("/workspace/table", c.id, "table");
-    e.textContent = "TABLE";
   }
 
   static detailWorkspace(model, c) {
@@ -645,7 +653,7 @@ class Render {
   }
 
   static detailInfoTable(model, c) {
-    let e = this.getElement(`/workspace/table/${c.row}/${c.column}`, `/workspace/row/${c.row}`);
+    let e = this.getElement(`/workspace/cell/${c.row}/${c.column}`, `/workspace/row/${c.row}`);
     e.textContent = c.value;
   }
 
@@ -664,5 +672,17 @@ class Render {
     this.addStyle(e, {
       border: (c.column_focus && c.row_focus) ? "1px solid red" : "1px solid black",
     })
+  }
+
+  static outlineInfoItem(model, c) {
+    let e = this.getElement(`/workspace/item${c.item}`, "/workspace/banner");
+    this.addStyle(e, {
+      flex: "auto"
+    });
+  }
+
+  static detailInfoItem(model, c) {
+    let e = this.getElement(`/workspace/item${c.item}`, "/workspace/banner");
+    e.textContent = c.item;
   }
 }
