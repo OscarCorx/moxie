@@ -171,4 +171,18 @@ COMPONENTS.push(
       });
     },
   },
+  {
+    source: "/procedure/subscription",
+    procedure: "/navigation",
+    event: "/event/mouse/move",
+    action: "/mouse/move",
+    routine: (model, message, resultId) => {
+      Navigation.dragMove(model, message.x, message.y);
+      model.setComponent({
+        source: "/message/header",
+        result: resultId,
+        event: "/event/drag",
+      });
+    },
+  }
 );

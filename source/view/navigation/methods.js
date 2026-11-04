@@ -22,16 +22,15 @@ class Navigation {
 
   static incrementFace(model, reverse) {
     const state = model.accessComponent("/current", "/view/navigation");
-
     const archetype_entity = model.getComponent(state.archetype_entity);
-    const property = model.getComponent(state.archetype_property).property;
-    state.component = model.nextId(archetype_entity.entity, property, 0);
-    state.schema_field = model.nextId(property, "/schema/field", 0);
     if (reverse) {
       state.archetype_property = model.previousId(archetype_entity.archetype, "/archetype/property", state.archetype_property);
     } else {
       state.archetype_property = model.nextId(archetype_entity.archetype, "/archetype/property", state.archetype_property);
     }
+    const property = model.getComponent(state.archetype_property).property;
+    state.component = model.nextId(archetype_entity.entity, property, 0);
+    state.schema_field = model.nextId(property, "/schema/field", 0);
   }
 
   static incrementSecondary(model, reverse) {
@@ -61,5 +60,11 @@ class Navigation {
       const property = model.getComponent(state.archetype_property).property;
       state.schema_field = model.nextId(property, "/schema/field", state.schema_field);
     }
+  }
+
+  static dragMove(model, x, y, resultId) {
+    const hud = model.accessComponent("/current", "/view/hud");
+    hud.primary_x = x;
+    hud.primary_y = y;
   }
 }

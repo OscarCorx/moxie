@@ -12,5 +12,19 @@ COMPONENTS.push(
         event: "/event/update",
       });
     },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/crud",
+    event: "/message/new",
+    action: "/crud/new",
+    routine: (model, header, resultId) => {
+      Crud.new(model, header);
+      model.setComponent({
+        source: "/message/header",
+        result: resultId,
+        event: "/event/new",
+      });
+    },
   }
 );

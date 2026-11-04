@@ -60,15 +60,6 @@ COMPONENTS.push(
       MouseActions.up(model, message.panel, message.x, message.y, resultId);
     },
   },
-  {
-    source: "/procedure/subscription",
-    procedure: "/user_input",
-    event: "/event/mouse/move",
-    action: "/mouse/move",
-    routine: (model, message, resultId) => {
-      MouseActions.move(model, message.x, message.y);
-    },
-  }
 );
 /* PAGE LOAD */
 COMPONENTS.push(

@@ -1,13 +1,12 @@
 - Today
-  - [ ] Add Alias to /schema/field
-  - [ ] Clean up subscriptions
-  - [ ] Design layout editor
-  - [ ] Design subscription editor
-  - [ ] Install thread segregation
-    - [ ] Can you rely on entity_id
-  - [ ] Create data with tool
-  - [ ] Create schema with tool
-  - [ ] Create subscription with tool
+  - [ ] Call /current a "thread"
+    - [ ] Clean up all the instances of /current
+  - [ ] Scheme out "prototype" attached to archetype
+    - [ ] archetype for data
+    - [ ] prototype for functions
+    - [ ] blueprint is a prototype for UI
+  - [ ] Clean up how the /current data structure works
+    - [ ] Try to remove components pointing to components
 
 - Interfaces
   - Mobile

@@ -113,18 +113,27 @@ COMPONENTS.push(
     source: "/procedure/subscription",
     procedure: "/render",
     event: "/event/drag",
-    action: "/detail",
+    action: "/position/panel",
     routine: (model, header, resultId) => {
-      Render.detail(model);
+      Render.positionPanel(model, header.panel_id);
     },
   },
-
   {
     source: "/procedure/subscription",
     procedure: "/render",
     event: "/event/update",
     action: "/detail",
     routine: (model, header, resultId) => {
+      Render.detail(model);
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
+    event: "/event/new",
+    action: "/outline/detail",
+    routine: (model, header, resultId) => {
+      Render.outline(model);
       Render.detail(model);
     },
   },

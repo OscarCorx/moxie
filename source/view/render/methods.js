@@ -21,6 +21,7 @@ class Render {
     }
     const hud = model.accessComponent("/current", "/view/hud");
     const navigation = model.accessComponent("/current", "/view/navigation");
+    const archetype_property = model.getComponent(navigation.archetype_property);
     /* USE ARCHETYPE TO GET GENERAL VERSIONS OF THESE */
     const contents = [];
     contents.push(...this.getLayout(model, hud));
@@ -157,8 +158,8 @@ class Render {
       contents.push({
         id: "/primary/panel",
         source: "/panel/primary",
-        top: `200px`,
-        left: `10px`,
+        top: (local.primary_y) ? `${local.primary_y}px` : `200px`,
+        left: (local.primary_x) ? `${local.primary_x}px` : `10px`,
         width: "10px",
         height: "10px",
         display: "flex",
@@ -191,10 +192,10 @@ class Render {
       contents.push({
         id: "/workspace/panel",
         source: "/panel/workspace",
-        top: `500px`,
+        top: `10px`,
         left: `10px`,
-        width: "10px",
-        height: "10px",
+        width: "1000px",
+        height: "600px",
       });
     }
     return contents;
@@ -230,6 +231,7 @@ class Render {
         component: component.id,
         field: field.key,
         value: component[field.key],
+        focus: local.schema_field === id,
       });
       pane.grid = component[field.key];
     }
@@ -248,7 +250,7 @@ class Render {
       entry: `/secondary/info/pane`,
       label: local.archetype_property,
       description: "This is a description",
-      grid: "This is a grid"
+      grid: "NEW RECORD"
     };
     const contents = [pane];
     for (let i = 0; i < components.length; i++) {
@@ -268,7 +270,9 @@ class Render {
 
   static getAlternate(model, local) { return []; }
 
-  static getWorkspace(model, local) { return []; }
+  static getWorkspace(model, local) {
+    return [];
+  }
 
   static outlineNavigation(model, c) {
     let e = this.getElement("/navigation/panel", "/app");
@@ -425,12 +429,23 @@ class Render {
       left: c.left,
       height: c.height,
       width: c.width,
-      cursor: "pointer",
       border: "1px solid black",
+      display: "flex",
+      "flex-direction": "column"
     });
   }
 
   static detailWorkspace(model, c) {
+
+  }
+
+  static positionPanel(model, panel_id) {
+    const hud = model.accessComponent("/current", "/view/hud");
+    const e = this.getElement("/primary/panel");
+    this.addStyle(e, {
+      top: `${hud.primary_y}px`,
+      left: `${hud.primary_x}px`,
+    })
 
   }
 
@@ -445,22 +460,24 @@ class Render {
     this.addStyle(e, {
       flex: "auto",
     });
-    // e.textContent = c.label;
     e = this.getElement(`${c.entry}/buttons`, `${c.entry}/title`);
     this.addStyle(e, {
       flex: "auto",
     });
-    // e.textContent = "BUTTONS"
     e = this.getElement(`${c.entry}/description`, `${c.entry}/info/pane`);
     this.addStyle(e, {
       flex: "auto",
     });
-    // e.textContent = c.description;
     e = this.getElement(`${c.entry}/grid`, `${c.entry}/info/pane`);
     this.addStyle(e, {
       flex: "auto",
     });
-    // e.textContent = c.grid;
+    e.textContent = "NEW";
+    e.addEventListener("click", (event) => {
+      model.emit({
+        event: "/message/new",
+      });
+    });
 
   }
 
@@ -538,7 +555,6 @@ class Render {
       flex: "1",
     });
     e.addEventListener("input", (e) => {
-      console.log("HERE WE ARE", e.target.value)
       model.emit({
         event: "/message/update",
         component: c.component,
@@ -551,9 +567,36 @@ class Render {
   static detailTextEntry(model, c) {
     let e = this.getElement(`/title${c.entry}/label`, `${c.entry}/title`);
     e.textContent = c.label;
+    if (c.focus) {
+      this.addStyle(e, {
+        color: "red",
+      })
+    }
     e = this.getElement(`${c.entry}/action`, `${c.entry}/title`);
     e.textContent = "ACTION";
-    e = this.getElement(`${c.entry}/value`, `${c.entry}/entry`, "input");
+    e = this.getElement(`${c.entry}/value`, `${c.entry}/entry`);
     e.value = c.value;
+  }
+
+  static outlineInfoTable(model, c) {
+    let e = this.getElement(`/workspace/table/${c.row}/${c.column}`, `/workspace/table`, "input");
+    e.value = c.value;
+    e.addEventListener("input", (event) => {
+      console.log("TABLE INPUT", c.row, c.column, event.value);
+    });
+
+
+  }
+
+  static detailInfoTable(model, c) {
+
+  }
+
+  static outlineTextTable(model, c) {
+
+  }
+
+  static detailTextTable(model, c) {
+
   }
 }
