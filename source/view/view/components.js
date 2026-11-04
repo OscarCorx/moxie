@@ -32,7 +32,7 @@ COMPONENTS.push(
     primary: true,
     secondary: true,
     alternate: false,
-    workspace: false,
+    workspace: true,
   },
   {
     id: "/current/user_input",

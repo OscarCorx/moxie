@@ -68,6 +68,13 @@ class Render {
       case "/text/entry":
         this.outlineTextEntry(model, c);
         break;
+      case "/info/table":
+        this.outlineInfoTable(model, c);
+        break;
+      case "/text/table":
+        this.outlineTextTable(model, c);
+        break;
+
     }
   }
 
@@ -119,6 +126,12 @@ class Render {
       case "/text/entry":
         this.detailTextEntry(model, c);
         break;
+      case "/info/table":
+        this.detailInfoTable(model, c);
+        break;
+      case "/text/table":
+        this.detailTextTable(model, c);
+        break;
     }
   }
 
@@ -138,6 +151,16 @@ class Render {
       width: "10px",
       height: "10px",
     });
+    if (local.workspace) {
+      contents.push({
+        id: "/workspace/panel",
+        source: "/panel/workspace",
+        top: `10px`,
+        left: `10px`,
+        width: "1000px",
+        height: "600px",
+      });
+    }
     // contents.push({
     //   id: "/setting/panel",
     //   source: "/panel/setting",
@@ -186,16 +209,6 @@ class Render {
         height: "10px",
         display: "flex",
         "flex-direction": "column",
-      });
-    }
-    if (local.workspace) {
-      contents.push({
-        id: "/workspace/panel",
-        source: "/panel/workspace",
-        top: `10px`,
-        left: `10px`,
-        width: "1000px",
-        height: "600px",
       });
     }
     return contents;
@@ -271,10 +284,49 @@ class Render {
   static getAlternate(model, local) { return []; }
 
   static getWorkspace(model, local) {
-    return [];
+    console.log("GET WORKSPACE")
+    const contents = [];
+    const archetype_property = model.getComponent(local.archetype_property);
+    const archetype_entity = model.getComponent(local.archetype_entity);
+    const properties = model.accessComponentIds(archetype_property.archetype, "/archetype/property");
+    for (const id of properties) {
+      const property = model.getComponent(id);
+      contents.push({
+        source: "/info/entry",
+        parent: "/workspace/banner",
+        value: property.property,
+      })
+    }
+    const fields = model.accessComponentIds(archetype_property.property, "/schema/field");
+    for (const [field_i, field_id] of fields.entries()) {
+      const field = model.getComponent(field_id);
+      contents.push({
+        source: "/info/table",
+        parent: "/workspace/row/0",
+        row: 0,
+        column: field_i,
+        value: field.key,
+      })
+      const components = model.accessComponentIds(archetype_entity.entity, archetype_property.property);
+      for (const [component_i, component_id] of components.entries()) {
+        const component = model.getComponent(component_id);
+        contents.push({
+          source: "/text/table",
+          parent: `/workspace/row/${component_i + 1}`,
+          row: component_i + 1,
+          column: field_i,
+          value: component[field.key],
+          row_focus: component_id === local.component,
+          column_focus: field_id === local.schema_field,
+        })
+      }
+    }
+
+    return contents;
   }
 
   static outlineNavigation(model, c) {
+    return;
     let e = this.getElement("/navigation/panel", "/app");
     this.addStyle(e, {
       position: "absolute",
@@ -292,6 +344,7 @@ class Render {
   }
 
   static detailNavigation(model, c) {
+    return;
     const user_input = model.accessComponent("/current", "/view/user_input");
     let e = this.getElement("/navigation/panel/mode", "/navigation/panel");
     e.textContent = `MODE: ${user_input.mode}`
@@ -422,8 +475,9 @@ class Render {
   }
 
   static outlineWorkspace(model, c) {
-    let entry = this.getElement(c.id, "/app");
-    this.addStyle(entry, {
+    console.log("WOKRSPACE", c.id)
+    let e = this.getElement(c.id, "/app");
+    this.addStyle(e, {
       position: "absolute",
       top: c.top,
       left: c.left,
@@ -433,6 +487,13 @@ class Render {
       display: "flex",
       "flex-direction": "column"
     });
+    e = this.getElement("/workspace/banner", c.id);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "row"
+    });
+    e = this.getElement("/workspace/table", c.id, "table");
+    e.textContent = "TABLE";
   }
 
   static detailWorkspace(model, c) {
@@ -579,24 +640,29 @@ class Render {
   }
 
   static outlineInfoTable(model, c) {
-    let e = this.getElement(`/workspace/table/${c.row}/${c.column}`, `/workspace/table`, "input");
-    e.value = c.value;
-    e.addEventListener("input", (event) => {
-      console.log("TABLE INPUT", c.row, c.column, event.value);
-    });
-
-
+    this.getElement(`/workspace/row/${c.row}`, `/workspace/table`, "tr");
+    this.getElement(`/workspace/cell/${c.row}/${c.column}`, `/workspace/row/${c.row}`, "td");
   }
 
   static detailInfoTable(model, c) {
-
+    let e = this.getElement(`/workspace/table/${c.row}/${c.column}`, `/workspace/row/${c.row}`);
+    e.textContent = c.value;
   }
 
   static outlineTextTable(model, c) {
-
+    this.getElement(`/workspace/row/${c.row}`, `/workspace/table`, "tr");
+    this.getElement(`/workspace/cell/${c.row}/${c.column}`, `/workspace/row/${c.row}`, "td");
+    let e = this.getElement(`/workspace/entry/${c.row}/${c.column}`, `/workspace/cell/${c.row}/${c.column}`, "input");
+    e.addEventListener("input", (event) => {
+      console.log("TABLE INPUT", c.row, c.column, event.value);
+    });
   }
 
   static detailTextTable(model, c) {
-
+    let e = this.getElement(`/workspace/entry/${c.row}/${c.column}`);
+    e.value = c.value;
+    this.addStyle(e, {
+      border: (c.column_focus && c.row_focus) ? "1px solid red" : "1px solid black",
+    })
   }
 }
