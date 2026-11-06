@@ -16,6 +16,10 @@ class Model {
     /* SET CONTENTS TO RESULT*/
   }
   /* MODEL */
+  accessComponent(entity, source, index) {
+    const componentIds = (this._entities[entity] || {})[source] || [];
+    return this._components[componentIds[index || 0]];
+  }
   accessComponentIds(entity, source) {
     if (!this._entities[entity]) return [];
     return this._entities[entity][source] || [];
@@ -30,11 +34,6 @@ class Model {
       id: id,
     };
     return this._entities[id];
-  }
-
-  accessComponent(entity, source, index) {
-    const componentIds = (this._entities[entity] || {})[source] || [];
-    return this._components[componentIds[index || 0]];
   }
 
   setComponent(c) {
@@ -76,23 +75,6 @@ class Model {
       }
     }
   }
-  /* INDEX */
-  nextId(entity, source, id) {
-    const components = this._entities[entity][source];
-    let i = components.indexOf(id);
-    i++;
-    i %= components.length;
-    return components[i];
-  }
-
-  previousId(entity, source, id) {
-    const components = this._entities[entity][source];
-    let i = components.indexOf(id);
-    i = i + components.length - 1;
-    i %= components.length;
-    return components[i];
-  }
-
   setReference(e, k, c, replace) {
     /* ENSURE ENTITY */
     if (!this._entities[e]) this._entities[e] = {};
@@ -114,6 +96,22 @@ class Model {
     const index = this._entities[e][source].indexOf(id);
     if (this._entities[e][source].indexOf(id) === -1) return;
     this._entities[e][source].splice(index);
+  }
+  /* INDEX */
+  nextId(entity, source, id) {
+    const components = this._entities[entity][source];
+    let i = components.indexOf(id);
+    i++;
+    i %= components.length;
+    return components[i];
+  }
+
+  previousId(entity, source, id) {
+    const components = this._entities[entity][source];
+    let i = components.indexOf(id);
+    i = i + components.length - 1;
+    i %= components.length;
+    return components[i];
   }
 
   constructor() {

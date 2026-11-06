@@ -685,4 +685,12 @@ class Render {
     let e = this.getElement(`/workspace/item${c.item}`, "/workspace/banner");
     e.textContent = c.item;
   }
+
+  static outlineChip(model, c) {
+
+  }
+
+  static detailChip(model, c) {
+
+  }
 }
