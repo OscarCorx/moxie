@@ -70,42 +70,42 @@ COMPONENTS.push(
     action: "/add/event/listener",
     routine: (model, message, resultId) => {
       window.addEventListener("keydown", (event) => {
-        PROCESS.model.emit({
+        model.emit({
           id: model.ID(),
           event: "/event/key_down",
           value: event.key,
-          entity: message.entity,
+          thread: message.thread,
         });
       });
       window.addEventListener("keyup", (event) => {
-        PROCESS.model.emit({
+        model.emit({
           id: model.ID(),
           event: "/event/key_up",
           value: event.key,
-          entity: message.entity,
+          thread: message.thread,
         });
       });
       window.addEventListener("mousemove", (event) => {
         event.preventDefault();
-        const state = model.accessComponent(message.entity, "/view/user_input");
+        const state = model.accessComponent(message.thread, "/view/user_input");
         if (!state.mouse_target) return;
-        PROCESS.model.emit({
+        model.emit({
           id: model.ID(),
           event: "/event/mouse/move",
           x: event.clientX,
           y: event.clientY,
-          entity: message.entity,
+          thread: message.thread,
         });
       });
       window.addEventListener("mouseup", (event) => {
-        const state = model.accessComponent(message.entity, "/view/user_input");
+        const state = model.accessComponent(message.thread, "/view/user_input");
         if (!state.mouse_target) return;
-        PROCESS.model.emit({
+        model.emit({
           id: model.ID(),
           event: "/event/mouse/up",
           x: event.clientX,
           y: event.clientY,
-          entity: message.entity,
+          thread: message.thread,
         });
       });
     },

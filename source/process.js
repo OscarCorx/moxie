@@ -6,13 +6,13 @@ class Process {
       }, event.detail.timeout || 0);
     });
     window.addEventListener("load", () => {
-      this.model.emit({ event: "/event/load", entity: "/current" });
+      this.model.emit({ event: "/event/load", thread: "/current" });
     });
   }
 
   /* PROCESS ROUTINE */
   processMessage(header) {
-    const state_component = {...this.model.accessComponent(header.entity, "/state")};
+    const state_component = {...this.model.accessComponent(header.thread, "/state")};
 
     const resultIds = [];
     const subscriptionIds = this.model.accessComponentIds(
@@ -37,7 +37,7 @@ class Process {
         const h = this.model.getComponent(headerId);
         if (!h) continue;
         h.prior_id = header.id;
-        h.entity = header.id;
+        h.thread = h.thread || header.id;
         h.timestamp = Date.now();
         this.model.emit(h);
       }
