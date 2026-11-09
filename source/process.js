@@ -1,12 +1,12 @@
 class Process {
-  start() {
-    document.addEventListener(this.endpoint, (event) => {
+  start(thread) {
+    document.addEventListener(this._endpoint, (event) => {
       setTimeout(() => {
         this.processMessage(event.detail);
       }, event.detail.timeout || 0);
     });
     window.addEventListener("load", () => {
-      this.model.emit({ event: "/event/load", thread: "/current" });
+      this.model.emit({ event: "/event/load", thread: thread });
     });
   }
 
@@ -44,8 +44,8 @@ class Process {
     }
   }
   constructor(endpoint) {
-    this.model = new Model();
-    this.endpoint = endpoint;
+    this.model = new Model(endpoint);
+    this._endpoint = endpoint;
   }
 }
 
@@ -57,4 +57,4 @@ COMPONENTS.forEach((i) => {
 ASSETS.forEach((i) => {
   PROCESS.model.setComponent(i);
 });
-PROCESS.start();
+PROCESS.start("/current");
