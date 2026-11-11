@@ -46,22 +46,26 @@ class Outline {
     }
   }
 
-  static layout(m, c) {
+  static absolute(m, c) {
 
   }
-
+  /* FLEX ROWS / COLUMNS */
   static panel(m, c) {
 
   }
-
-  static pane(m, c) {
+  /* GRID ROWS COLUMNS */
+  static board(m, c) {
 
   }
-
+  /* COMPOSITE OF ENTRIES */
   static entry(m, c) {
 
   }
   /* ATOMS */
+  static info(m, c) {
+
+  }
+
   static chip(m, c) {
 
   }
@@ -74,7 +78,7 @@ class Outline {
 
   }
 
-  static input(m, c) {
+  static text(m, c) {
 
   }
 }

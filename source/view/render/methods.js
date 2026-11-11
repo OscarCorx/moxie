@@ -624,6 +624,7 @@ class Render {
       flex: "1",
     });
     e.addEventListener("input", (e) => {
+      console.log("HERE")
       model.emit({
         event: "/message/update",
         component: c.component,
