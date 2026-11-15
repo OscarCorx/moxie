@@ -100,19 +100,21 @@ class Model {
   }
   /* INDEX */
   nextId(entity, source, id) {
-    const components = this._entities[entity][source];
+    const components = this._entities[entity][source] || [];
     let i = components.indexOf(id);
-    i++;
-    i %= components.length;
-    return components[i];
+    let index = (i === -1) ? 0 : i;
+    index++;
+    index %= components.length;
+    return components[index];
   }
 
   previousId(entity, source, id) {
-    const components = this._entities[entity][source];
+    const components = this._entities[entity][source] || [];
     let i = components.indexOf(id);
-    i = i + components.length - 1;
-    i %= components.length;
-    return components[i];
+    let index = (i === -1) ? 0 : i;
+    index = index + components.length - 1;
+    index %= components.length;
+    return components[index];
   }
 
   constructor(endpoint) {

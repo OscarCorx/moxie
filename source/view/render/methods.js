@@ -1,4 +1,5 @@
 class Render {
+
   static outline(model, c) {
     switch (c.source) {
       case "/absolute":
@@ -18,6 +19,9 @@ class Render {
         break;
       case "/table":
         Standard.outlineTable(model, c);
+        break;
+      case "/table/field":
+        Standard.outlineTableField(model, c);
         break;
       case "/table/row":
         Standard.outlineTableRow(model, c);
@@ -71,6 +75,9 @@ class Render {
         break;
       case "/table":
         Standard.detailTable(model, c);
+        break;
+      case "/table/field":
+        Standard.detailTableField(model, c);
         break;
       case "/table/row":
         Standard.detailTableRow(model, c);

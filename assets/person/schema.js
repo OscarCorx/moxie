@@ -16,9 +16,18 @@ ASSETS.push(
     archetype: "/archetype/person",
   },
   {
-    id: "/person_person_0",
     source: "/archetype/entity",
     entity: "/person/0",
+    archetype: "/archetype/person",
+  },
+  {
+    source: "/archetype/entity",
+    entity: "/person/1",
+    archetype: "/archetype/person",
+  },
+  {
+    source: "/archetype/entity",
+    entity: "/person/2",
     archetype: "/archetype/person",
   },
 );

@@ -4,28 +4,28 @@ COMPONENTS.push(
     style: "/theme/dark_mode",
     source: "/style/definition",
     key: "row_passive_0",
-    "background-color": "purple",
-    color: "yellow",
-  },
-  {
-    style: "/theme/dark_mode",
-    source: "/style/definition",
-    key: "row_passive_1",
-    "background-color": "yellow",
-    color: "purple",
-  },
-  {
-    style: "/theme/dark_mode",
-    source: "/style/definition",
-    key: "tab_inactive",
-    "background-color": "blue",
+    "background-color": "neutral_darkest",
     color: "white",
   },
   {
     style: "/theme/dark_mode",
     source: "/style/definition",
+    key: "row_passive_1",
+    "background-color": "neutral_dark",
+    color: "white",
+  },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
+    key: "tab_inactive",
+    "background-color": "neutral_dark",
+    color: "neutral",
+  },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
     key: "tab_passive",
-    "background-color": "green",
+    "background-color": "neutral",
     color: "white",
   },
   {
@@ -55,6 +55,12 @@ COMPONENTS.push(
     key: "button_focus",
     "background-color": "black",
     color: "white",
+  },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
+    key: "background",
+    "background-color": "black",
   }
 );
 /* DARK MODE */
@@ -160,8 +166,15 @@ COMPONENTS.push(
   {
     display: "/display/0",
     source: "/display/color/neutral",
-    black: "black",
-    white: "white"
+    black: "#000000",
+    neutral_darkest: "#1a1a1a",
+    neutral_darker: "#333333",
+    neutral_dark: "#4d4d4d",
+    neutral: "#808080",
+    neutral_light: "#b3b3b3",
+    neutral_lighter: "#cccccc",
+    neutral_lightest: "#e6e6e6",
+    white: "#ffffff"
   },
   {
     display: "/display/0",

@@ -16,10 +16,16 @@ class Standard {
 
   static outlineAbsolute(m, c) {
     let e = this.getElement(c.id, c.parent);
+    while (e.firstChild) {
+      e.firstChild.remove();
+    }
   }
 
   static detailAbsolute(m, c) {
+    const state = m.accessComponent("/current", "/view/style");
+    const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
+    this.addStyle(e, style["background"]);
   }
 
   static outlinePanel(m, c) {
@@ -111,11 +117,16 @@ class Standard {
   }
 
   static outlineTableField(m, c) {
-    let e = this.getElement(c.id, c.parent);
+    let e = this.getElement(c.id, c.parent, "th");
   }
 
   static detailTableField(m, c) {
+    const state = m.accessComponent("/current", "/view/style");
+    const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
+    e.textContent = c.content;
+    this.addStyle(e, style["tab_inactive"]);
+
   }
 
   static outlineTableCell(m, c) {

@@ -7,42 +7,58 @@ class Navigation {
 
   static incrementCard(model, reverse) {
     const state = model.accessComponent("/current", "/view/navigation");
-
-    const archetype_entity = model.getComponent(state.archetype_entity);
-    state.archetype_property = model.nextId(archetype_entity.archetype, "/archetype/property", 0);
-    const property = model.getComponent(state.archetype_property).property;
-    state.component = model.nextId(archetype_entity.entity, property, 0);
-    state.schema_field = model.nextId(property, "/schema/field", 0);
-    if (reverse) {
-      state.archetype_entity = model.previousId(archetype_entity.archetype, "/archetype/entity", archetype_entity.id);
-    } else {
-      state.archetype_entity = model.nextId(archetype_entity.archetype, "/archetype/entity", archetype_entity.id);
+    const archetype_entity = model.accessComponent(state.entity, "/archetype/entity");
+    let entity_id;
+    for (entity_id of model.accessComponentIds(archetype_entity.archetype, "/archetype/entity")) {
+      const component = model.getComponent(entity_id);
+      if (component.entity === state.entity) break;
     }
+    if (reverse) {
+      console.log("reverse", state.entity);
+      const id = model.previousId(archetype_entity.archetype, "/archetype/entity", entity_id);
+      state.entity = model.getComponent(id).entity;
+      console.log("reverse", state.entity);
+    } else {
+      console.log("forward", state.entity);
+      const id = model.nextId(archetype_entity.archetype, "/archetype/entity", entity_id);
+      state.entity = model.getComponent(id).entity;
+      console.log("forward", state.entity);
+    }
+    console.log(state.entity);
+    const id = model.nextId(archetype_entity.archetype, "/archetype/property", 0);
+    state.property = model.getComponent(id).property;
+    state.component = model.nextId(archetype_entity.entity, state.property, 0);
+    state.schema_field = model.nextId(state.property, "/schema/field", 0);
   }
 
   static incrementFace(model, reverse) {
+    console.log("INCREMENT")
     const state = model.accessComponent("/current", "/view/navigation");
-    const archetype_entity = model.getComponent(state.archetype_entity);
-    if (reverse) {
-      state.archetype_property = model.previousId(archetype_entity.archetype, "/archetype/property", state.archetype_property);
-    } else {
-      state.archetype_property = model.nextId(archetype_entity.archetype, "/archetype/property", state.archetype_property);
+    const archetype_entity = model.accessComponent(state.entity, "/archetype/entity");
+    let property_id;
+    for (property_id of model.accessComponentIds(archetype_entity.archetype, "/archetype/property")) {
+      const component = model.getComponent(property_id);
+      if (component.property === state.property) break;
     }
-    const property = model.getComponent(state.archetype_property).property;
-    state.component = model.nextId(archetype_entity.entity, property, 0);
-    state.schema_field = model.nextId(property, "/schema/field", 0);
+    if (reverse) {
+      const id = model.previousId(archetype_entity.archetype, "/archetype/property", property_id);
+      state.property = model.getComponent(id).property;
+    } else {
+      const id = model.nextId(archetype_entity.archetype, "/archetype/property", property_id);
+      state.property = model.getComponent(id).property;
+    }
+    state.component = model.nextId(archetype_entity.entity, state.property, 0);
+    console.log(model.getComponent(state.component));
+    state.schema_field = model.nextId(state.property, "/schema/field", 0);
   }
 
   static incrementSecondary(model, reverse) {
     const state = model.accessComponent("/current", "/view/navigation");
-    const archetype_entity = model.getComponent(state.archetype_entity);
 
     if (reverse) {
-      const property = model.getComponent(state.archetype_property).property;
-      state.component = model.previousId(archetype_entity.entity, property, state.component);
+      state.component = model.previousId(state.entity, state.property, state.component);
     } else {
-      const property = model.getComponent(state.archetype_property).property;
-      state.component = model.nextId(archetype_entity.entity, property, state.component);
+      state.component = model.nextId(state.entity, state.property, state.component);
     }
   }
 
@@ -54,11 +70,9 @@ class Navigation {
   static incrementPrimary(model, reverse) {
     const state = model.accessComponent("/current", "/view/navigation");
     if (reverse) {
-      const property = model.getComponent(state.archetype_property).property;
-      state.schema_field = model.previousId(property, "/schema/field", state.schema_field);
+      state.schema_field = model.previousId(state.property, "/schema/field", state.schema_field);
     } else {
-      const property = model.getComponent(state.archetype_property).property;
-      state.schema_field = model.nextId(property, "/schema/field", state.schema_field);
+      state.schema_field = model.nextId(state.property, "/schema/field", state.schema_field);
     }
   }
 

@@ -4,26 +4,32 @@ COMPONENTS.push(
     procedure: "/render",
     event: "/event/user/input",
     action: "/detail/navigation",
-    routine: (model, header, resultId) => {
-      // Render.detailNavigation(model, {});
-    },
+    routine: (model, header, resultId) => { },
   },
   {
     source: "/procedure/subscription",
     procedure: "/render",
     event: "/event/navigation/component",
-    action: "/detail",
-    routine: (model, header, resultId) => {
-      Render.detail(model);
-    },
+    routine: (model, header, resultId) => { },
   },
   {
     source: "/procedure/subscription",
     procedure: "/render",
     event: "/event/style/compiled",
-    action: "/full/render",
     routine: (model, header, resultId) => {
-      console.log("HERE WE GO")
+      const contents = Query.fullRender(model);
+      for (const c of contents) {
+        Render.outline(model, c);
+        Render.detail(model, c);
+      }
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
+    event: "/event/previous",
+    action: "/detail",
+    routine: (model, header, resultId) => {
       const contents = Query.fullRender(model);
       for (const c of contents) {
         Render.outline(model, c);
@@ -35,21 +41,13 @@ COMPONENTS.push(
     source: "/procedure/subscription",
     procedure: "/render",
     event: "/event/next",
-    action: "/detail",
-    routine: (model, header, resultId) => {
-      Render.outline(model);
-      Render.detail(model);
-    },
-  },
-  {
-    source: "/procedure/subscription",
-    procedure: "/render",
-    event: "/event/next",
     action: "/detail/navigation",
     routine: (model, header, resultId) => {
-      // Render.detailNavigation(model, {
-      //   action: "/event/next",
-      // });
+      const contents = Query.fullRender(model);
+      for (const c of contents) {
+        Render.outline(model, c);
+        Render.detail(model, c);
+      }
     },
   },
   {
@@ -58,8 +56,12 @@ COMPONENTS.push(
     event: "/event/forward",
     action: "/detail",
     routine: (model, header, resultId) => {
-      Render.outline(model);
-      Render.detail(model);
+      console.log("jhere")
+      const contents = Query.fullRender(model);
+      for (const c of contents) {
+        Render.outline(model, c);
+        Render.detail(model, c);
+      }
     },
   },
   {
@@ -68,9 +70,11 @@ COMPONENTS.push(
     event: "/event/forward",
     action: "/detail/navigation",
     routine: (model, header, resultId) => {
-      // Render.detailNavigation(model, {
-      //   action: "/event/forward",
-      // });
+      const contents = Query.fullRender(model);
+      for (const c of contents) {
+        Render.outline(model, c);
+        Render.detail(model, c);
+      }
     },
   },
   {
@@ -79,8 +83,11 @@ COMPONENTS.push(
     event: "/event/flip",
     action: "/outline/detail",
     routine: (model, header, resultId) => {
-      Render.outline(model);
-      Render.detail(model);
+      const contents = Query.fullRender(model);
+      for (const c of contents) {
+        Render.outline(model, c);
+        Render.detail(model, c);
+      }
     },
   },
   {
@@ -89,9 +96,11 @@ COMPONENTS.push(
     event: "/event/flip",
     action: "/detail/navigation",
     routine: (model, header, resultId) => {
-      // Render.detailNavigation(model, {
-      //   action: "/event/flip",
-      // });
+      const contents = Query.fullRender(model);
+      for (const c of contents) {
+        Render.outline(model, c);
+        Render.detail(model, c);
+      }
     },
   },
   {
@@ -100,8 +109,11 @@ COMPONENTS.push(
     event: "/event/draw",
     action: "/outline/detail",
     routine: (model, header, resultId) => {
-      Render.outline(model);
-      Render.detail(model);
+      const contents = Query.fullRender(model);
+      for (const c of contents) {
+        Render.outline(model, c);
+        Render.detail(model, c);
+      }
     },
   },
   {
@@ -110,9 +122,11 @@ COMPONENTS.push(
     event: "/event/draw",
     action: "/detail/navigation",
     routine: (model, header, resultId) => {
-      // Render.detailNavigation(model, {
-      //   action: "/event/draw",
-      // });
+      const contents = Query.fullRender(model);
+      for (const c of contents) {
+        Render.outline(model, c);
+        Render.detail(model, c);
+      }
     },
   },
   {

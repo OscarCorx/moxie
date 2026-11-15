@@ -9,7 +9,6 @@ ASSETS.push(
       description: "This is Joseph Average, a lovely example.",
     },
     {
-      id: "/address/0",
       source: "/location",
       entity: "/person/0",
       address_1: "123 Easy Street",

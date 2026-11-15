@@ -1,4 +1,3 @@
-//"/message/navigation/component"
 COMPONENTS.push(
   {
     source: "/procedure/subscription",
@@ -20,7 +19,7 @@ COMPONENTS.push(
     event: "/message/next",
     action: "/increment_primary",
     routine: (model, message, resultId) => {
-      Navigation.incrementPrimary(model);
+      Navigation.incrementPrimary(model, true);
       model.setComponent({
         source: "/message/header",
         result: resultId,
@@ -48,7 +47,7 @@ COMPONENTS.push(
     event: "/message/forward",
     action: "/increment_secondary",
     routine: (model, message, resultId) => {
-      Navigation.incrementSecondary(model);
+      Navigation.incrementSecondary(model, false);
       model.setComponent({
         source: "/message/header",
         result: resultId,
@@ -62,7 +61,7 @@ COMPONENTS.push(
     event: "/message/back",
     action: "/increment_secondary",
     routine: (model, message, resultId) => {
-      Navigation.incrementSecondary(model, false);
+      Navigation.incrementSecondary(model, true);
       model.setComponent({
         source: "/message/header",
         result: resultId,
@@ -76,7 +75,7 @@ COMPONENTS.push(
     event: "/message/flip",
     action: "/increment_face",
     routine: (model, message, resultId) => {
-      Navigation.incrementFace(model);
+      Navigation.incrementFace(model, false);
       model.setComponent({
         source: "/message/header",
         result: resultId,
@@ -90,7 +89,7 @@ COMPONENTS.push(
     event: "/message/reverse",
     action: "/increment_face",
     routine: (model, message, resultId) => {
-      Navigation.incrementFace(model, false);
+      Navigation.incrementFace(model, true);
       model.setComponent({
         source: "/message/header",
         result: resultId,
@@ -105,7 +104,12 @@ COMPONENTS.push(
     result: "/message/draw",
     action: "/increment_card",
     routine: (model, message, resultId) => {
-      Navigation.incrementCard(model);
+      Navigation.incrementCard(model, false);
+      model.setComponent({
+        source: "/message/header",
+        result: resultId,
+        event: "/event/draw",
+      });
     },
   },
   {
@@ -115,7 +119,12 @@ COMPONENTS.push(
     result: "/message/replace",
     action: "/increment_card",
     routine: (model, message, resultId) => {
-      Navigation.incrementCard(model, false);
+      Navigation.incrementCard(model, true);
+      model.setComponent({
+        source: "/message/header",
+        result: resultId,
+        event: "/event/replace",
+      });
     },
   },
   {
@@ -124,7 +133,7 @@ COMPONENTS.push(
     event: "/message/exit",
     action: "/change_component",
     routine: (model, message, resultId) => {
-      // Navigation.incrementEntity(model, true);
+      Navigation.incrementEntity(model, true);
       model.setComponent({
         source: "/message/header",
         result: resultId,

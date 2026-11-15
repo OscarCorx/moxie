@@ -16,7 +16,7 @@ COMPONENTS.push(
   {
     id: "/current/style",
     source: "/view/style",
-    main_theme: "/theme/light_mode",
+    main_theme: "/theme/dark_mode",
     stable_theme: "/theme/light",
     main_layout: "/layout/0",
     stable_layout: "/layout/1",

@@ -6,26 +6,6 @@ class Query {
     this.getWorkspace(model, contents);
     return contents;
   }
-  /* CONTROLS AND WINDOWS */
-  static getLayout(model, contents) {
-    // const element_ids = model.accessComponentIds("/current", "/view/absolute");
-    // for (const id of element_ids) {
-    //   const c = model.getComponent(id);
-    //   if (!c.active) continue;
-    //   const content = {
-    //     id: c.id,
-    //     source: "/absolute",
-    //     handle: c.handle,
-    //     top: `${c.y}px`,
-    //     left: `${c.x}px`,
-    //   };
-    //   if (c.width) {
-    //     content.width = c.width;
-    //     content.height = c.height;
-    //   }
-    //   contents.push(content);
-    // }
-  }
 
   static getAbsolute(model, element_id) {
     const c = model.getComponent(element_id);
@@ -37,11 +17,7 @@ class Query {
       left: `${c.x}px`,
     };
   }
-  /* NAVIGATION, SETTINGS, ACTIONS */
-  static getControls(model) {
 
-  }
-  /* WINDOWS */
   /* PRIMARY USER TOOLS */
   static getPrimary(model, contents) {
     const c = model.getComponent("/absolute/primary");
@@ -90,7 +66,8 @@ class Query {
     const archetype_entity = model.accessComponent(state.entity, "/archetype/entity");
     const property_ids = model.accessComponentIds(archetype_entity.archetype, "/archetype/property")
     const property = model.getComponent(property_ids[0]);
-    const component_ids = model.accessComponentIds(state.entity, property.property);
+    const component_ids = model.accessComponentIds(state.entity, state.property);
+    console.log("GET WORKSPACE")
     const field_ids = model.accessComponentIds(state.property, "/schema/field");
     contents.push(
       {
@@ -119,16 +96,36 @@ class Query {
         id: "/absolute/workspace/header/entry_0",
         source: "/entry",
         parent: "/absolute/workspace/header",
-        content: "0",
+        content: state.entity,
       },
       {
         id: "/absolute/workspace/header/entry_1",
         source: "/entry",
         parent: "/absolute/workspace/header",
-        content: "1",
+        content: state.property,
+      },
+      {
+        id: "/absolute/workspace/header/entry_2",
+        source: "/entry",
+        parent: "/absolute/workspace/header",
+        content: state.component,
+      },
+      {
+        id: "/absolute/workspace/header/entry_3",
+        source: "/entry",
+        parent: "/absolute/workspace/header",
+        content: state.schema_field,
       },
     );
-    let r = 0;
+    for (const field_id of field_ids) {
+      const field = model.getComponent(field_id);
+      contents.push({
+        id: `/absolute/workspace/table/field/${field_id}`,
+        source: "/table/field",
+        parent: "/absolute/workspace/table/header",
+        content: field.key,
+      });
+    }
     for (const r in component_ids) {
       const component_id = component_ids[r];
       const component = model.getComponent(component_id);
