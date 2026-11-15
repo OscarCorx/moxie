@@ -20,6 +20,7 @@ class Model {
     const componentIds = (this._entities[entity] || {})[source] || [];
     return this._components[componentIds[index || 0]];
   }
+
   accessComponentIds(entity, source) {
     if (!this._entities[entity]) return [];
     return this._entities[entity][source] || [];

@@ -4,26 +4,28 @@ ASSETS.push(
     source: "/archetype/property",
     property: "/location",
     archetype: "/archetype/person",
-    access: "/collection",
   },
   {
     source: "/archetype/property",
     property: "/demographics",
     archetype: "/archetype/person",
-    access: "/collection",
+  },
+  {
+    source: "/archetype/property",
+    property: "/contact",
+    archetype: "/archetype/person",
   },
   {
     id: "/person_person_0",
     source: "/archetype/entity",
     entity: "/person/0",
     archetype: "/archetype/person",
-    access: "/collection",
   },
 );
 /* LOCATION */
 ASSETS.push(
   {
-    source: "/display",
+    source: "/present",
     entity: "/location",
     title: "Location",
     key: "location",
@@ -71,7 +73,7 @@ ASSETS.push(
 /* DEMOGRAPHICS */
 ASSETS.push(
   {
-    source: "/display",
+    source: "/present",
     entity: "/demographics",
     title: "Demographics",
     key: "demographics",
@@ -119,7 +121,7 @@ ASSETS.push(
 /* CONTACT */
 ASSETS.push(
   {
-    source: "/display",
+    source: "/present",
     entity: "/contact",
     title: "Contact",
     key: "contact",

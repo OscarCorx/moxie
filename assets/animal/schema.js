@@ -9,7 +9,7 @@ ASSETS.push(
 
 ASSETS.push(
   {
-    source: "/display",
+    source: "/present",
     entity: "/identification",
     title: "Identification",
     key: "identification",

@@ -1,19 +1,120 @@
-/* STYLE DEFINITION */
+/* DARK MODE */
 COMPONENTS.push(
   {
     style: "/theme/dark_mode",
     source: "/style/definition",
-    key: "style_class",
-    font_size: "glyph_xs",
-    padding: "space_l",
+    key: "row_passive_0",
+    "background-color": "purple",
+    color: "yellow",
   },
   {
-    style: "/style/light_mode",
+    style: "/theme/dark_mode",
     source: "/style/definition",
-    key: "style_class",
-    font_size: "glyph_xs",
-    padding: "space_l",
+    key: "row_passive_1",
+    "background-color": "yellow",
+    color: "purple",
   },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
+    key: "tab_inactive",
+    "background-color": "blue",
+    color: "white",
+  },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
+    key: "tab_passive",
+    "background-color": "green",
+    color: "white",
+  },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
+    key: "tab_focus",
+    "background-color": "purple",
+    color: "white",
+  },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
+    key: "button_inactive",
+    "background-color": "yellow",
+    color: "white",
+  },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
+    key: "button_passive",
+    "background-color": "blue",
+    color: "white",
+  },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
+    key: "button_focus",
+    "background-color": "black",
+    color: "white",
+  }
+);
+/* DARK MODE */
+COMPONENTS.push(
+  {
+    style: "/theme/light_mode",
+    source: "/style/definition",
+    key: "row_passive_0",
+    "background-color": "purple",
+    color: "yellow",
+  },
+  {
+    style: "/theme/light_mode",
+    source: "/style/definition",
+    key: "row_passive_1",
+    "background-color": "yellow",
+    color: "purple",
+  },
+  {
+    style: "/theme/light_mode",
+    source: "/style/definition",
+    key: "tab_inactive",
+    "background-color": "blue",
+    color: "white",
+  },
+  {
+    style: "/theme/light_mode",
+    source: "/style/definition",
+    key: "tab_passive",
+    "background-color": "green",
+    color: "white",
+  },
+  {
+    style: "/theme/light_mode",
+    source: "/style/definition",
+    key: "tab_focus",
+    "background-color": "purple",
+    color: "white",
+  },
+  {
+    style: "/theme/light_mode",
+    source: "/style/definition",
+    key: "button_inactive",
+    "background-color": "yellow",
+    color: "white",
+  },
+  {
+    style: "/theme/light_mode",
+    source: "/style/definition",
+    key: "button_passive",
+    "background-color": "blue",
+    color: "white",
+  },
+  {
+    style: "/theme/light_mode",
+    source: "/style/definition",
+    key: "button_focus",
+    "background-color": "white",
+    color: "black",
+  }
 );
 /* ARCHETYPE */
 COMPONENTS.push(

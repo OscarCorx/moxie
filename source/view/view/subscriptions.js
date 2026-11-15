@@ -10,6 +10,5 @@ COMPONENTS.push(
       model.setReference("/current", "/view/style", "/current/style");
       model.setReference("/current", "/view/user_input", "/current/user_input");
     },
-    transition: (model, message, resultId) => { },
   },
 );

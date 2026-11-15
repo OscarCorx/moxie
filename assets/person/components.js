@@ -1,7 +1,7 @@
 ASSETS.push(
   ...[
     {
-      source: "/display",
+      source: "/present",
       entity: "/person/0",
       title: "Joe Average",
       key: "joe_average",
@@ -22,6 +22,24 @@ ASSETS.push(
       source: "/location",
       entity: "/person/0",
       address_1: "222 Easy Street",
+      address_2: "Unit 3",
+      city: "Springfield",
+      state: "AL",
+      zipcode: "10101",
+    },
+    {
+      source: "/location",
+      entity: "/person/0",
+      address_1: "333 Easy Street",
+      address_2: "Unit 3",
+      city: "Springfield",
+      state: "AL",
+      zipcode: "10101",
+    },
+    {
+      source: "/location",
+      entity: "/person/0",
+      address_1: "333 Easy Street",
       address_2: "Unit 3",
       city: "Springfield",
       state: "AL",

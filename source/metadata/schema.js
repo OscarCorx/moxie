@@ -45,37 +45,37 @@ COMPONENTS.push(
 COMPONENTS.push(
   ...[
     {
-      parent: "/display",
+      parent: "/present",
       source: "/schema/field",
       kind: "/entity",
       key: "entity",
     },
     {
-      parent: "/display",
+      parent: "/present",
       source: "/schema/field",
       kind: "/string",
       key: "key",
     },
     {
-      parent: "/display",
+      parent: "/present",
       source: "/schema/field",
       kind: "/sting",
       key: "name",
     },
     {
-      parent: "/display",
+      parent: "/present",
       source: "/schema/field",
       kind: "/sting",
       key: "icon",
     },
     {
-      parent: "/display",
+      parent: "/present",
       source: "/schema/field",
       kind: "/sting",
       key: "description",
     },
     {
-      parent: "/display",
+      parent: "/present",
       source: "/schema/field",
       kind: "/sting",
       key: "name",

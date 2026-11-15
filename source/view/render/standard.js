@@ -24,11 +24,31 @@ class Standard {
 
   static outlinePanel(m, c) {
     let e = this.getElement(c.id, c.parent);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "column",
+    });
     e = this.getElement(c.header, c.id);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "row",
+    });
     e = this.getElement(c.body, c.id);
     e = this.getElement(c.footer, c.id);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "row",
+    });
     e = this.getElement(c.tabs, c.footer);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "row",
+    });
     e = this.getElement(c.tab, c.footer);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "row",
+    });
   }
 
   static detailPanel(m, c) { }
@@ -67,6 +87,9 @@ class Standard {
 
   static outlineTable(m, c) {
     let e = this.getElement(c.id, c.parent, "table");
+    this.addStyle(e, {
+      "border-collapse": "collapse",
+    });
     e = this.getElement(c.table_header, c.id, "tr");
   }
 
@@ -80,7 +103,11 @@ class Standard {
   }
 
   static detailTableRow(m, c) {
-    let e = this.getElement(c.id, c.parent);
+    const state = m.accessComponent("/current", "/view/style");
+    const style = m.getEntity(state.main_theme);
+    let e = this.getElement(c.id);
+    const display = (c.row % 2) ? style["row_passive_0"] : style["row_passive_1"];
+    this.addStyle(e, display);
   }
 
   static outlineTableField(m, c) {
@@ -92,7 +119,7 @@ class Standard {
   }
 
   static outlineTableCell(m, c) {
-    let e = this.getElement(c.id, c.parent);
+    let e = this.getElement(c.id, c.parent, "td");
   }
 
   static detailTableCell(m, c) {
@@ -141,7 +168,16 @@ class Standard {
   }
 
   static detailButton(m, c) {
+    const state = m.accessComponent("/current", "/view/style");
+    const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
+    if (c.focus === "inactive") {
+      this.addStyle(e, style["button_inactive"]);
+    } else if (c.active === "passive") {
+      this.addStyle(e, style["button_passive"]);
+    } else {
+      this.addStyle(e, style["button_focus"]);
+    }
     e.textContent = c.content;
   }
 
@@ -168,7 +204,16 @@ class Standard {
   }
 
   static detailTab(m, c) {
+    const state = m.accessComponent("/current", "/view/style");
+    const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
+    if (c.active === "inactive") {
+      this.addStyle(e, style["tab_inactive"]);
+    } else if (c.active === "passive") {
+      this.addStyle(e, style["tab_passive"]);
+    } else {
+      this.addStyle(e, style["tab_focus"]);
+    }
     e.textContent = c.content;
   }
 }

@@ -6,7 +6,11 @@ COMPONENTS.push(
     action: "/style/compile",
     routine: (model, header, resultId) => {
       Style.compile(model);
+      model.setComponent({
+        source: "/message/header",
+        result: resultId,
+        event: "/event/style/compiled",
+      });
     },
-    transition: (model, header, resultId) => { },
   },
 );

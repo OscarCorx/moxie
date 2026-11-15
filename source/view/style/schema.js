@@ -93,7 +93,7 @@ COMPONENTS.push(
     archetype: "/archetype/display",
   },
   {
-    source: "/archetype/entity",
+    source: "/archetype/property",
     property: "/display/color/general",
     archetype: "/archetype/display",
   },

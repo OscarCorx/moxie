@@ -11,7 +11,8 @@ class Style {
       Object.assign(display, model.accessComponent(state.main_display, p.property));
     }
 
-    for (const id of model.accessComponentIds(state.main_theme, "/theme/definition")) {
+    const definition_ids = model.accessComponentIds(state.main_theme, "/style/definition");
+    for (const id of definition_ids) {
       const definition = model.getComponent(id);
       const s = {};
 
@@ -21,5 +22,6 @@ class Style {
       }
       style[definition.key] = s;
     }
+    console.log("HERE")
   }
 }

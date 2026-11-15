@@ -1,6 +1,6 @@
 ASSETS.push(
   {
-    source: "/display",
+    source: "/present",
     entity: "/dog",
     title: "Poochie",
     key: "poochie",

@@ -136,6 +136,7 @@ class Query {
         id: `/absolute/workspace/table/row/${r}`,
         source: "/table/row",
         parent: "/absolute/workspace/table",
+        row: r,
       });
 
       for (const c in field_ids) {
@@ -151,9 +152,10 @@ class Query {
     }
     contents.push({
       id: "/absolute/workspace/tab/new",
-      source: "/tab",
+      source: "/button",
       parent: "/absolute/workspace/tab",
       content: "NEW TAB",
+      active: "focus",
     });
     for (const i in property_ids) {
       const property_id = property_ids[i];
@@ -163,6 +165,7 @@ class Query {
         source: "/tab",
         parent: "/absolute/workspace/tabs",
         content: archetype_property.property,
+        active: "passive",
       });
     }
   }

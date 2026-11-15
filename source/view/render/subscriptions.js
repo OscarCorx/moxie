@@ -20,7 +20,7 @@ COMPONENTS.push(
   {
     source: "/procedure/subscription",
     procedure: "/render",
-    event: "/event/load",
+    event: "/event/style/compiled",
     action: "/full/render",
     routine: (model, header, resultId) => {
       console.log("HERE WE GO")
