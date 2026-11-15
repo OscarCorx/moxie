@@ -45,5 +45,35 @@ ASSETS.push(
       date_of_birth: "1980-02-20",
       gender: "Male",
     },
+    {
+      source: "/contact",
+      entity: "/person/0",
+      kind: "Telephone",
+      value: "(123) 555-1234"
+    },
+    {
+      source: "/contact",
+      entity: "/person/0",
+      kind: "Telephone",
+      value: "(456) 555-1234"
+    },
+    {
+      source: "/contact",
+      entity: "/person/0",
+      kind: "Telephone",
+      value: "(789) 555-1234"
+    },
+    {
+      source: "/contact",
+      entity: "/person/0",
+      kind: "Email",
+      value: "primary@example.com"
+    },
+    {
+      source: "/contact",
+      entity: "/person/0",
+      kind: "Email",
+      value: "secondary@example.com"
+    }
   ],
 );

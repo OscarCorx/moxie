@@ -127,17 +127,19 @@ class KeyboardActions {
 }
 
 class MouseActions {
-  static down(model, target, x, y, resultId) {
+  static down(model, element_id, x, y, resultId) {
     const state = model.accessComponent("/current", "/view/user_input");
-    state.mouse_target = target;
+    state.mouse_target = element_id;
+    const element = model.getComponent(element_id);
+    element.offset_x = x - element.x;
+    element.offset_y = y - element.y;
   }
+
   static move(model, x, y, resultId) {
     const state = model.accessComponent("/current", "/view/user_input");
-
-    console.log("MOUSE MOVE", x, y)
   }
+
   static up(model, x, y, resultId) {
-    console.log("MOUSE UP", x, y)
     const state = model.accessComponent("/current", "/view/user_input");
     state.mouse_target = null;
   }

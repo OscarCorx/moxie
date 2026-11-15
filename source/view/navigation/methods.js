@@ -63,8 +63,9 @@ class Navigation {
   }
 
   static dragMove(model, x, y, resultId) {
-    const hud = model.accessComponent("/current", "/view/hud");
-    hud.primary_x = x;
-    hud.primary_y = y;
+    const user_input = model.accessComponent("/current", "/view/user_input");
+    const target = model.getComponent(user_input.mouse_target);
+    target.x = x - target.offset_x;
+    target.y = y - target.offset_y;
   }
 }

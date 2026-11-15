@@ -20,7 +20,7 @@ ASSETS.push(
     access: "/collection",
   },
 );
-
+/* LOCATION */
 ASSETS.push(
   {
     source: "/display",
@@ -68,7 +68,7 @@ ASSETS.push(
     key: "zipcode",
   },
 );
-
+/* DEMOGRAPHICS */
 ASSETS.push(
   {
     source: "/display",
@@ -114,5 +114,34 @@ ASSETS.push(
     source: "/schema/field",
     kind: "/string",
     key: "gender",
+  },
+);
+/* CONTACT */
+ASSETS.push(
+  {
+    source: "/display",
+    entity: "/contact",
+    title: "Contact",
+    key: "contact",
+    icon: "[C]",
+    description: "This component gives contact information",
+  },
+  {
+    parent: "/contact",
+    source: "/schema/field",
+    kind: "/entity",
+    key: "entity",
+  },
+  {
+    parent: "/contact",
+    source: "/schema/field",
+    kind: "/string",
+    key: "kind",
+  },
+  {
+    parent: "/contact",
+    source: "/schema/field",
+    kind: "/string",
+    key: "value",
   },
 );

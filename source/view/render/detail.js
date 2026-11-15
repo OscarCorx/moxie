@@ -16,32 +16,53 @@ class Detail {
 
   static element(model, c) {
     switch (c.source) {
-      case "/layout":
-        this.layout(model, c);
+      case "/absolute":
+        Standard.detailAbsolute(model, c);
         break;
       case "/panel":
-        this.panel(model, c);
+        Standard.detailPanel(model, c);
+        break;
+      case "/panel/row":
+        Standard.detailPanelRow(model, c);
+        break;
+      case "/board":
+        Standard.detailBoard(model, c);
+        break;
+      case "/board/tile":
+        Standard.detailAbsolute(model, c);
         break;
       case "/table":
-        this.panel(model, c);
+        Standard.detailTable(model, c);
         break;
-      case "/info/pane":
-        this.infoPane(model, c);
+      case "/table/row":
+        Standard.detailTableRow(model, c);
         break;
-      case "/info/entry":
-        this.infoEntry(model, c);
+      case "/table/cell":
+        Standard.detailTableCell(model, c);
         break;
-      case "/text/entry":
-        this.textEntry(model, c);
+      case "/entry":
+        Standard.detailEntry(model, c);
         break;
       case "/chip":
-        this.chip(model, c);
+        Standard.detailChip(model, c);
+        break;
+      case "/toggle":
+        Standard.detailToggle(model, c);
+        break;
+      case "/text":
+        Standard.detailText(model, c);
         break;
       case "/button":
-        this.button(model, c);
+        Standard.detailButton(model, c);
         break;
       case "/link":
-        this.link(model, c);
+        Standard.detailLink(model, c);
+        break;
+      case "/field":
+        Standard.detailField(model, c);
+        break;
+      case "/tab":
+        Standard.detailTab(model, c);
         break;
     }
   }

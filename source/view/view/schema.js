@@ -35,6 +35,15 @@ COMPONENTS.push(
 /* HUD */
 COMPONENTS.push(
   {
+    parent: "/view/absolute",
+    source: "/schema/field",
+    kind: "/entity",
+    key: "thread",
+  },
+);
+/* HUD */
+COMPONENTS.push(
+  {
     parent: "/view/hud",
     source: "/schema/field",
     kind: "/entity",

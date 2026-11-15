@@ -178,8 +178,11 @@ COMPONENTS.push(
     action: "/mouse/move",
     routine: (model, message, resultId) => {
       Navigation.dragMove(model, message.x, message.y);
+      const user_input = model.accessComponent("/current", "/view/user_input");
+
       model.setComponent({
         source: "/message/header",
+        element_id: user_input.mouse_target,
         result: resultId,
         event: "/event/drag",
       });
