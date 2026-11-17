@@ -71,8 +71,10 @@ class Navigation {
     const state = model.accessComponent("/current", "/view/navigation");
     if (reverse) {
       state.schema_field = model.previousId(state.property, "/schema/field", state.schema_field);
+      console.log("REVERSE")
     } else {
       state.schema_field = model.nextId(state.property, "/schema/field", state.schema_field);
+      console.log("FORWARD")
     }
   }
 

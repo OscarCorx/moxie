@@ -1,4 +1,10 @@
 class Render {
+  static background(m) {
+    const state = m.accessComponent("/current", "/view/style");
+    const style = m.getEntity(state.main_theme);
+    let e = document.getElementsByTagName("body")[0];
+    Object.assign(e.style, style["background"]);
+  }
 
   static outline(model, c) {
     switch (c.source) {

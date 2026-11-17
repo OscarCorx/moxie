@@ -112,8 +112,13 @@ class Standard {
     const state = m.accessComponent("/current", "/view/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id);
-    const display = (c.row % 2) ? style["row_passive_0"] : style["row_passive_1"];
-    this.addStyle(e, display);
+    if (c.focus) {
+      this.addStyle(e, style["row_focus"]);
+    } else if (c.row % 2) {
+      this.addStyle(e, style["row_passive_0"]);
+    } else {
+      this.addStyle(e, style["row_passive_1"]);
+    }
   }
 
   static outlineTableField(m, c) {
@@ -125,7 +130,8 @@ class Standard {
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     e.textContent = c.content;
-    this.addStyle(e, style["tab_inactive"]);
+    const display = (c.focus) ? style["field_focus"] : style["field_inactive"];
+    this.addStyle(e, display);
 
   }
 

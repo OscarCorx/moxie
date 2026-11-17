@@ -3,6 +3,12 @@ COMPONENTS.push(
   {
     style: "/theme/dark_mode",
     source: "/style/definition",
+    key: "background",
+    "background-color": "black",
+  },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
     key: "row_passive_0",
     "background-color": "neutral_darkest",
     color: "white",
@@ -12,6 +18,27 @@ COMPONENTS.push(
     source: "/style/definition",
     key: "row_passive_1",
     "background-color": "neutral_dark",
+    color: "white",
+  },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
+    key: "row_focus",
+    "background-color": "primary_highlight",
+    color: "white",
+  },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
+    key: "field_inactive",
+    "background-color": "neutral_dark",
+    color: "neutral",
+  },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
+    key: "field_focus",
+    "background-color": "primary_accent",
     color: "white",
   },
   {
@@ -179,9 +206,9 @@ COMPONENTS.push(
   {
     display: "/display/0",
     source: "/display/color/primary",
-    primary: "primary",
-    primary_highlight: "primary_highlight",
-    primary_accent: "primary_accent",
+    primary: "#594370",
+    primary_highlight: "#8c69af",
+    primary_accent: "#cc99ff",
   },
   {
     display: "/display/0",

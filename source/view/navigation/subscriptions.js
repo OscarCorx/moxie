@@ -19,7 +19,7 @@ COMPONENTS.push(
     event: "/message/next",
     action: "/increment_primary",
     routine: (model, message, resultId) => {
-      Navigation.incrementPrimary(model, true);
+      Navigation.incrementPrimary(model, false);
       model.setComponent({
         source: "/message/header",
         result: resultId,
@@ -33,7 +33,7 @@ COMPONENTS.push(
     event: "/message/previous",
     action: "/increment_primary",
     routine: (model, message, resultId) => {
-      Navigation.incrementPrimary(model, false);
+      Navigation.incrementPrimary(model, true);
       model.setComponent({
         source: "/message/header",
         result: resultId,

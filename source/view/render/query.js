@@ -124,6 +124,7 @@ class Query {
         source: "/table/field",
         parent: "/absolute/workspace/table/header",
         content: field.key,
+        focus: field_id === state.schema_field,
       });
     }
     for (const r in component_ids) {
@@ -134,6 +135,7 @@ class Query {
         source: "/table/row",
         parent: "/absolute/workspace/table",
         row: r,
+        focus: component_id == state.component,
       });
 
       for (const c in field_ids) {
