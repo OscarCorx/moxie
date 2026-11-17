@@ -45,6 +45,23 @@ COMPONENTS.push(
   {
     source: "/procedure/subscription",
     procedure: "/user_input",
+    event: "/message/entry/select",
+    action: "/entry/select",
+    routine: (model, message, resultId) => {
+      MouseActions.entrySelect(model);
+      model.setComponent({
+        id: model.ID(),
+        source: "/message/header",
+        event: "/event/entry/select",
+        result: resultId,
+        component: message.component,
+        field: message.field,
+      });
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/user_input",
     event: "/event/mouse/down",
     action: "/mouse/down",
     routine: (model, message, resultId) => {

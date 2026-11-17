@@ -15,7 +15,20 @@ COMPONENTS.push(
   {
     source: "/procedure/subscription",
     procedure: "/render",
-    event: "/event/style/compiled",
+    event: "/event/navigation/create_state",
+    routine: (model, header, resultId) => {
+      Render.background(model);
+      const contents = Query.fullRender(model);
+      for (const c of contents) {
+        Render.outline(model, c);
+        Render.detail(model, c);
+      }
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
+    event: "/event/navigation/change_entry",
     routine: (model, header, resultId) => {
       Render.background(model);
       const contents = Query.fullRender(model);
@@ -57,20 +70,6 @@ COMPONENTS.push(
     event: "/event/forward",
     action: "/detail",
     routine: (model, header, resultId) => {
-      console.log("jhere")
-      const contents = Query.fullRender(model);
-      for (const c of contents) {
-        Render.outline(model, c);
-        Render.detail(model, c);
-      }
-    },
-  },
-  {
-    source: "/procedure/subscription",
-    procedure: "/render",
-    event: "/event/forward",
-    action: "/detail/navigation",
-    routine: (model, header, resultId) => {
       const contents = Query.fullRender(model);
       for (const c of contents) {
         Render.outline(model, c);
@@ -83,19 +82,6 @@ COMPONENTS.push(
     procedure: "/render",
     event: "/event/flip",
     action: "/outline/detail",
-    routine: (model, header, resultId) => {
-      const contents = Query.fullRender(model);
-      for (const c of contents) {
-        Render.outline(model, c);
-        Render.detail(model, c);
-      }
-    },
-  },
-  {
-    source: "/procedure/subscription",
-    procedure: "/render",
-    event: "/event/flip",
-    action: "/detail/navigation",
     routine: (model, header, resultId) => {
       const contents = Query.fullRender(model);
       for (const c of contents) {

@@ -6,7 +6,7 @@ class Process {
       }, event.detail.timeout || 0);
     });
     window.addEventListener("load", () => {
-      this.model.emit({ event: "/event/load", thread: thread });
+      this.model.emit({ event: "/event/load", thread: thread, entity: "/person/0" });
     });
   }
 
@@ -25,7 +25,7 @@ class Process {
         if (state_component && subscription.state && subscription.state !== state_component[subscription.procedure]) continue;
       }
       if (!subscription.routine) continue;
-      console.log(subscription.event, subscription.procedure, subscription.state, subscription.action);
+      // console.log(subscription.event, subscription.procedure, subscription.state, subscription.action);
       const resultId = this.model.ID();
       resultIds.push(resultId);
       subscription.routine(this.model, header, resultId);

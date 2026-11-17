@@ -143,4 +143,8 @@ class MouseActions {
     const state = model.accessComponent("/current", "/view/user_input");
     state.mouse_target = null;
   }
+
+  static entrySelect(model) {
+    state["/user_input"] = "/entry";
+  }
 }

@@ -122,7 +122,7 @@ class Standard {
   }
 
   static outlineTableField(m, c) {
-    let e = this.getElement(c.id, c.parent, "th");
+    let e = this.getElement(c.id, c.parent, "td");
   }
 
   static detailTableField(m, c) {
@@ -137,6 +137,13 @@ class Standard {
 
   static outlineTableCell(m, c) {
     let e = this.getElement(c.id, c.parent, "td");
+    e.addEventListener("click", (e) => {
+      m.emit({
+        event: "/event/entry/select",
+        component: c.component,
+        field: c.field,
+      });
+    });
   }
 
   static detailTableCell(m, c) {
@@ -149,7 +156,10 @@ class Standard {
   }
 
   static detailEntry(m, c) {
+    const state = m.accessComponent("/current", "/view/style");
+    const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
+    this.addStyle(e, style["field_inactive"]);
     e.textContent = `ENTRY: ${c.content}`;
   }
 

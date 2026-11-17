@@ -9,6 +9,8 @@ COMPONENTS.push(
       model.setComponent({
         source: "/message/header",
         result: resultId,
+        thread: header.thread,
+        entity: header.entity,
         event: "/event/style/compiled",
       });
     },

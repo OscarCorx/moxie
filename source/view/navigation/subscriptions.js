@@ -16,6 +16,35 @@ COMPONENTS.push(
   {
     source: "/procedure/subscription",
     procedure: "/navigation",
+    event: "/event/entry/select",
+    action: "/entry_select",
+    routine: (model, message, resultId) => {
+      console.log("ENTRY SELECT", message)
+      Navigation.changeEntry(model, message.component, message.field);
+      model.setComponent({
+        source: "/message/header",
+        result: resultId,
+        event: "/event/navigation/change_entry",
+      });
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/navigation",
+    event: "/event/style/compiled",
+    action: "/create_state",
+    routine: (model, message, resultId) => {
+      Navigation.createState(model, message.thread, message.entity);
+      model.setComponent({
+        source: "/message/header",
+        result: resultId,
+        event: "/event/navigation/create_state",
+      });
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/navigation",
     event: "/message/next",
     action: "/increment_primary",
     routine: (model, message, resultId) => {
