@@ -49,23 +49,22 @@ class KeyboardActions {
   static entry(model, value, resultId) {
     const user_input = model.accessComponent("/current", "/view/user_input");
     const state = model.accessComponent("/current", "/state");
-    let event = BINDINGS[value];
-    console.log("BINDINGS", event)
-    switch (event) {
-      case "/event/bind":
-        user_input.bind = true;
-        break;
-      case "/event/mode":
-        console.log("/event/bind", event)
-        user_input.mode = "/move";
-        state["/user_input"] = "/move";
-        break;
+    let binding = BINDINGS[value];
+    let event = "/event/user/input";
+    if (binding === "/event/bind") {
+      user_input.bind = true;
+    } else if (user_input.bind && binding === "/event/mode") {
+      user_input.mode = "/move";
+      state["/user_input"] = "/move";
+    } else if (value.length === 1) {
+      event = "/message/crud/input"
     }
     model.setComponent({
       id: model.ID(),
       source: "/message/header",
-      event: "/event/user/input",
+      event: event,
       result: resultId,
+      value: value,
     });
   }
 

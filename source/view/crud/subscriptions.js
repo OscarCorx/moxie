@@ -16,6 +16,20 @@ COMPONENTS.push(
   {
     source: "/procedure/subscription",
     procedure: "/crud",
+    event: "/message/crud/input",
+    action: "/crud/update",
+    routine: (model, header, resultId) => {
+      Crud.input(model, header);
+      model.setComponent({
+        source: "/message/header",
+        result: resultId,
+        event: "/event/update",
+      });
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/crud",
     event: "/message/new",
     action: "/crud/new",
     routine: (model, header, resultId) => {

@@ -12,6 +12,8 @@ class Navigation {
       field: field.id,
     });
     model.setReference(thread, "/view/navigation", c.id, true);
+    const user_input = model.accessComponent("/current", "/view/user_input");
+    user_input.buffer = "";
   }
 
   static exit(model) {
@@ -22,7 +24,6 @@ class Navigation {
 
   static incrementCard(model, reverse) {
     const state = model.accessComponent("/current", "/view/navigation");
-    console.log("incrementCard", state.component, state.property, state.field);
     let archetype_entity = model.getComponent(state.entity);
     if (reverse) {
       state.entity = model.previousId(archetype_entity.archetype, "/archetype/entity", state.entity);
@@ -38,7 +39,6 @@ class Navigation {
 
   static incrementFace(model, reverse) {
     const state = model.accessComponent("/current", "/view/navigation");
-    console.log("incrementFace", state.component, state.property, state.field);
     const archetype_entity = model.getComponent(state.entity);
     let archetype_property = model.getComponent(state.property);
     if (reverse) {
@@ -49,12 +49,10 @@ class Navigation {
     archetype_property = model.getComponent(state.property);
     state.component = model.nextId(archetype_entity.entity, archetype_property.property);
     state.field = model.nextId(archetype_property.property, "/schema/field");
-    console.log("incrementFace", state.component, state.property, state.field);
   }
 
   static incrementSecondary(model, reverse) {
     const state = model.accessComponent("/current", "/view/navigation");
-    console.log("incrementSecondary", state.component, state.property, state.field);
     const archetype_entity = model.getComponent(state.entity);
     const archetype_property = model.getComponent(state.property);
     if (reverse) {
@@ -66,7 +64,6 @@ class Navigation {
 
   static incrementPrimary(model, reverse) {
     const state = model.accessComponent("/current", "/view/navigation");
-    console.log("incrementPrimary", state.component, state.property, state.field);
     const archetype_property = model.getComponent(state.property);
     if (reverse) {
       state.field = model.previousId(archetype_property.property, "/schema/field", state.field);

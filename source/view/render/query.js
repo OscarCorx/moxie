@@ -68,6 +68,8 @@ class Query {
     const property_ids = model.accessComponentIds(archetype_property.archetype, "/archetype/property")
     const component_ids = model.accessComponentIds(archetype_entity.entity, archetype_property.property);
     const field_ids = model.accessComponentIds(archetype_property.property, "/schema/field");
+    const user_input = model.accessComponent("/current", "/view/user_input");
+
 
     const component = model.getComponent(state.component);
     const field = model.getComponent(state.field);
@@ -122,7 +124,7 @@ class Query {
         id: "/absolute/workspace/header/entry_3",
         source: "/entry",
         parent: "/absolute/workspace/header",
-        content: component[field.key],
+        content: user_input.buffer,
       },
     );
     for (const field_id of field_ids) {
@@ -138,7 +140,6 @@ class Query {
     for (const r in component_ids) {
       const component_id = component_ids[r];
       const component = model.getComponent(component_id);
-      console.log("COMPONENT", component_id, state.component)
       contents.push({
         id: `/absolute/workspace/table/row/${r}`,
         source: "/table/row",

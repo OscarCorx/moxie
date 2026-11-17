@@ -19,7 +19,6 @@ COMPONENTS.push(
     event: "/event/entry/select",
     action: "/entry_select",
     routine: (model, message, resultId) => {
-      console.log("ENTRY SELECT", message)
       Navigation.changeEntry(model, message.component, message.field);
       model.setComponent({
         source: "/message/header",

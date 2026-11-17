@@ -1,4 +1,13 @@
 class Crud {
+  static input(model, header) {
+    const user_input = model.accessComponent("/current", "/view/user_input");
+    if (header.value === "d") {
+      user_input.buffer = user_input.buffer.slice(0, -1);
+    } else {
+      user_input.buffer += header.value;
+    }
+  }
+
   static update(model, header) {
     const state = model.accessComponent("/current", "/view/navigation");
     const component = model.getComponent(state.component);

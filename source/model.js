@@ -111,10 +111,9 @@ class Model {
   previousId(entity, source, id) {
     const components = this._entities[entity][source] || [];
     let i = components.indexOf(id);
-    let index = (i === -1) ? 0 : i;
     i = i + components.length - 1;
     i %= components.length;
-    return components[index];
+    return components[i];
   }
 
   constructor(endpoint) {

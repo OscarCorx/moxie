@@ -22,6 +22,5 @@ class Style {
       }
       style[definition.key] = s;
     }
-    console.log("HERE")
   }
 }

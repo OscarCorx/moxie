@@ -80,6 +80,19 @@ COMPONENTS.push(
   {
     source: "/procedure/subscription",
     procedure: "/render",
+    event: "/event/back",
+    action: "/detail",
+    routine: (model, header, resultId) => {
+      const contents = Query.fullRender(model);
+      for (const c of contents) {
+        Render.outline(model, c);
+        Render.detail(model, c);
+      }
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
     event: "/event/flip",
     action: "/outline/detail",
     routine: (model, header, resultId) => {
@@ -132,7 +145,12 @@ COMPONENTS.push(
     event: "/event/update",
     action: "/detail",
     routine: (model, header, resultId) => {
-      Render.detail(model);
+      Render.background(model);
+      const contents = Query.fullRender(model);
+      for (const c of contents) {
+        Render.outline(model, c);
+        Render.detail(model, c);
+      }
     },
   },
   {
