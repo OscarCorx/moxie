@@ -1,10 +1,12 @@
 class Crud {
   static input(model, header) {
-    const user_input = model.accessComponent("/current", "/view/user_input");
-    if (header.value === "d") {
-      user_input.buffer = user_input.buffer.slice(0, -1);
+    const state = model.accessComponent("/current", "/view/navigation");
+    const component = model.getComponent(state.component);
+    const field = model.getComponent(state.field);
+    if (header.value === "Backspace") {
+      component[field.key] = component[field.key].slice(0, -1);
     } else {
-      user_input.buffer += header.value;
+      component[field.key] += header.value;
     }
   }
 
@@ -16,13 +18,13 @@ class Crud {
   }
 
   static new(model, header) {
-    const navigation = model.accessComponent("/current", "/view/navigation");
-    const archetype_entity = model.getComponent(navigation.archetype_entity);
-
-    const component = model.getComponent(navigation.component);
-    const schema = model.accessComponentIds(component.source, "/schema/field");
+    const state = model.accessComponent("/current", "/view/navigation");
+    const archetype_entity = model.getComponent(state.entity);
+    const archetype_property = model.getComponent(state.property);
+    const component = model.getComponent(state.component);
+    const schema = model.accessComponentIds(archetype_property.property, "/schema/field");
     const c = {
-      source: component.source,
+      source: archetype_property.property,
     };
     for (const id of schema) {
       const f = model.getComponent(id);

@@ -2,7 +2,7 @@ class Navigation {
   static createState(model, thread, entity) {
     const archetype_entity = model.accessComponent(entity, "/archetype/entity");
     const archetype_property = model.accessComponent(archetype_entity.archetype, "/archetype/property");
-    const component = model.accessComponent(archetype_entity.entity, archetype_property.property);
+    const component = model.accessComponent(entity, archetype_property.property);
     const field = model.accessComponent(archetype_property.property, "/schema/field");
     const c = model.setComponent({
       source: "/view/navigation",

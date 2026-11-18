@@ -12,6 +12,7 @@ const BINDINGS = {
   "y": "/message/exit",
   "g": "/message/select",
   "n": "/event/mode",
+  "q": "/message/new",
   "Shift": "/event/big",
   "Control": "/event/bind",
 }
@@ -56,8 +57,8 @@ class KeyboardActions {
     } else if (user_input.bind && binding === "/event/mode") {
       user_input.mode = "/move";
       state["/user_input"] = "/move";
-    } else if (value.length === 1) {
-      event = "/message/crud/input"
+    } else if (value.length === 1 || value === "Backspace") {
+      event = "/message/crud/input";
     }
     model.setComponent({
       id: model.ID(),

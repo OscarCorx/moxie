@@ -7,12 +7,12 @@ COMPONENTS.push(
     "/hud": "/default",
     "/user_input": "/move",
   },
-  {
-    id: "/current/navigation",
-    source: "/view/navigation",
-    entity: "/person/0",
-    property: "/location",
-  },
+  // {
+  //   id: "/current/navigation",
+  //   source: "/view/navigation",
+  //   entity: "/person/0",
+  //   property: "/location",
+  // },
   {
     id: "/current/style",
     source: "/view/style",

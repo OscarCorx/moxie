@@ -159,8 +159,12 @@ COMPONENTS.push(
     event: "/event/new",
     action: "/outline/detail",
     routine: (model, header, resultId) => {
-      Render.outline(model);
-      Render.detail(model);
+      Render.background(model);
+      const contents = Query.fullRender(model);
+      for (const c of contents) {
+        Render.outline(model, c);
+        Render.detail(model, c);
+      }
     },
   },
 );
