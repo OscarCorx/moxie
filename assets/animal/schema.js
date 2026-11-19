@@ -3,7 +3,6 @@ ASSETS.push(
     source: "/archetype/property",
     property: "/identification",
     archetype: "/archetype/animal",
-    access: "/collection",
   },
 );
 
@@ -21,7 +20,6 @@ ASSETS.push(
     source: "/schema/field",
     kind: "/entity",
     key: "entity",
-    access: "/collection",
   },
   {
     parent: "/identification",

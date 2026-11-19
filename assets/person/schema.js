@@ -51,7 +51,6 @@ ASSETS.push(
     source: "/schema/field",
     kind: "/entity",
     key: "entity",
-    access: "/collection",
   },
   {
     parent: "/location",
@@ -99,7 +98,6 @@ ASSETS.push(
     source: "/schema/field",
     kind: "/entity",
     key: "entity",
-    access: "/collection",
   },
   {
     parent: "/demographics",
