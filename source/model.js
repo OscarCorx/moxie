@@ -53,7 +53,8 @@ class Model {
       if (!c[f.key]) continue;
       switch (f.kind) {
         case "/entity":
-          this.setReference(c[f.key], c.source, c.id);
+          const key = f.as || c.source;
+          this.setReference(c[f.key], key, c.id);
           break;
         default:
           break;

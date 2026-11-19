@@ -1,96 +1,94 @@
 ASSETS.push(
-  ...[
-    {
-      source: "/present",
-      entity: "/person/0",
-      title: "Joe Average",
-      key: "joe_average",
-      icon: "JA",
-      description: "This is Joseph Average, a lovely example.",
-    },
-    {
-      source: "/location",
-      entity: "/person/0",
-      address_1: "123 Easy Street",
-      address_2: "Unit 3",
-      city: "Springfield",
-      state: "AL",
-      zipcode: "10101",
-    },
-    {
-      source: "/location",
-      entity: "/person/0",
-      address_1: "222 Easy Street",
-      address_2: "Unit 3",
-      city: "Springfield",
-      state: "AL",
-      zipcode: "10101",
-    },
-    {
-      source: "/location",
-      entity: "/person/0",
-      address_1: "333 Easy Street",
-      address_2: "Unit 3",
-      city: "Springfield",
-      state: "AL",
-      zipcode: "10101",
-    },
-    {
-      source: "/location",
-      entity: "/person/0",
-      address_1: "333 Easy Street",
-      address_2: "Unit 3",
-      city: "Springfield",
-      state: "AL",
-      zipcode: "10101",
-    },
-    {
-      source: "/location",
-      entity: "/person/0",
-      address_1: "333 Easy Street",
-      address_2: "Unit 3",
-      city: "Springfield",
-      state: "AL",
-      zipcode: "10101",
-    },
-    {
-      source: "/demographics",
-      entity: "/person/0",
-      family_name: "Average",
-      given_name: "Joseph",
-      middle_name: "Danger",
-      date_of_birth: "1980-02-20",
-      gender: "Male",
-    },
-    {
-      source: "/contact",
-      entity: "/person/0",
-      kind: "Telephone",
-      value: "(123) 555-1234"
-    },
-    {
-      source: "/contact",
-      entity: "/person/0",
-      kind: "Telephone",
-      value: "(456) 555-1234"
-    },
-    {
-      source: "/contact",
-      entity: "/person/0",
-      kind: "Telephone",
-      value: "(789) 555-1234"
-    },
-    {
-      source: "/contact",
-      entity: "/person/0",
-      kind: "Email",
-      value: "primary@example.com"
-    },
-    {
-      source: "/contact",
-      entity: "/person/0",
-      kind: "Email",
-      value: "secondary@example.com"
-    }
-  ],
+  {
+    source: "/present",
+    entity: "/person/0",
+    title: "Joe Average",
+    key: "joe_average",
+    icon: "JA",
+    description: "This is Joseph Average, a lovely example.",
+  },
+  {
+    source: "/location",
+    entity: "/person/0",
+    address_1: "123 Easy Street",
+    address_2: "Unit 3",
+    city: "Springfield",
+    state: "AL",
+    zipcode: "10101",
+  },
+  {
+    source: "/location",
+    entity: "/person/0",
+    address_1: "222 Easy Street",
+    address_2: "Unit 3",
+    city: "Springfield",
+    state: "AL",
+    zipcode: "10101",
+  },
+  {
+    source: "/location",
+    entity: "/person/0",
+    address_1: "333 Easy Street",
+    address_2: "Unit 3",
+    city: "Springfield",
+    state: "AL",
+    zipcode: "10101",
+  },
+  {
+    source: "/location",
+    entity: "/person/0",
+    address_1: "333 Easy Street",
+    address_2: "Unit 3",
+    city: "Springfield",
+    state: "AL",
+    zipcode: "10101",
+  },
+  {
+    source: "/location",
+    entity: "/person/0",
+    address_1: "333 Easy Street",
+    address_2: "Unit 3",
+    city: "Springfield",
+    state: "AL",
+    zipcode: "10101",
+  },
+  {
+    source: "/demographics",
+    entity: "/person/0",
+    family_name: "Average",
+    given_name: "Joseph",
+    middle_name: "Danger",
+    date_of_birth: "1980-02-20",
+    gender: "Male",
+  },
+  {
+    source: "/contact",
+    entity: "/person/0",
+    kind: "Telephone",
+    value: "(123) 555-1234"
+  },
+  {
+    source: "/contact",
+    entity: "/person/0",
+    kind: "Telephone",
+    value: "(456) 555-1234"
+  },
+  {
+    source: "/contact",
+    entity: "/person/0",
+    kind: "Telephone",
+    value: "(789) 555-1234"
+  },
+  {
+    source: "/contact",
+    entity: "/person/0",
+    kind: "Email",
+    value: "primary@example.com"
+  },
+  {
+    source: "/contact",
+    entity: "/person/0",
+    kind: "Email",
+    value: "secondary@example.com"
+  }
 );
