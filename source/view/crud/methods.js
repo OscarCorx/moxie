@@ -28,12 +28,29 @@ class Crud {
     };
     for (const id of schema) {
       const f = model.getComponent(id);
-      if (component[f.key] === archetype_entity.entity) {
+      if (archetype_property.field === f.key) {
         c[f.key] = archetype_entity.entity;
       } else {
-        c[f.key] = null;
+        c[f.key] = "";
       }
     }
     model.setComponent(c);
+  }
+
+  static create_entity(model, header, resultId) {
+    const state = model.accessComponent("/current", "/view/navigation");
+    const archetype_entity = model.getComponent(state.entity);
+    const c = {
+      source: archetype_entity.source,
+      archetype: archetype_entity.archetype,
+      entity: model.ID(),
+    };
+    model.setComponent(c);
+    model.setComponent({
+      source: "/message/header",
+      result: resultId,
+      event: "/event/create_entity",
+      entity: c.entity,
+    });
   }
 }

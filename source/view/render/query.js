@@ -64,7 +64,7 @@ class Query {
   static getWorkspace(model, contents) {
     const state = model.accessComponent("/current", "/view/navigation");
     const archetype_entity = model.getComponent(state.entity);
-    const entity_present = model.accessComponent(archetype_entity.entity, "/present");
+    const entity_present = model.accessComponent(archetype_entity.entity, "/present") || {};
     const archetype_present = model.accessComponent(archetype_entity.archetype, "/present") || {};
     const archetype_property = model.getComponent(state.property);
     const property_ids = model.accessComponentIds(archetype_property.archetype, "/archetype/property")
@@ -107,7 +107,7 @@ class Query {
         description: entity_present.description,
         subtitle: archetype_present.title,
         subdescription: archetype_present.description,
-        action: "New Entity",
+        action: "/message/create_entity",
         action_text: "New Entity",
       },
       {

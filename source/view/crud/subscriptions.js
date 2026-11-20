@@ -40,5 +40,14 @@ COMPONENTS.push(
         event: "/event/new",
       });
     },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/crud",
+    event: "/message/create_entity",
+    action: "/crud/create_entity",
+    routine: (model, header, resultId) => {
+      Crud.create_entity(model, header, resultId);
+    },
   }
 );

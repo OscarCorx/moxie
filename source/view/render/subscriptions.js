@@ -28,6 +28,20 @@ COMPONENTS.push(
   {
     source: "/procedure/subscription",
     procedure: "/render",
+    event: "/event/change_card",
+    action: "full_render",
+    routine: (model, header, resultId) => {
+      Render.background(model);
+      const contents = Query.fullRender(model);
+      for (const c of contents) {
+        Render.outline(model, c);
+        Render.detail(model, c);
+      }
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
     event: "/event/navigation/change_entry",
     routine: (model, header, resultId) => {
       Render.background(model);

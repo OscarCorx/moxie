@@ -14,21 +14,25 @@ ASSETS.push(
     source: "/archetype/property",
     property: "/location",
     archetype: "/archetype/person",
+    field: "entity",
   },
   {
     source: "/archetype/property",
     property: "/demographics",
     archetype: "/archetype/person",
+    field: "entity",
   },
   {
     source: "/archetype/property",
     property: "/contact",
     archetype: "/archetype/person",
+    field: "entity",
   },
   {
     source: "/archetype/property",
     property: "/present",
     archetype: "/archetype/person",
+    field: "entity",
   },
   {
     source: "/archetype/entity",

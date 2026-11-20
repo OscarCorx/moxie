@@ -16,6 +16,20 @@ COMPONENTS.push(
   {
     source: "/procedure/subscription",
     procedure: "/navigation",
+    event: "/event/create_entity",
+    action: "/change_entity",
+    routine: (model, message, resultId) => {
+      Navigation.changeCard(model, message.entity);
+      model.setComponent({
+        source: "/message/header",
+        result: resultId,
+        event: "/event/change_card",
+      });
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/navigation",
     event: "/event/entry/select",
     action: "/entry_select",
     routine: (model, message, resultId) => {
@@ -136,7 +150,7 @@ COMPONENTS.push(
       model.setComponent({
         source: "/message/header",
         result: resultId,
-        event: "/event/draw",
+        event: "/event/change_entity",
       });
     },
   },

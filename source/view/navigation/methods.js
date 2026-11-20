@@ -22,6 +22,16 @@ class Navigation {
     model.setReference("/current", state.source, state.exit, true);
   }
 
+  static changeCard(model, entity) {
+    const archetype_entity = model.accessComponent(entity, "/archetype/entity");
+    const state = model.accessComponent("/current", "/view/navigation");
+    state.entity = archetype_entity.id;
+    state.property = model.nextId(archetype_entity.archetype, "/archetype/property");
+    const archetype_property = model.getComponent(state.property);
+    state.component = model.nextId(archetype_entity.entity, archetype_property.property);
+    state.field = model.nextId(archetype_property.property, "/schema/field");
+  }
+
   static incrementCard(model, reverse) {
     const state = model.accessComponent("/current", "/view/navigation");
     let archetype_entity = model.getComponent(state.entity);

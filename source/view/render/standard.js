@@ -167,6 +167,11 @@ class Standard {
       e = this.getElement(`${c.id}/action`, c.id);
       e.addEventListener("click", () => {
         console.log("ACTION", c.action)
+        m.emit({
+          event: c.action,
+          component: c.component,
+          field: c.field,
+        });
       });
     }
   }
