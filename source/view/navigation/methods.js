@@ -42,7 +42,7 @@ class Navigation {
     }
     archetype_entity = model.getComponent(state.entity);
     state.property = model.nextId(archetype_entity.archetype, "/archetype/property");
-    archetype_property = model.getComponent(state.property);
+    const archetype_property = model.getComponent(state.property);
     state.component = model.nextId(archetype_entity.entity, archetype_property.property);
     state.field = model.nextId(archetype_property.property, "/schema/field");
   }

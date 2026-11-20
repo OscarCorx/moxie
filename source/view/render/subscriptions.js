@@ -123,19 +123,7 @@ COMPONENTS.push(
     event: "/event/draw",
     action: "/outline/detail",
     routine: (model, header, resultId) => {
-      const contents = Query.fullRender(model);
-      for (const c of contents) {
-        Render.outline(model, c);
-        Render.detail(model, c);
-      }
-    },
-  },
-  {
-    source: "/procedure/subscription",
-    procedure: "/render",
-    event: "/event/draw",
-    action: "/detail/navigation",
-    routine: (model, header, resultId) => {
+      console.log("HERE")
       const contents = Query.fullRender(model);
       for (const c of contents) {
         Render.outline(model, c);

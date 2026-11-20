@@ -143,14 +143,13 @@ COMPONENTS.push(
     source: "/procedure/subscription",
     procedure: "/navigation",
     event: "/message/draw",
-    result: "/message/draw",
     action: "/increment_card",
     routine: (model, message, resultId) => {
       Navigation.incrementCard(model, false);
       model.setComponent({
         source: "/message/header",
         result: resultId,
-        event: "/event/change_entity",
+        event: "/event/draw",
       });
     },
   },
