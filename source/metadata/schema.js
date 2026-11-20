@@ -57,7 +57,7 @@ COMPONENTS.push(
     parent: "/present",
     source: "/schema/field",
     kind: "/sting",
-    key: "name",
+    key: "title",
   },
   {
     parent: "/present",
@@ -72,10 +72,12 @@ COMPONENTS.push(
     key: "description",
   },
   {
-    parent: "/present",
-    source: "/schema/field",
-    kind: "/sting",
-    key: "name",
+    source: "/present",
+    entity: "/present",
+    title: "Presentation",
+    key: "present",
+    icon: "[L]",
+    description: "This is a presentation",
   },
 );
 /* ARCHETYPE */

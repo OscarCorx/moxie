@@ -64,8 +64,11 @@ class Query {
   static getWorkspace(model, contents) {
     const state = model.accessComponent("/current", "/view/navigation");
     const archetype_entity = model.getComponent(state.entity);
+    const entity_present = model.accessComponent(archetype_entity.entity, "/present");
+    const archetype_present = model.accessComponent(archetype_entity.archetype, "/present") || {};
     const archetype_property = model.getComponent(state.property);
     const property_ids = model.accessComponentIds(archetype_property.archetype, "/archetype/property")
+    const schema_present = model.accessComponent(archetype_property.property, "/present") || {};
     const component_ids = model.accessComponentIds(archetype_entity.entity, archetype_property.property);
     const field_ids = model.accessComponentIds(archetype_property.property, "/schema/field");
     const user_input = model.accessComponent("/current", "/view/user_input");
@@ -100,31 +103,28 @@ class Query {
         id: "/absolute/workspace/header/entry_0",
         source: "/entry",
         parent: "/absolute/workspace/header",
-        content: "ENTITY",
-      },
-      {
-        id: "/absolute/workspace/header/entry_1",
-        source: "/entry",
-        parent: "/absolute/workspace/header",
-        content: "ARCHETYPE",
+        title: entity_present.title,
+        description: entity_present.description,
+        subtitle: archetype_present.title,
+        subdescription: archetype_present.description,
+        action: "New Entity",
+        action_text: "New Entity",
       },
       {
         id: "/absolute/workspace/header/entry_2",
         source: "/entry",
         parent: "/absolute/workspace/header",
-        content: "PROPERTY",
+        title: schema_present.title,
+        description: schema_present.description,
+        action: "New Component",
+        action_text: "New Component",
       },
       {
         id: "/absolute/workspace/header/entry_3",
         source: "/entry",
         parent: "/absolute/workspace/header",
-        content: "FIELD",
-      },
-      {
-        id: "/absolute/workspace/header/entry_3",
-        source: "/entry",
-        parent: "/absolute/workspace/header",
-        content: user_input.buffer,
+        title: "FIELD",
+        description: "This is a deep dive into the schema",
       },
     );
     for (const field_id of field_ids) {

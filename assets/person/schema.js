@@ -1,5 +1,15 @@
 ASSETS.push(
   {
+    source: "/present",
+    entity: "/archetype/person",
+    title: "Person Record",
+    key: "person_record",
+    icon: "[L]",
+    description: "This is an entity of a person",
+  },
+);
+ASSETS.push(
+  {
     id: "/location/0",
     source: "/archetype/property",
     property: "/location",

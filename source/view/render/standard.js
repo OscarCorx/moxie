@@ -153,6 +153,22 @@ class Standard {
 
   static outlineEntry(m, c) {
     let e = this.getElement(c.id, c.parent);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "column",
+    });
+    e = this.getElement(`${c.id}/title`, c.id);
+    e = this.getElement(`${c.id}/description`, c.id);
+    if (c.subtitle) {
+      e = this.getElement(`${c.id}/subtitle`, c.id);
+      e = this.getElement(`${c.id}/subdescription`, c.id);
+    }
+    if (c.action) {
+      e = this.getElement(`${c.id}/action`, c.id);
+      e.addEventListener("click", () => {
+        console.log("ACTION", c.action)
+      });
+    }
   }
 
   static detailEntry(m, c) {
@@ -160,7 +176,20 @@ class Standard {
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     this.addStyle(e, style["field_inactive"]);
-    e.textContent = `ENTRY: ${c.content}`;
+    e = this.getElement(`${c.id}/title`, c.id);
+    e.textContent = c.title;
+    e = this.getElement(`${c.id}/description`, c.id);
+    e.textContent = c.description;
+    if (c.subtitle) {
+      e = this.getElement(`${c.id}/subtitle`, c.id);
+      e.textContent = c.subtitle;
+      e = this.getElement(`${c.id}/subdescription`, c.id);
+      e.textContent = c.subdescription;
+    }
+    if (c.action) {
+      e = this.getElement(`${c.id}/action`, c.id);
+      e.textContent = c.action_text;
+    }
   }
 
   static outlineChip(m, c) {
