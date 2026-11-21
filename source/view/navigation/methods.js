@@ -1,5 +1,5 @@
 class Navigation {
-  static createState(model, thread, entity) {
+  static createState(model, header, entity) {
     const archetype_entity = model.accessComponent(entity, "/archetype/entity");
     const archetype_property = model.accessComponent(archetype_entity.archetype, "/archetype/property");
     const component = model.accessComponent(entity, archetype_property.property);
@@ -12,16 +12,16 @@ class Navigation {
       field: field.id,
     };
     model.setComponent(c);
-    model.setReference(thread, "/navigation", c.id, true);
+    model.setReference(header.thread, "/navigation", c.id, true);
   }
 
-  static exit(model) {
+  static exit(model, header) {
     const state = model.accessComponent(header.thread, "/navigation");
     if (!state.exit) return false;
     model.setReference(header.thread, state.source, state.exit, true);
   }
 
-  static changeCard(model, entity) {
+  static changeCard(model, header, entity) {
     const archetype_entity = model.accessComponent(entity, "/archetype/entity");
     const state = model.accessComponent("/current", "/navigation");
     state.entity = archetype_entity.id;
@@ -31,7 +31,7 @@ class Navigation {
     state.field = model.nextId(archetype_property.property, "/schema/field");
   }
 
-  static incrementCard(model, reverse) {
+  static incrementCard(model, header, reverse) {
     const state = model.accessComponent("/current", "/navigation");
     let archetype_entity = model.getComponent(state.entity);
     if (reverse) {
@@ -46,7 +46,7 @@ class Navigation {
     state.field = model.nextId(archetype_property.property, "/schema/field");
   }
 
-  static incrementFace(model, reverse) {
+  static incrementFace(model, header, reverse) {
     const state = model.accessComponent("/current", "/navigation");
     const archetype_entity = model.getComponent(state.entity);
     let archetype_property = model.getComponent(state.property);
@@ -60,7 +60,7 @@ class Navigation {
     state.field = model.nextId(archetype_property.property, "/schema/field");
   }
 
-  static incrementSecondary(model, reverse) {
+  static incrementSecondary(model, header, reverse) {
     const state = model.accessComponent("/current", "/navigation");
     const archetype_entity = model.getComponent(state.entity);
     const archetype_property = model.getComponent(state.property);
@@ -71,7 +71,7 @@ class Navigation {
     }
   }
 
-  static incrementPrimary(model, reverse) {
+  static incrementPrimary(model, header, reverse) {
     const state = model.accessComponent("/current", "/navigation");
     const archetype_property = model.getComponent(state.property);
     if (reverse) {
@@ -81,16 +81,16 @@ class Navigation {
     }
   }
 
-  static dragMove(model, x, y, resultId) {
+  static dragMove(model, header, x, y, resultId) {
     const user_input = model.accessComponent("/current", "/user_input");
     const target = model.getComponent(user_input.mouse_target);
     target.x = x - target.offset_x;
     target.y = y - target.offset_y;
   }
 
-  static changeEntry(model, component, field) {
+  static selectPrimary(model, header) {
     const state = model.accessComponent("/current", "/navigation");
-    if (component) state.component = component;
-    if (field) state.field = field;
+    if (header.component) state.component = header.component;
+    if (header.field) state.field = header.field;
   }
 }

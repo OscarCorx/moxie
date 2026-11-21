@@ -44,6 +44,7 @@ class Standard {
         event.preventDefault();
         m.emit({
           event: "/event/mouse/down",
+          thread: "/current",
           element_id: c.id,
           x: event.clientX,
           y: event.clientY,
@@ -171,7 +172,8 @@ class Standard {
     this.addStyle(e, { height: "20px" });
     e.addEventListener("click", (e) => {
       m.emit({
-        event: "/message/entry/select",
+        event: "/event/entry/select",
+        thread: "/current",
         component: c.component,
         field: c.field,
       });

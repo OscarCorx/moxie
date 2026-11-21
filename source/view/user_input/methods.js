@@ -21,7 +21,7 @@ const BINDING = {
 }
 
 class UserInput {
-  static createState(model, thread) {
+  static createState(model, header) {
     const c = {
       source: "/user_input/state",
       state: "/move",
@@ -32,14 +32,14 @@ class UserInput {
       buffer: "",
     };
     model.setComponent(c);
-    model.setReference(thread, "/user_input", c.id);
+    model.setReference(header.thread, "/user_input", c.id);
   }
 }
 
 class KeyboardActions {
-  static move(model, thread, value, resultId) {
-    const user_input = model.accessComponent(thread, "/user_input");
-    let event = NAVIGATION[value];
+  static move(model, header, resultId) {
+    const user_input = model.accessComponent(header.thread, "/user_input");
+    let event = NAVIGATION[header.value];
     switch (event) {
       case "/event/user_input/bind":
         user_input.state = "/bind";
@@ -125,26 +125,25 @@ class KeyboardActions {
 }
 
 class MouseActions {
-  static down(model, element_id, x, y, resultId) {
-    const state = model.accessComponent("/current", "/user_input");
+  static down(model, header, element_id, x, y, resultId) {
+    const state = model.accessComponent(header.thread, "/user_input");
     state.mouse_target = element_id;
     const element = model.getComponent(element_id);
     element.offset_x = x - element.x;
     element.offset_y = y - element.y;
   }
 
-  static move(model, x, y, resultId) {
-    const state = model.accessComponent("/current", "/user_input");
+  static move(model, header, x, y, resultId) {
+    const state = model.accessComponent(header.thread, "/user_input");
   }
 
-  static up(model, x, y, resultId) {
-    const state = model.accessComponent("/current", "/user_input");
+  static up(model, header, x, y, resultId) {
+    const state = model.accessComponent(header.thread, "/user_input");
     state.mouse_target = null;
   }
 
-  static entrySelect(model) {
-    const user_input = model.accessComponent("/current", "/user_input");
-    user_input.mode = "/entry";
-    state["/user_input"] = "/entry";
+  static entrySelect(model, header) {
+    const state = model.accessComponent(header.thread, "/user_input");
+    state.state = "/entry";
   }
 }

@@ -12,7 +12,6 @@ class Process {
 
   /* PROCESS ROUTINE */
   processMessage(header) {
-    const state_component = {...this.model.accessComponent(header.thread, "/state")};
 
     const resultIds = [];
     const subscriptionIds = this.model.accessComponentIds(
@@ -23,7 +22,8 @@ class Process {
     for (const subscriptionId of subscriptionIds) {
       const subscription = this.model.getComponent(subscriptionId);
       if (subscription.state) {
-        if (state_component && subscription.state && subscription.state !== state_component[subscription.procedure]) continue;
+        const state = {...this.model.accessComponent(header.thread, subscription.procedure)};
+        if (state && subscription.state && subscription.state !== state.state) continue;
       }
       if (!subscription.routine) continue;
       console.log("SUBSCRIPTION", subscription.event, subscription.message, subscription.procedure, subscription.state);

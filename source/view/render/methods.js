@@ -15,7 +15,7 @@ class Render {
       id: "/absolute/primary",
       source: "/view/absolute",
       handle: true,
-      active: true,
+      active: false,
       x: 100,
       y: 100,
     });
@@ -23,7 +23,7 @@ class Render {
       id: "/absolute/secondary",
       source: "/view/absolute",
       handle: true,
-      active: true,
+      active: false,
       x: 400,
       y: 100,
     });

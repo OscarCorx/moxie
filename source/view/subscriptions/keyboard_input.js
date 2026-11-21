@@ -6,7 +6,7 @@ COMPONENTS.push(
     state: "/move",
     message: "/message/keyboard/move",
     routine: (model, header, resultId) => {
-      return KeyboardActions.move(model, header.value, resultId);
+      return KeyboardActions.move(model, header, resultId);
     },
   },
   {
