@@ -1,9 +1,9 @@
 class Query {
-  static fullRender(model) {
+  static fullRender(model, header) {
     const contents = [];
-    this.getWorkspace(model, contents);
-    this.getPrimary(model, contents);
-    this.getSecondary(model, contents);
+    this.getWorkspace(model, header, contents);
+    this.getPrimary(model, header, contents);
+    this.getSecondary(model, header, contents);
     return contents;
   }
 
@@ -18,8 +18,8 @@ class Query {
   }
 
   /* PRIMARY USER TOOLS */
-  static getPrimary(model, contents) {
-    const state = model.accessComponent("/current", "/navigation");
+  static getPrimary(model, header, contents) {
+    const state = model.accessComponent(header.thread, "/navigation");
     const archetype_entity = model.getComponent(state.entity);
     const entity_present = model.accessComponent(archetype_entity.entity, "/present") || {};
     const archetype_present = model.accessComponent(archetype_entity.archetype, "/present") || {};
@@ -28,7 +28,7 @@ class Query {
     const schema_present = model.accessComponent(archetype_property.property, "/present") || {};
     const component_ids = model.accessComponentIds(archetype_entity.entity, archetype_property.property);
     const field_ids = model.accessComponentIds(archetype_property.property, "/schema/field");
-    const user_input = model.accessComponent("/current", "/user_input");
+    const user_input = model.accessComponent(header.thread, "/user_input");
     const c = model.getComponent("/absolute/primary");
     if (!c.active) return;
     contents.push(
@@ -55,8 +55,8 @@ class Query {
     );
   }
   /* AUGMENTS PRIMARY TOOLS */
-  static getSecondary(model, contents) {
-    const state = model.accessComponent("/current", "/navigation");
+  static getSecondary(model, header, contents) {
+    const state = model.accessComponent(header.thread, "/navigation");
     const archetype_entity = model.getComponent(state.entity);
     const entity_present = model.accessComponent(archetype_entity.entity, "/present") || {};
     const archetype_present = model.accessComponent(archetype_entity.archetype, "/present") || {};
@@ -65,7 +65,7 @@ class Query {
     const schema_present = model.accessComponent(archetype_property.property, "/present") || {};
     const component_ids = model.accessComponentIds(archetype_entity.entity, archetype_property.property);
     const field_ids = model.accessComponentIds(archetype_property.property, "/schema/field");
-    const user_input = model.accessComponent("/current", "/user_input");
+    const user_input = model.accessComponent(header.thread, "/user_input");
     const c = model.getComponent("/absolute/secondary");
     if (!c.active) return;
     contents.push(
@@ -101,8 +101,8 @@ class Query {
 
   }
   /* ACTUAL WORK PRODUCT */
-  static getWorkspace(model, contents) {
-    const state = model.accessComponent("/current", "/navigation");
+  static getWorkspace(model, header, contents) {
+    const state = model.accessComponent(header.thread, "/navigation");
     const archetype_entity = model.getComponent(state.entity);
     const entity_present = model.accessComponent(archetype_entity.entity, "/present") || {};
     const archetype_present = model.accessComponent(archetype_entity.archetype, "/present") || {};
@@ -111,7 +111,7 @@ class Query {
     const schema_present = model.accessComponent(archetype_property.property, "/present") || {};
     const component_ids = model.accessComponentIds(archetype_entity.entity, archetype_property.property);
     const field_ids = model.accessComponentIds(archetype_property.property, "/schema/field");
-    const user_input = model.accessComponent("/current", "/user_input");
+    const user_input = model.accessComponent(header.thread, "/user_input");
     const c = model.getComponent("/absolute/workspace");
     if (!c.active) return;
 

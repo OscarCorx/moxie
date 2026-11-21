@@ -1,9 +1,8 @@
 class Render {
-  static createState(model, thread) {
+  static createState(model, header) {
     model.setComponent({
       id: "/absolute/workspace",
       source: "/view/absolute",
-      thread: "/current",
       handle: false,
       active: true,
       x: 2,
@@ -29,15 +28,15 @@ class Render {
     });
   }
 
-  static background(m) {
-    const state = m.accessComponent("/current", "/style");
-    const style = m.getEntity(state.main_theme);
+  static background(model, header) {
+    const state = model.accessComponent(header.thread, "/style");
+    const style = model.getEntity(state.main_theme);
     let e = document.getElementsByTagName("body")[0];
     Object.assign(e.style, style["background"]);
   }
 
   static full(model, header) {
-    const contents = Query.fullRender(model);
+    const contents = Query.fullRender(model, header);
     for (const c of contents) {
       this.outline(model, c);
       this.detail(model, c);

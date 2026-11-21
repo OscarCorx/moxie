@@ -16,7 +16,7 @@ COMPONENTS.push(
     state: "/edit",
     message: "/message/keyboard/edit",
     routine: (model, header, resultId) => {
-      KeyboardActions.edit(model, header.value, resultId);
+      KeyboardActions.edit(model, header, resultId);
     },
   },
   {
@@ -26,7 +26,7 @@ COMPONENTS.push(
     state: "/bind",
     message: "/message/keyboard/bind",
     routine: (model, header, resultId) => {
-      KeyboardActions.bind(model, header.value, resultId);
+      KeyboardActions.bind(model, header, resultId);
     },
   },
   {
@@ -35,7 +35,7 @@ COMPONENTS.push(
     event: "/event/keyboard/up",
     message: "/message/keyboard/keyup",
     routine: (model, header, resultId) => {
-      KeyboardActions.keyUp(model, header.value, resultId);
+      KeyboardActions.keyUp(model, header, resultId);
     },
   },
 );

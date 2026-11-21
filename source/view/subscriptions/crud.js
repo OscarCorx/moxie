@@ -11,6 +11,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/crud/update",
+        thread: header.thread,
       });
     },
   },
@@ -20,7 +21,7 @@ COMPONENTS.push(
     event: "/event/crud/update",
     message: "/message/render/full",
     routine: (model, header, resultId) => {
-      Render.full(model);
+      Render.full(model, header);
     },
   },
 );
@@ -37,6 +38,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/crud/create_entity",
+        thread: header.thread,
       });
     },
   },
@@ -46,7 +48,7 @@ COMPONENTS.push(
     event: "/event/crud/create_entity",
     message: "/message/render/full",
     routine: (model, header, resultId) => {
-      Render.full(model);
+      Render.full(model, header);
     },
   },
 );
@@ -63,6 +65,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/crud/create_component",
+        thread: header.thread,
       });
     },
   },
@@ -72,7 +75,7 @@ COMPONENTS.push(
     event: "/event/crud/create_component",
     message: "/message/render/full",
     routine: (model, header, resultId) => {
-      Render.full(model);
+      Render.full(model, header);
     },
   },
 );

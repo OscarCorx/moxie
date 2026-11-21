@@ -11,6 +11,7 @@ COMPONENTS.push(
         source: "/message/header",
         event: "/event/user_input/entry_select",
         result: resultId,
+        thread: header.thread,
         component: header.component,
         field: header.field,
       });

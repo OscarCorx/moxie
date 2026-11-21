@@ -23,7 +23,7 @@ class Navigation {
 
   static changeCard(model, header, entity) {
     const archetype_entity = model.accessComponent(entity, "/archetype/entity");
-    const state = model.accessComponent("/current", "/navigation");
+    const state = model.accessComponent(header.thread, "/navigation");
     state.entity = archetype_entity.id;
     state.property = model.nextId(archetype_entity.archetype, "/archetype/property");
     const archetype_property = model.getComponent(state.property);
@@ -32,7 +32,7 @@ class Navigation {
   }
 
   static incrementCard(model, header, reverse) {
-    const state = model.accessComponent("/current", "/navigation");
+    const state = model.accessComponent(header.thread, "/navigation");
     let archetype_entity = model.getComponent(state.entity);
     if (reverse) {
       state.entity = model.previousId(archetype_entity.archetype, "/archetype/entity", state.entity);
@@ -47,7 +47,7 @@ class Navigation {
   }
 
   static incrementFace(model, header, reverse) {
-    const state = model.accessComponent("/current", "/navigation");
+    const state = model.accessComponent(header.thread, "/navigation");
     const archetype_entity = model.getComponent(state.entity);
     let archetype_property = model.getComponent(state.property);
     if (reverse) {
@@ -61,7 +61,7 @@ class Navigation {
   }
 
   static incrementSecondary(model, header, reverse) {
-    const state = model.accessComponent("/current", "/navigation");
+    const state = model.accessComponent(header.thread, "/navigation");
     const archetype_entity = model.getComponent(state.entity);
     const archetype_property = model.getComponent(state.property);
     if (reverse) {
@@ -72,7 +72,7 @@ class Navigation {
   }
 
   static incrementPrimary(model, header, reverse) {
-    const state = model.accessComponent("/current", "/navigation");
+    const state = model.accessComponent(header.thread, "/navigation");
     const archetype_property = model.getComponent(state.property);
     if (reverse) {
       state.field = model.previousId(archetype_property.property, "/schema/field", state.field);
@@ -82,14 +82,14 @@ class Navigation {
   }
 
   static dragMove(model, header, x, y, resultId) {
-    const user_input = model.accessComponent("/current", "/user_input");
+    const user_input = model.accessComponent(header.thread, "/user_input");
     const target = model.getComponent(user_input.mouse_target);
     target.x = x - target.offset_x;
     target.y = y - target.offset_y;
   }
 
   static selectPrimary(model, header) {
-    const state = model.accessComponent("/current", "/navigation");
+    const state = model.accessComponent(header.thread, "/navigation");
     if (header.component) state.component = header.component;
     if (header.field) state.field = header.field;
   }

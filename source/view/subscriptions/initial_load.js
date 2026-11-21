@@ -71,6 +71,7 @@ COMPONENTS.push(
         thread: header.thread,
         entity: header.entity,
         event: "/event/style/compile",
+        thread: header.thread,
       });
     },
   },
@@ -85,6 +86,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/navigation/create_state",
+        thread: header.thread,
       });
     },
   },
@@ -94,12 +96,13 @@ COMPONENTS.push(
     event: "/event/navigation/create_state",
     message: "/message/render/full",
     routine: (model, header, resultId) => {
-      Render.background(model);
+      Render.background(model, header);
       Render.full(model, header);
       model.setComponent({
         source: "/message/header",
         result: resultId,
         event: "/event/render/full",
+        thread: header.thread,
       });
     },
   },

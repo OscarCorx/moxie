@@ -59,30 +59,32 @@ class KeyboardActions {
       source: "/message/header",
       event: event,
       result: resultId,
+      thread: header.thread,
     });
   }
 
-  static edit(model, thread, value, resultId) {
-    const user_input = model.accessComponent(thread, "/user_input");
-    let event = NAVIGATION[value];
+  static edit(model, header, resultId) {
+    const user_input = model.accessComponent(header.thread, "/user_input");
+    let event = NAVIGATION[header.value];
     if (event === "/event/user_input/bind") {
       user_input.state = "/bind";
       user_input.bind = true;
-    } else if (value.length === 1 || value === "Backspace") {
-      event = "/message/crud/input";
+    } else if (header.value.length === 1 || header.value === "Backspace") {
+      event = "/event/user_input/keyboard_input";
     }
     model.setComponent({
       id: model.ID(),
       source: "/message/header",
       event: event,
       result: resultId,
-      value: value,
+      value: header.value,
+      thread: header.thread,
     });
   }
 
-  static bind(model, thread, value, resultId) {
-    const user_input = model.accessComponent(thread, "/user_input");
-    let event = NAVIGATION[value];
+  static bind(model, header, resultId) {
+    const user_input = model.accessComponent(header.thread, "/user_input");
+    let event = NAVIGATION[header.value];
     if (event === "/event/user_input/mode") {
       user_input.state = "/move";
       user_input.move = true;
@@ -92,10 +94,11 @@ class KeyboardActions {
         source: "/message/header",
         event: event,
         result: resultId,
+        thread: header.thread,
       });
       return;
     }
-    event = BINDING[value];
+    event = BINDING[header.value];
     model.setComponent({
       id: `/keydown/${model.ID()}`,
       source: "/message/header",
@@ -104,9 +107,9 @@ class KeyboardActions {
     });
   }
 
-  static keyUp(model, value, resultId) {
-    const state = model.accessComponent("/current", "/user_input");
-    let event = NAVIGATION[value];
+  static keyUp(model, header, resultId) {
+    const state = model.accessComponent(header.thread, "/user_input");
+    let event = NAVIGATION[header.value];
     switch (event) {
       case "/event/bind":
         state.bind = false;
@@ -144,6 +147,6 @@ class MouseActions {
 
   static entrySelect(model, header) {
     const state = model.accessComponent(header.thread, "/user_input");
-    state.state = "/entry";
+    state.state = "/edit";
   }
 }

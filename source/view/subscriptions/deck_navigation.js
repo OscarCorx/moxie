@@ -11,6 +11,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/navigation/increment_primary",
+        thread: header.thread
       });
     },
   },
@@ -25,6 +26,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/navigation/increment_primary",
+        thread: header.thread
       });
     },
   },
@@ -34,7 +36,7 @@ COMPONENTS.push(
     event: "/event/navigation/increment_primary",
     message: "/message/render/full",
     routine: (model, header, resultId) => {
-      Render.full(model);
+      Render.full(model, header);
     },
   },
 );
@@ -51,6 +53,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/navigation/increment_secondary",
+        thread: header.thread
       });
     },
   },
@@ -65,6 +68,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/navigation/increment_secondary",
+        thread: header.thread
       });
     },
   },
@@ -91,6 +95,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/navigation/increment_face",
+        thread: header.thread
       });
     },
   },
@@ -105,6 +110,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/navigation/increment_face",
+        thread: header.thread
       });
     },
   },
@@ -131,6 +137,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/navigation/increment_card",
+        thread: header.thread
       });
     },
   },
@@ -145,6 +152,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/navigation/increment_card",
+        thread: header.thread
       });
     },
   },
@@ -171,6 +179,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/navigation/increment_deck",
+        thread: header.thread
       });
     },
   },
@@ -185,6 +194,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/navigation/increment_deck",
+        thread: header.thread
       });
     },
   },
@@ -198,7 +208,23 @@ COMPONENTS.push(
     },
   },
 );
+/* USER INPUT */
 COMPONENTS.push(
+  {
+    source: "/procedure/subscription",
+    procedure: "/navigation",
+    event: "/event/user_input/return",
+    message: "/message/navigation/increment_primary",
+    routine: (model, header, resultId) => {
+      Navigation.incrementPrimary(model, header, false);
+      model.setComponent({
+        source: "/message/header",
+        result: resultId,
+        event: "/event/navigation/increment_primary",
+        thread: header.thread
+      });
+    },
+  },
   {
     source: "/procedure/subscription",
     procedure: "/navigation",
@@ -210,6 +236,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: resultId,
         event: "/event/navigation/select_primary",
+        thread: header.thread
       });
     },
   },
