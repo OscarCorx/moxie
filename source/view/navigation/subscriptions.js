@@ -41,20 +41,20 @@ COMPONENTS.push(
       });
     },
   },
-  {
-    source: "/procedure/subscription",
-    procedure: "/navigation",
-    event: "/event/style/compiled",
-    action: "/create_state",
-    routine: (model, message, resultId) => {
-      Navigation.createState(model, message.thread, message.entity);
-      model.setComponent({
-        source: "/message/header",
-        result: resultId,
-        event: "/event/navigation/create_state",
-      });
-    },
-  },
+  // {
+  //   source: "/procedure/subscription",
+  //   procedure: "/navigation",
+  //   event: "/event/style/compiled",
+  //   action: "/create_state",
+  //   routine: (model, message, resultId) => {
+  //     Navigation.createState(model, message.thread, message.entity);
+  //     model.setComponent({
+  //       source: "/message/header",
+  //       result: resultId,
+  //       event: "/event/navigation/create_state",
+  //     });
+  //   },
+  // },
   {
     source: "/procedure/subscription",
     procedure: "/navigation",

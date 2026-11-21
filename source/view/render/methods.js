@@ -6,6 +6,14 @@ class Render {
     Object.assign(e.style, style["background"]);
   }
 
+  static full(model, header) {
+    const contents = Query.fullRender(model);
+    for (const c of contents) {
+      this.outline(model, c);
+      this.detail(model, c);
+    }
+  }
+
   static outline(model, c) {
     switch (c.source) {
       case "/absolute":

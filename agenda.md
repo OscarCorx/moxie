@@ -1,12 +1,18 @@
 - Today
   - [ ] Call /current a "thread"
     - [ ] Clean up all the instances of /current
-  - [ ] Scheme out "prototype" attached to archetype
-    - [ ] archetype for data
-    - [ ] prototype for functions
-    - [ ] blueprint is a prototype for UI
   - [ ] Clean up how the /current data structure works
     - [ ] Try to remove components pointing to components
+    - [ ] Clean up different locations of state
+  - [ ] Clean up message / event / action
+  - [ ] Do bindings with render and bind state
+    - [ ] Integrate present more generally
+  - [ ] Formattiing
+    - [ ] Fixed table height
+    - [ ] Clean up absolutes
+    - [ ] Remove panel
+  - [ ] Work out workflow to create workflows
+    - [ ] Will then support algorithms
 
 - Interfaces
   - Mobile

@@ -12,19 +12,19 @@ COMPONENTS.push(
     event: "/event/navigation/component",
     routine: (model, header, resultId) => { },
   },
-  {
-    source: "/procedure/subscription",
-    procedure: "/render",
-    event: "/event/navigation/create_state",
-    routine: (model, header, resultId) => {
-      Render.background(model);
-      const contents = Query.fullRender(model);
-      for (const c of contents) {
-        Render.outline(model, c);
-        Render.detail(model, c);
-      }
-    },
-  },
+  // {
+  //   source: "/procedure/subscription",
+  //   procedure: "/render",
+  //   event: "/event/navigation/create_state",
+  //   routine: (model, header, resultId) => {
+  //     Render.background(model);
+  //     const contents = Query.fullRender(model);
+  //     for (const c of contents) {
+  //       Render.outline(model, c);
+  //       Render.detail(model, c);
+  //     }
+  //   },
+  // },
   {
     source: "/procedure/subscription",
     procedure: "/render",

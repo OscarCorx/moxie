@@ -12,14 +12,14 @@ class Navigation {
       field: field.id,
     });
     model.setReference(thread, "/view/navigation", c.id, true);
-    const user_input = model.accessComponent("/current", "/view/user_input");
+    const user_input = model.accessComponent(thread, "/view/user_input");
     user_input.buffer = "";
   }
 
   static exit(model) {
-    const state = model.accessComponent("/current", "/view/navigation");
+    const state = model.accessComponent(header.thread, "/view/navigation");
     if (!state.exit) return false;
-    model.setReference("/current", state.source, state.exit, true);
+    model.setReference(header.thread, state.source, state.exit, true);
   }
 
   static changeCard(model, entity) {

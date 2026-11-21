@@ -6,7 +6,7 @@ class Process {
       }, event.detail.timeout || 0);
     });
     window.addEventListener("load", () => {
-      this.model.emit({ event: "/event/load", thread: thread, entity: "/person/0" });
+      this.model.emit({ event: "/event/initial/load", thread: thread, entity: "/person/0" });
     });
   }
 

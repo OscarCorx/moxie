@@ -80,51 +80,5 @@ COMPONENTS.push(
 );
 /* PAGE LOAD */
 COMPONENTS.push(
-  {
-    source: "/procedure/subscription",
-    procedure: "/user_input",
-    event: "/event/load",
-    action: "/add/event/listener",
-    routine: (model, message, resultId) => {
-      window.addEventListener("keydown", (event) => {
-        model.emit({
-          id: model.ID(),
-          event: "/event/key_down",
-          value: event.key,
-          thread: message.thread,
-        });
-      });
-      window.addEventListener("keyup", (event) => {
-        model.emit({
-          id: model.ID(),
-          event: "/event/key_up",
-          value: event.key,
-          thread: message.thread,
-        });
-      });
-      window.addEventListener("mousemove", (event) => {
-        event.preventDefault();
-        const state = model.accessComponent(message.thread, "/view/user_input");
-        if (!state.mouse_target) return;
-        model.emit({
-          id: model.ID(),
-          event: "/event/mouse/move",
-          x: event.clientX,
-          y: event.clientY,
-          thread: message.thread,
-        });
-      });
-      window.addEventListener("mouseup", (event) => {
-        const state = model.accessComponent(message.thread, "/view/user_input");
-        if (!state.mouse_target) return;
-        model.emit({
-          id: model.ID(),
-          event: "/event/mouse/up",
-          x: event.clientX,
-          y: event.clientY,
-          thread: message.thread,
-        });
-      });
-    },
-  }
+
 );
