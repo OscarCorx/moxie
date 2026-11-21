@@ -13,6 +13,12 @@ COMPONENTS.push(
     key: "display",
   },
   {
+    parent: "/display/cursor",
+    source: "/schema/field",
+    kind: "/entity",
+    key: "display",
+  },
+  {
     parent: "/display/glyph",
     source: "/schema/field",
     kind: "/entity",

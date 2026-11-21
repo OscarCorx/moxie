@@ -11,6 +11,9 @@ class Render {
       case "/absolute":
         Standard.outlineAbsolute(model, c);
         break;
+      case "/move/absolute":
+        Standard.moveAbsolute(model, c);
+        break;
       case "/panel":
         Standard.outlinePanel(model, c);
         break;
@@ -77,7 +80,7 @@ class Render {
         Standard.detailBoard(model, c);
         break;
       case "/board/tile":
-        Standard.detailAbsolute(model, c);
+        Standard.detailBoardTile(model, c);
         break;
       case "/table":
         Standard.detailTable(model, c);

@@ -1,9 +1,9 @@
 class Query {
   static fullRender(model) {
     const contents = [];
+    this.getWorkspace(model, contents);
     this.getPrimary(model, contents);
     this.getSecondary(model, contents);
-    this.getWorkspace(model, contents);
     return contents;
   }
 
@@ -11,49 +11,89 @@ class Query {
     const c = model.getComponent(element_id);
     return {
       id: c.id,
-      source: "/absolute",
-      handle: true,
-      top: `${c.y}px`,
-      left: `${c.x}px`,
+      source: "/move/absolute",
+      x: c.x,
+      y: c.y,
     };
   }
 
   /* PRIMARY USER TOOLS */
   static getPrimary(model, contents) {
+    const state = model.accessComponent("/current", "/view/navigation");
+    const archetype_entity = model.getComponent(state.entity);
+    const entity_present = model.accessComponent(archetype_entity.entity, "/present") || {};
+    const archetype_present = model.accessComponent(archetype_entity.archetype, "/present") || {};
+    const archetype_property = model.getComponent(state.property);
+    const property_ids = model.accessComponentIds(archetype_property.archetype, "/archetype/property")
+    const schema_present = model.accessComponent(archetype_property.property, "/present") || {};
+    const component_ids = model.accessComponentIds(archetype_entity.entity, archetype_property.property);
+    const field_ids = model.accessComponentIds(archetype_property.property, "/schema/field");
+    const user_input = model.accessComponent("/current", "/view/user_input");
     const c = model.getComponent("/absolute/primary");
     if (!c.active) return;
     contents.push(
-      // {
-      //   id: "/absolute/primary",
-      //   source: "/panel",
-      //   parent: "/app",
-      //   content: "Primary",
-      // },
-      // {
-      //   id: "/absolute/primary/panel",
-      //   source: "/panel",
-      //   parent: "/absolute/primary",
-      //   content: "Primary Panel",
-      // },
+      {
+        id: "/absolute/primary",
+        source: "/absolute",
+        parent: "/app",
+        content: "Primary",
+        handle: c.handle,
+        x: c.x,
+        y: c.y
+      },
+      {
+        id: "/absolute/primary/entry_0",
+        source: "/entry",
+        parent: "/absolute/primary",
+        title: entity_present.title,
+        description: entity_present.description,
+        subtitle: archetype_present.title,
+        subdescription: archetype_present.description,
+        action: "/message/create_entity",
+        action_text: "New Entity",
+      },
     );
   }
   /* AUGMENTS PRIMARY TOOLS */
   static getSecondary(model, contents) {
+    const state = model.accessComponent("/current", "/view/navigation");
+    const archetype_entity = model.getComponent(state.entity);
+    const entity_present = model.accessComponent(archetype_entity.entity, "/present") || {};
+    const archetype_present = model.accessComponent(archetype_entity.archetype, "/present") || {};
+    const archetype_property = model.getComponent(state.property);
+    const property_ids = model.accessComponentIds(archetype_property.archetype, "/archetype/property")
+    const schema_present = model.accessComponent(archetype_property.property, "/present") || {};
+    const component_ids = model.accessComponentIds(archetype_entity.entity, archetype_property.property);
+    const field_ids = model.accessComponentIds(archetype_property.property, "/schema/field");
+    const user_input = model.accessComponent("/current", "/view/user_input");
     const c = model.getComponent("/absolute/secondary");
     if (!c.active) return;
     contents.push(
-      // {
-      //   id: "/absolute/secondary",
-      //   source: "/panel",
-      //   parent: "/app",
-      //   content: "Secondary",
-      // },
-      // {
-      //   id: "/absolute/secondary/panel",
-      //   source: "/panel",
-      //   parent: "/absolute/secondary",
-      //   content: "Secondary Panel",
-      // },
+      {
+        id: "/absolute/secondary",
+        source: "/absolute",
+        parent: "/app",
+        content: "Secondary",
+        handle: c.handle,
+        x: c.x,
+        y: c.y
+      },
+      {
+        id: "/absolute/secondary/entry_1",
+        source: "/entry",
+        parent: "/absolute/secondary",
+        title: schema_present.title,
+        description: schema_present.description,
+        action: "New Component",
+        action_text: "Secondary",
+      },
+      {
+        id: "/absolute/secondary/entry_2",
+        source: "/entry",
+        parent: "/absolute/secondary",
+        title: "FIELD",
+        description: "This is a deep dive into the schema",
+      },
     );
   }
   /* TOOLS INDEPENDENT OF CURRENT WORK */
@@ -72,7 +112,8 @@ class Query {
     const component_ids = model.accessComponentIds(archetype_entity.entity, archetype_property.property);
     const field_ids = model.accessComponentIds(archetype_property.property, "/schema/field");
     const user_input = model.accessComponent("/current", "/view/user_input");
-
+    const c = model.getComponent("/absolute/workspace");
+    if (!c.active) return;
 
     const component = model.getComponent(state.component);
     const field = model.getComponent(state.field);
@@ -134,7 +175,6 @@ class Query {
         source: "/table/field",
         parent: "/absolute/workspace/table/header",
         content: field.key,
-        focus: field_id === state.field,
       });
     }
     for (const r in component_ids) {
@@ -145,7 +185,6 @@ class Query {
         source: "/table/row",
         parent: "/absolute/workspace/table",
         row: r,
-        focus: component_id == state.component,
       });
 
       for (const c in field_ids) {
@@ -158,6 +197,7 @@ class Query {
           content: component[field.key],
           component: component.id,
           field: field_id,
+          focus: component_id == state.component && field_id === state.field,
         });
       }
     }
@@ -170,13 +210,13 @@ class Query {
     });
     for (const i in property_ids) {
       const property_id = property_ids[i];
-      const archetype_property = model.getComponent(property_id);
+      const ap = model.getComponent(property_id);
       contents.push({
         id: `/absolute/workspace/tabs/${i}`,
         source: "/tab",
         parent: "/absolute/workspace/tabs",
-        content: archetype_property.property,
-        active: "passive",
+        content: ap.property,
+        active: (ap.property === archetype_property.property) ? "focus" : "passive",
       });
     }
   }

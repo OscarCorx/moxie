@@ -14,10 +14,41 @@ class Standard {
     Object.assign(element.style, style);
   }
 
+  static moveAbsolute(m, c) {
+    let e = this.getElement(c.id, c.parent);
+    this.addStyle(e, {
+      position: "absolute",
+      left: `${c.x}px`,
+      top: `${c.y}px`,
+    });
+  }
+
   static outlineAbsolute(m, c) {
     let e = this.getElement(c.id, c.parent);
     while (e.firstChild) {
       e.firstChild.remove();
+    }
+    this.addStyle(e, {
+      position: "absolute",
+      left: `${c.x}px`,
+      top: `${c.y}px`,
+    });
+    if (c.handle) {
+      e = this.getElement(`${c.id}/handle`, c.id);
+      e = this.getElement(`${c.id}/grab`, `${c.id}/handle`);
+      this.addStyle(e, {
+        cursor: "grab",
+      });
+      e.textContent = "HANDLE";
+      e.addEventListener("mousedown", (event) => {
+        event.preventDefault();
+        m.emit({
+          event: "/event/mouse/down",
+          element_id: c.id,
+          x: event.clientX,
+          y: event.clientY,
+        });
+      })
     }
   }
 
@@ -25,7 +56,6 @@ class Standard {
     const state = m.accessComponent("/current", "/view/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
-    this.addStyle(e, style["background"]);
   }
 
   static outlinePanel(m, c) {
@@ -123,6 +153,7 @@ class Standard {
 
   static outlineTableField(m, c) {
     let e = this.getElement(c.id, c.parent, "td");
+    this.addStyle(e, { width: "100px" })
   }
 
   static detailTableField(m, c) {
@@ -137,9 +168,10 @@ class Standard {
 
   static outlineTableCell(m, c) {
     let e = this.getElement(c.id, c.parent, "td");
+    this.addStyle(e, { height: "20px" });
     e.addEventListener("click", (e) => {
       m.emit({
-        event: "/event/entry/select",
+        event: "/message/entry/select",
         component: c.component,
         field: c.field,
       });
@@ -147,7 +179,12 @@ class Standard {
   }
 
   static detailTableCell(m, c) {
+    const state = m.accessComponent("/current", "/view/style");
+    const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
+    if (c.focus) {
+      this.addStyle(e, style["field_focus"]);
+    }
     e.textContent = c.content;
   }
 
@@ -166,7 +203,6 @@ class Standard {
     if (c.action) {
       e = this.getElement(`${c.id}/action`, c.id);
       e.addEventListener("click", () => {
-        console.log("ACTION", c.action)
         m.emit({
           event: c.action,
           component: c.component,
@@ -261,7 +297,10 @@ class Standard {
   }
 
   static outlineTab(m, c) {
+    const state = m.accessComponent("/current", "/view/style");
+    const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
+    this.addStyle(e, style["space_tab"]);
   }
 
   static detailTab(m, c) {

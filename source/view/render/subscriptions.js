@@ -123,7 +123,6 @@ COMPONENTS.push(
     event: "/event/draw",
     action: "/outline/detail",
     routine: (model, header, resultId) => {
-      console.log("HERE")
       const contents = Query.fullRender(model);
       for (const c of contents) {
         Render.outline(model, c);
@@ -138,7 +137,7 @@ COMPONENTS.push(
     action: "/position/panel",
     routine: (model, header, resultId) => {
       const c = Query.getAbsolute(model, header.element_id);
-      Detail.element(model, c);
+      Render.outline(model, c);
     },
   },
   {

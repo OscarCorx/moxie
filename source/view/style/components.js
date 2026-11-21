@@ -3,8 +3,17 @@ COMPONENTS.push(
   {
     style: "/theme/dark_mode",
     source: "/style/definition",
+    key: "space_tab",
+    padding: "space_xs",
+    width: "width_1",
+    height: "height_1",
+  },
+  {
+    style: "/theme/dark_mode",
+    source: "/style/definition",
     key: "background",
     "background-color": "black",
+    cursor: "arrow",
   },
   {
     style: "/theme/dark_mode",
@@ -83,14 +92,8 @@ COMPONENTS.push(
     "background-color": "black",
     color: "white",
   },
-  {
-    style: "/theme/dark_mode",
-    source: "/style/definition",
-    key: "background",
-    "background-color": "black",
-  }
 );
-/* DARK MODE */
+/* LIGHT MODE */
 COMPONENTS.push(
   {
     style: "/theme/light_mode",
@@ -166,21 +169,37 @@ COMPONENTS.push(
 COMPONENTS.push(
   {
     display: "/display/0",
+    source: "/display/cursor",
+    arrow: "arrow",
+  },
+  {
+    display: "/display/0",
     source: "/display/space",
-    space_xs: "1",
-    space_s: "10",
-    space_m: "20",
-    space_l: "40",
-    space_xl: "80",
+    space_xs: "1px",
+    space_s: "2px",
+    space_m: "4px",
+    space_l: "8px",
+    space_xl: "16px",
+    width_1: "100px",
+    width_2: "10px",
+    width_3: "10px",
+    width_4: "10px",
+    width_5: "100px",
+    height_1: "25px",
+    height_2: "10px",
+    height_3: "10px",
+    height_4: "10px",
+    height_5: "10px",
   },
   {
     display: "/display/0",
     source: "/display/glyph",
-    glyph_xs: "1",
-    glyph_s: "2",
-    glyph_m: "4",
-    glyph_l: "8",
-    glyph_xl: "16",
+    glyph_xs: "1px",
+    glyph_s: "2px",
+    glyph_m: "4px",
+    glyph_l: "8px",
+    glyph_xl: "16px",
+    arrow: "pointer",
   },
   {
     display: "/display/0",

@@ -10,6 +10,12 @@ ASSETS.push(
 );
 ASSETS.push(
   {
+    source: "/archetype/property",
+    property: "/present",
+    archetype: "/archetype/person",
+    field: "entity",
+  },
+  {
     id: "/location/0",
     source: "/archetype/property",
     property: "/location",
@@ -25,12 +31,6 @@ ASSETS.push(
   {
     source: "/archetype/property",
     property: "/contact",
-    archetype: "/archetype/person",
-    field: "entity",
-  },
-  {
-    source: "/archetype/property",
-    property: "/present",
     archetype: "/archetype/person",
     field: "entity",
   },

@@ -15,6 +15,7 @@ const BINDINGS = {
   "q": "/message/new",
   "Shift": "/event/big",
   "Control": "/event/bind",
+  "Enter": "/event/enter"
 }
 class KeyboardActions {
   static move(model, value, resultId) {
@@ -54,6 +55,9 @@ class KeyboardActions {
     let event = "/event/user/input";
     if (binding === "/event/bind") {
       user_input.bind = true;
+    } else if (binding === "/event/enter") {
+      user_input.mode = "/move";
+      state["/user_input"] = "/move";
     } else if (user_input.bind && binding === "/event/mode") {
       user_input.mode = "/move";
       state["/user_input"] = "/move";
@@ -145,6 +149,9 @@ class MouseActions {
   }
 
   static entrySelect(model) {
+    const user_input = model.accessComponent("/current", "/view/user_input");
+    const state = model.accessComponent("/current", "/state");
+    user_input.mode = "/entry";
     state["/user_input"] = "/entry";
   }
 }
