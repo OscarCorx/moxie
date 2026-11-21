@@ -5,6 +5,7 @@
     - [ ] Try to remove components pointing to components
     - [ ] Clean up different locations of state
   - [ ] Clean up message / event / action
+    - [ ] Rename "procedure" to "system"
   - [ ] Do bindings with render and bind state
     - [ ] Integrate present more generally
   - [ ] Formattiing

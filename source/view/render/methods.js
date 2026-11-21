@@ -1,6 +1,36 @@
 class Render {
+  static createState(model, thread) {
+    model.setComponent({
+      id: "/absolute/workspace",
+      source: "/view/absolute",
+      thread: "/current",
+      handle: false,
+      active: true,
+      x: 2,
+      y: 2,
+      height: 99,
+      width: 99,
+    });
+    model.setComponent({
+      id: "/absolute/primary",
+      source: "/view/absolute",
+      handle: true,
+      active: true,
+      x: 100,
+      y: 100,
+    });
+    model.setComponent({
+      id: "/absolute/secondary",
+      source: "/view/absolute",
+      handle: true,
+      active: true,
+      x: 400,
+      y: 100,
+    });
+  }
+
   static background(m) {
-    const state = m.accessComponent("/current", "/view/style");
+    const state = m.accessComponent("/current", "/style");
     const style = m.getEntity(state.main_theme);
     let e = document.getElementsByTagName("body")[0];
     Object.assign(e.style, style["background"]);

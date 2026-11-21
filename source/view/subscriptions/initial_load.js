@@ -3,45 +3,45 @@ COMPONENTS.push(
     source: "/procedure/subscription",
     procedure: "/user_input",
     event: "/event/initial/load",
-    message: "/message/add/event_listener",
-    routine: (model, message, resultId) => {
+    message: "/message/user_input/event_listener",
+    routine: (model, header, resultId) => {
       window.addEventListener("keydown", (event) => {
         model.emit({
           id: model.ID(),
-          event: "/event/key_down",
+          event: "/event/keyboard/down",
           value: event.key,
-          thread: message.thread,
+          thread: header.thread,
         });
       });
       window.addEventListener("keyup", (event) => {
         model.emit({
           id: model.ID(),
-          event: "/event/key_up",
+          event: "/event/keyboard/up",
           value: event.key,
-          thread: message.thread,
+          thread: header.thread,
         });
       });
       window.addEventListener("mousemove", (event) => {
         event.preventDefault();
-        const state = model.accessComponent(message.thread, "/view/user_input");
+        const state = model.accessComponent(header.thread, "/user_input");
         if (!state.mouse_target) return;
         model.emit({
           id: model.ID(),
           event: "/event/mouse/move",
           x: event.clientX,
           y: event.clientY,
-          thread: message.thread,
+          thread: header.thread,
         });
       });
       window.addEventListener("mouseup", (event) => {
-        const state = model.accessComponent(message.thread, "/view/user_input");
+        const state = model.accessComponent(header.thread, "/user_input");
         if (!state.mouse_target) return;
         model.emit({
           id: model.ID(),
           event: "/event/mouse/up",
           x: event.clientX,
           y: event.clientY,
-          thread: message.thread,
+          thread: header.thread,
         });
       });
     },
@@ -50,12 +50,12 @@ COMPONENTS.push(
     source: "/procedure/subscription",
     procedure: "/view",
     event: "/event/initial/load",
-    message: "/message/view/create_state",
-    routine: (model, message, resultId) => {
-      model.setReference("/current", "/view/hud", "/current/hud");
-      // model.setReference("/current", "/view/navigation", "/current/navigation");
-      model.setReference("/current", "/view/style", "/current/style");
-      model.setReference("/current", "/view/user_input", "/current/user_input");
+    message: "/message/all/create_state",
+    routine: (model, header, resultId) => {
+      UserInput.createState(model, header);
+      Navigation.createState(model, header, "/person/0");
+      Style.createState(model, header);
+      Render.createState(model, header);
     },
   },
   {
@@ -64,23 +64,23 @@ COMPONENTS.push(
     event: "/event/initial/load",
     message: "/message/style/compile",
     routine: (model, header, resultId) => {
-      Style.compile(model);
+      Style.compile(model, header);
       model.setComponent({
         source: "/message/header",
         result: resultId,
         thread: header.thread,
         entity: header.entity,
-        event: "/event/style/compiled",
+        event: "/event/style/compile",
       });
     },
   },
   {
     source: "/procedure/subscription",
     procedure: "/navigation",
-    event: "/event/style/compiled",
+    event: "/event/style/compile",
     message: "/message/navigation/create_state",
-    routine: (model, message, resultId) => {
-      Navigation.createState(model, message.thread, message.entity);
+    routine: (model, header, resultId) => {
+      Navigation.createState(model, header.thread, header.entity);
       model.setComponent({
         source: "/message/header",
         result: resultId,

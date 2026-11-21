@@ -53,7 +53,7 @@ class Standard {
   }
 
   static detailAbsolute(m, c) {
-    const state = m.accessComponent("/current", "/view/style");
+    const state = m.accessComponent("/current", "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
   }
@@ -139,7 +139,7 @@ class Standard {
   }
 
   static detailTableRow(m, c) {
-    const state = m.accessComponent("/current", "/view/style");
+    const state = m.accessComponent("/current", "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id);
     if (c.focus) {
@@ -157,7 +157,7 @@ class Standard {
   }
 
   static detailTableField(m, c) {
-    const state = m.accessComponent("/current", "/view/style");
+    const state = m.accessComponent("/current", "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     e.textContent = c.content;
@@ -179,7 +179,7 @@ class Standard {
   }
 
   static detailTableCell(m, c) {
-    const state = m.accessComponent("/current", "/view/style");
+    const state = m.accessComponent("/current", "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     if (c.focus) {
@@ -213,7 +213,7 @@ class Standard {
   }
 
   static detailEntry(m, c) {
-    const state = m.accessComponent("/current", "/view/style");
+    const state = m.accessComponent("/current", "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     this.addStyle(e, style["field_inactive"]);
@@ -265,7 +265,7 @@ class Standard {
   }
 
   static detailButton(m, c) {
-    const state = m.accessComponent("/current", "/view/style");
+    const state = m.accessComponent("/current", "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     if (c.focus === "inactive") {
@@ -297,14 +297,14 @@ class Standard {
   }
 
   static outlineTab(m, c) {
-    const state = m.accessComponent("/current", "/view/style");
+    const state = m.accessComponent("/current", "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     this.addStyle(e, style["space_tab"]);
   }
 
   static detailTab(m, c) {
-    const state = m.accessComponent("/current", "/view/style");
+    const state = m.accessComponent("/current", "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     if (c.active === "inactive") {

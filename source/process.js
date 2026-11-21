@@ -19,13 +19,14 @@ class Process {
       header.event,
       "/procedure/subscription",
     );
+    console.log("PROCESS MESSAGE", header.event, subscriptionIds.length);
     for (const subscriptionId of subscriptionIds) {
       const subscription = this.model.getComponent(subscriptionId);
       if (subscription.state) {
         if (state_component && subscription.state && subscription.state !== state_component[subscription.procedure]) continue;
       }
       if (!subscription.routine) continue;
-      console.log(subscription.event, subscription.procedure, subscription.state, subscription.action);
+      console.log("SUBSCRIPTION", subscription.event, subscription.message, subscription.procedure, subscription.state);
       const resultId = this.model.ID();
       resultIds.push(resultId);
       subscription.routine(this.model, header, resultId);

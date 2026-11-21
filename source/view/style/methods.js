@@ -1,6 +1,20 @@
 class Style {
-  static compile(model) {
-    const state = model.accessComponent("/current", "/view/style");
+  static createState(model, header) {
+    const state = {
+      source: "/style/state",
+      main_theme: "/theme/dark_mode",
+      stable_theme: "/theme/light",
+      main_space: "/layout/0",
+      stable_space: "/layout/1",
+      main_display: "/display/0",
+      stable_display: "/display/1",
+    };
+    model.setComponent(state);
+    model.setReference(header.thread, "/style", state.id);
+  }
+
+  static compile(model, header) {
+    const state = model.accessComponent(header.thread, "/style");
     const style = model.getEntity(state.main_theme);
 
     const display = {};

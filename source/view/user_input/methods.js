@@ -1,37 +1,57 @@
-/* BINDINGS */
-const BINDINGS = {
-  "j": "/message/forward",
-  "u": "/message/back",
-  "f": "/message/next",
-  "t": "/message/previous",
-  "k": "/message/flip",
-  "i": "/message/reverse",
-  "d": "/message/draw",
-  "r": "/message/replace",
-  "h": "/message/enter",
-  "y": "/message/exit",
-  "g": "/message/select",
-  "n": "/event/mode",
-  "q": "/message/new",
-  "Shift": "/event/big",
-  "Control": "/event/bind",
-  "Enter": "/event/enter"
+const NAVIGATION = {
+  "j": "/event/user_input/forward",
+  "u": "/event/user_input/back",
+  "f": "/event/user_input/next",
+  "t": "/event/user_input/previous",
+  "k": "/event/user_input/flip",
+  "i": "/event/user_input/reverse",
+  "d": "/event/user_input/draw",
+  "r": "/event/user_input/replace",
+  "h": "/event/user_input/enter",
+  "y": "/event/user_input/exit",
+  "g": "/event/user_input/select",
+  "n": "/event/user_input/mode",
+  "Shift": "/event/user_input/big",
+  "Control": "/event/user_input/bind",
+  "Enter": "/event/user_input/return",
+};
+const BINDING = {
+  "q": "/event/binding/new_component",
+  "w": "/event/binding/new_entity",
 }
+
+class UserInput {
+  static createState(model, thread) {
+    const c = {
+      source: "/user_input/state",
+      state: "/move",
+      move: true,
+      edit: false,
+      bind: false,
+      big: false,
+      buffer: "",
+    };
+    model.setComponent(c);
+    model.setReference(thread, "/user_input", c.id);
+  }
+}
+
 class KeyboardActions {
-  static move(model, value, resultId) {
-    const user_input = model.accessComponent("/current", "/view/user_input");
-    const state = model.accessComponent("/current", "/state");
-    let event = BINDINGS[value];
+  static move(model, thread, value, resultId) {
+    const user_input = model.accessComponent(thread, "/user_input");
+    let event = NAVIGATION[value];
     switch (event) {
-      case "/event/bind":
+      case "/event/user_input/bind":
+        user_input.state = "/bind";
         user_input.bind = true;
         break;
-      case "/event/big":
+      case "/event/user_input/big":
         user_input.big = true;
         break;
-      case "/event/mode":
-        user_input.mode = "/entry";
-        state["/user_input"] = "/entry";
+      case "/event/user_input/mode":
+        user_input.state = "/edit";
+        user_input.move = false;
+        user_input.edit = true;
         break;
     }
     model.setComponent({
@@ -40,27 +60,14 @@ class KeyboardActions {
       event: event,
       result: resultId,
     });
-    model.setComponent({
-      id: model.ID(),
-      source: "/message/header",
-      event: "/event/user/input",
-      result: resultId,
-    });
   }
 
-  static entry(model, value, resultId) {
-    const user_input = model.accessComponent("/current", "/view/user_input");
-    const state = model.accessComponent("/current", "/state");
-    let binding = BINDINGS[value];
-    let event = "/event/user/input";
-    if (binding === "/event/bind") {
+  static edit(model, thread, value, resultId) {
+    const user_input = model.accessComponent(thread, "/user_input");
+    let event = NAVIGATION[value];
+    if (event === "/event/user_input/bind") {
+      user_input.state = "/bind";
       user_input.bind = true;
-    } else if (binding === "/event/enter") {
-      user_input.mode = "/move";
-      state["/user_input"] = "/move";
-    } else if (user_input.bind && binding === "/event/mode") {
-      user_input.mode = "/move";
-      state["/user_input"] = "/move";
     } else if (value.length === 1 || value === "Backspace") {
       event = "/message/crud/input";
     }
@@ -73,39 +80,33 @@ class KeyboardActions {
     });
   }
 
-  static bind(model, value, resultId) {
-    const state = model.accessComponent("/current", "/view/user_input");
-    let event = BINDINGS[value];
-    switch (event) {
-      case "/event/bind":
-        state.bind = true;
-        event = "/event/bind";
-        break;
-      case "/event/big":
-        state.big = true;
-        return;
-      case "/event/mode":
-        state.mode = "/move";
-        event = "/event/mode";
-        break;
+  static bind(model, thread, value, resultId) {
+    const user_input = model.accessComponent(thread, "/user_input");
+    let event = NAVIGATION[value];
+    if (event === "/event/user_input/mode") {
+      user_input.state = "/move";
+      user_input.move = true;
+      user_input.edit = false;
+      model.setComponent({
+        id: `/keydown/${model.ID()}`,
+        source: "/message/header",
+        event: event,
+        result: resultId,
+      });
+      return;
     }
+    event = BINDING[value];
     model.setComponent({
       id: `/keydown/${model.ID()}`,
       source: "/message/header",
       event: event,
       result: resultId,
     });
-    model.setComponent({
-      id: model.ID(),
-      source: "/message/header",
-      event: "/event/user/input",
-      result: resultId,
-    });
   }
 
   static keyUp(model, value, resultId) {
-    const state = model.accessComponent("/current", "/view/user_input");
-    let event = BINDINGS[value];
+    const state = model.accessComponent("/current", "/user_input");
+    let event = NAVIGATION[value];
     switch (event) {
       case "/event/bind":
         state.bind = false;
@@ -120,19 +121,12 @@ class KeyboardActions {
         state.big = false;
         break;
     }
-    model.setComponent({
-      id: model.ID(),
-      source: "/message/header",
-      event: "/event/user/input",
-      result: resultId,
-    });
-
   }
 }
 
 class MouseActions {
   static down(model, element_id, x, y, resultId) {
-    const state = model.accessComponent("/current", "/view/user_input");
+    const state = model.accessComponent("/current", "/user_input");
     state.mouse_target = element_id;
     const element = model.getComponent(element_id);
     element.offset_x = x - element.x;
@@ -140,17 +134,16 @@ class MouseActions {
   }
 
   static move(model, x, y, resultId) {
-    const state = model.accessComponent("/current", "/view/user_input");
+    const state = model.accessComponent("/current", "/user_input");
   }
 
   static up(model, x, y, resultId) {
-    const state = model.accessComponent("/current", "/view/user_input");
+    const state = model.accessComponent("/current", "/user_input");
     state.mouse_target = null;
   }
 
   static entrySelect(model) {
-    const user_input = model.accessComponent("/current", "/view/user_input");
-    const state = model.accessComponent("/current", "/state");
+    const user_input = model.accessComponent("/current", "/user_input");
     user_input.mode = "/entry";
     state["/user_input"] = "/entry";
   }

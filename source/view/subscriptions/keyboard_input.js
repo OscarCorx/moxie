@@ -2,40 +2,40 @@ COMPONENTS.push(
   {
     source: "/procedure/subscription",
     procedure: "/user_input",
-    event: "/event/key_down",
+    event: "/event/keyboard/down",
     state: "/move",
-    action: "/keyboard/move",
-    routine: (model, message, resultId) => {
-      return KeyboardActions.move(model, message.value, resultId);
+    message: "/message/keyboard/move",
+    routine: (model, header, resultId) => {
+      return KeyboardActions.move(model, header.value, resultId);
     },
   },
   {
     source: "/procedure/subscription",
     procedure: "/user_input",
-    event: "/event/key_down",
-    state: "/entry",
-    action: "/keyboard/entry",
-    routine: (model, message, resultId) => {
-      KeyboardActions.entry(model, message.value, resultId);
+    event: "/event/keyboard/down",
+    state: "/edit",
+    message: "/message/keyboard/edit",
+    routine: (model, header, resultId) => {
+      KeyboardActions.edit(model, header.value, resultId);
     },
   },
   {
     source: "/procedure/subscription",
     procedure: "/user_input",
-    event: "/event/key_down",
-    state: "/entry/bind",
-    action: "/keyboard/bind",
-    routine: (model, message, resultId) => {
-      KeyboardActions.bind(model, message.value, resultId);
+    event: "/event/keyboard/down",
+    state: "/bind",
+    message: "/message/keyboard/bind",
+    routine: (model, header, resultId) => {
+      KeyboardActions.bind(model, header.value, resultId);
     },
   },
   {
     source: "/procedure/subscription",
     procedure: "/user_input",
-    event: "/event/key_up",
-    action: "/keyboard/keyup",
-    routine: (model, message, resultId) => {
-      KeyboardActions.keyUp(model, message.value, resultId);
+    event: "/event/keyboard/up",
+    message: "/message/keyboard/keyup",
+    routine: (model, header, resultId) => {
+      KeyboardActions.keyUp(model, header.value, resultId);
     },
   },
 );
