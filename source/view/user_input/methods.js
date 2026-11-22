@@ -18,6 +18,7 @@ const NAVIGATION = {
 const BINDING = {
   "q": "/event/binding/new_component",
   "w": "/event/binding/new_entity",
+  "p": "/event/absolute/toggle",
 }
 
 class UserInput {
@@ -101,6 +102,7 @@ class KeyboardActions {
       source: "/message/header",
       event: event,
       result: resultId,
+      thread: header.thread,
     });
   }
 

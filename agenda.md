@@ -1,19 +1,14 @@
 - Today
-  - [ ] Call /current a "thread"
-    - [ ] Clean up all the instances of /current
-  - [ ] Clean up how the /current data structure works
-    - [ ] Try to remove components pointing to components
-    - [ ] Clean up different locations of state
-  - [ ] Clean up message / event / action
-    - [ ] Rename "procedure" to "system"
-  - [ ] Do bindings with render and bind state
-    - [ ] Integrate present more generally
+  - [ ] Replace thread with "run"
   - [ ] Formattiing
-    - [ ] Fixed table height
-    - [ ] Clean up absolutes
     - [ ] Remove panel
   - [ ] Work out workflow to create workflows
     - [ ] Will then support algorithms
+      - [ ] Requirements
+        - [ ] Entity
+        - [ ] Procedure applied to the entity archetype
+        - [ ] Actions ( Event / Message / Error )
+        - [ ] State of Procedure
 
 - Interfaces
   - Mobile
@@ -60,3 +55,38 @@ Sort
 Classification
 Tier
 Heading
+
+Style
+- Display
+  - CSS Primitives
+- Style
+  - Collections of display values
+- Dimensions
+  - Layout
+    - Fixed by the blueprint
+  - Spacing
+    - Configured per user
+    - Requires outline
+  - Theme
+    - Configured per user
+    - Requires detail
+- Language
+  - 3 shapes
+    - Sharp corners
+      - Information
+    - Smooth corners
+      - User Action
+    - Round corners
+      - Data
+  - 2 Color States
+    - Neutral: Passive
+    - Colorful: Attention
+      - In particular, focus
+
+Workflow Concepts
+- Start Human, then automate
+  - A procedure is a set of routines
+    - Each routine is triggered by a message
+    - Each routine sends an event
+    - Subscriptions convert events to messages
+  -

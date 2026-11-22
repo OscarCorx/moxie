@@ -19,6 +19,18 @@ class Query {
 
   /* PRIMARY USER TOOLS */
   static getPrimary(model, header, contents) {
+
+    const c = model.getComponent("/absolute/primary");
+    contents.push({
+      id: "/absolute/primary",
+      source: "/absolute",
+      parent: "/app",
+      content: "Primary",
+      handle: c.handle,
+      x: c.x,
+      y: c.y
+    });
+    if (!c.active) return;
     const state = model.accessComponent(header.thread, "/navigation");
     const archetype_entity = model.getComponent(state.entity);
     const entity_present = model.accessComponent(archetype_entity.entity, "/present") || {};
@@ -29,14 +41,14 @@ class Query {
     const component_ids = model.accessComponentIds(archetype_entity.entity, archetype_property.property);
     const field_ids = model.accessComponentIds(archetype_property.property, "/schema/field");
     const user_input = model.accessComponent(header.thread, "/user_input");
-    const c = model.getComponent("/absolute/primary");
-    if (!c.active) return;
+
     contents.push(
       {
         id: "/absolute/primary",
         source: "/absolute",
         parent: "/app",
         content: "Primary",
+        active: c.active,
         handle: c.handle,
         x: c.x,
         y: c.y
@@ -56,6 +68,18 @@ class Query {
   }
   /* AUGMENTS PRIMARY TOOLS */
   static getSecondary(model, header, contents) {
+    const c = model.getComponent("/absolute/secondary");
+    contents.push({
+      id: "/absolute/secondary",
+      source: "/absolute",
+      parent: "/app",
+      content: "Secondary",
+      active: c.active,
+      handle: c.handle,
+      x: c.x,
+      y: c.y,
+    });
+    if (!c.active) return;
     const state = model.accessComponent(header.thread, "/navigation");
     const archetype_entity = model.getComponent(state.entity);
     const entity_present = model.accessComponent(archetype_entity.entity, "/present") || {};
@@ -66,18 +90,7 @@ class Query {
     const component_ids = model.accessComponentIds(archetype_entity.entity, archetype_property.property);
     const field_ids = model.accessComponentIds(archetype_property.property, "/schema/field");
     const user_input = model.accessComponent(header.thread, "/user_input");
-    const c = model.getComponent("/absolute/secondary");
-    if (!c.active) return;
     contents.push(
-      {
-        id: "/absolute/secondary",
-        source: "/absolute",
-        parent: "/app",
-        content: "Secondary",
-        handle: c.handle,
-        x: c.x,
-        y: c.y
-      },
       {
         id: "/absolute/secondary/entry_1",
         source: "/entry",

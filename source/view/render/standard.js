@@ -34,6 +34,7 @@ class Standard {
       top: `${c.y}px`,
       height: "100%"
     });
+    if (!c.active) return;
     if (c.handle) {
       e = this.getElement(`${c.id}/handle`, c.id);
       e = this.getElement(`${c.id}/grab`, `${c.id}/handle`);

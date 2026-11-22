@@ -65,4 +65,14 @@ COMPONENTS.push(
       Render.full(model, header);
     },
   },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
+    event: "/event/absolute/toggle",
+    message: "/message/render/toggle_state",
+    routine: (model, header, resultId) => {
+      Render.toggleState(model, header);
+      Render.full(model, header);
+    },
+  },
 );

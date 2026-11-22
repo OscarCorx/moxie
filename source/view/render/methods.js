@@ -28,6 +28,13 @@ class Render {
     });
   }
 
+  static toggleState(model, header) {
+    let state = model.getComponent("/absolute/primary");
+    state.active = !state.active;
+    state = model.getComponent("/absolute/secondary");
+    state.active = !state.active;
+  }
+
   static background(model, header) {
     const state = model.accessComponent(header.thread, "/style");
     const style = model.getEntity(state.main_theme);

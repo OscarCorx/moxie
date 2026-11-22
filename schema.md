@@ -1,63 +1,18 @@
 DECK -> Fixed Template, List of Entities
 CARD -> FIxed Template, Fixed Entity
 FACE -> Fixed Query, Fixed Entity
-PANEL -> List of Contents
-ENTRY -> List of Entries
+SECONDARY -> List of Contents
+PRIMARY -> List of Entries
 
-Use "channel" instead of context
-- Will include tennancy, etc
+/procedure/subscription
+/procedure/run
+- procedure
+- run <- THREAD
+- entity
+/run/message <- MESSAGE HEADER
+/<system>/state
+- run
+- system
+- 
 
-
-
-/misenplace
-  - /deck
-  - /controls
-  - /bindings
-  - /primary_design
-  - /secondary_design
-/deck
-  - /cards
-    - /index:int
-    - /card:card
-  - /navigation
-    - /focus:card
-    - /exit:deck
-/card
-  - /deck
-  - /faces
-    - /index:int
-    - /face:face
-  - /navigation
-    - /focus:face
-/face
-  - /card
-  - /inert
-    - /index:int
-    - /entry:entry
-  - /primary
-    - /index:int
-    - /entry:entry
-  - /secondary
-    - /index:int
-    - /entry:entry
-  - /template
-    - /entry:
-    - /entry_template:
-  - /navigation
-    - /primary_focus:boolean
-    - /secondary_focus:boolean
-
-/entry/textarea
-  - /entry/textarea/template
-  - /entry/textarea/data
-
-/css
-  - /css/keyword
-/style
-  - /style/element
-/design
-  - /design/theme
-  - /design/position
-  - /design/space
-  - /design/style
-    - /style:style
+/<EVENT/MESSAGE>/<SYSTEM>/<ROUTINE>

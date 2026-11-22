@@ -38,6 +38,7 @@ COMPONENTS.push(
         source: "/message/header",
         event: "/event/navigation/drag_move",
         result: resultId,
+        thread: header.thread,
       });
     },
   },
