@@ -33,9 +33,36 @@ COMPONENTS.push(
     source: "/procedure/subscription",
     procedure: "/user_input",
     event: "/event/keyboard/up",
-    message: "/message/keyboard/keyup",
+    message: "/message/keyboard/key_up",
     routine: (model, header, resultId) => {
       KeyboardActions.keyUp(model, header, resultId);
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
+    event: "/event/user_input/bind",
+    message: "/message/render/full",
+    routine: (model, header, resultId) => {
+      Render.full(model, header);
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
+    event: "/event/user_input/unbind",
+    message: "/message/render/full",
+    routine: (model, header, resultId) => {
+      Render.full(model, header);
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
+    event: "/event/user_input/mode",
+    message: "/message/render/full",
+    routine: (model, header, resultId) => {
+      Render.full(model, header);
     },
   },
 );

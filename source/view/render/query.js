@@ -149,7 +149,7 @@ class Query {
         subtitle: archetype_present.title,
         subdescription: archetype_present.description,
         action: "/message/create_entity",
-        action_text: "New Entity",
+        action_text: (user_input.bind) ? "N" : "New Entity",
       },
       {
         id: "/absolute/workspace/header/entry_2",
@@ -158,7 +158,7 @@ class Query {
         title: schema_present.title,
         description: schema_present.description,
         action: "New Component",
-        action_text: "New Component",
+        action_text: (user_input.bind) ? "Q" : "New Component",
       },
       {
         id: "/absolute/workspace/header/entry_3",
@@ -217,6 +217,8 @@ class Query {
         parent: "/absolute/workspace/tabs",
         content: ap.property,
         active: (ap.property === archetype_property.property) ? "focus" : "passive",
+        action: "/event/face/select",
+        action_value: property_id,
       });
     }
   }

@@ -86,11 +86,9 @@ class KeyboardActions {
     const user_input = model.accessComponent(header.thread, "/user_input");
     let event = NAVIGATION[header.value];
     if (event === "/event/user_input/mode") {
-      user_input.state = "/move";
       user_input.move = true;
       user_input.edit = false;
       model.setComponent({
-        id: `/keydown/${model.ID()}`,
         source: "/message/header",
         event: event,
         result: resultId,
@@ -100,7 +98,6 @@ class KeyboardActions {
     }
     event = BINDING[header.value];
     model.setComponent({
-      id: `/keydown/${model.ID()}`,
       source: "/message/header",
       event: event,
       result: resultId,
@@ -111,16 +108,17 @@ class KeyboardActions {
     const state = model.accessComponent(header.thread, "/user_input");
     let event = NAVIGATION[header.value];
     switch (event) {
-      case "/event/bind":
+      case "/event/user_input/bind":
         state.bind = false;
+        state.state = (state.move) ? "/move" : "/edit";
         model.setComponent({
-          id: `/keydown/${model.ID()}`,
           source: "/message/header",
-          event: "/event/unbind",
+          event: "/event/user_input/unbind",
           result: resultId,
+          thread: header.thread,
         });
         break;
-      case "/event/big":
+      case "/event/user_input/big":
         state.big = false;
         break;
     }

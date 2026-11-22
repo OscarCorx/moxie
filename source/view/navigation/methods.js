@@ -93,4 +93,9 @@ class Navigation {
     if (header.component) state.component = header.component;
     if (header.field) state.field = header.field;
   }
+
+  static selectFace(model, header) {
+    const state = model.accessComponent(header.thread, "/navigation");
+    state.property = header.value;
+  }
 }

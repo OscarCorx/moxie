@@ -32,6 +32,7 @@ class Standard {
       position: "absolute",
       left: `${c.x}px`,
       top: `${c.y}px`,
+      height: "100%"
     });
     if (c.handle) {
       e = this.getElement(`${c.id}/handle`, c.id);
@@ -64,6 +65,7 @@ class Standard {
     this.addStyle(e, {
       display: "flex",
       "flex-direction": "column",
+      height: "100%"
     });
     e = this.getElement(c.header, c.id);
     this.addStyle(e, {
@@ -71,6 +73,9 @@ class Standard {
       "flex-direction": "row",
     });
     e = this.getElement(c.body, c.id);
+    this.addStyle(e, {
+      height: "100%",
+    });
     e = this.getElement(c.footer, c.id);
     this.addStyle(e, {
       display: "flex",
@@ -209,6 +214,7 @@ class Standard {
           event: c.action,
           component: c.component,
           field: c.field,
+          thread: "/current",
         });
       });
     }
@@ -316,6 +322,13 @@ class Standard {
     } else {
       this.addStyle(e, style["tab_focus"]);
     }
+    e.addEventListener("click", () => {
+      m.emit({
+        event: c.action,
+        value: c.action_value,
+        thread: "/current",
+      });
+    });
     e.textContent = c.content;
   }
 }

@@ -12,23 +12,26 @@ class Process {
 
   /* PROCESS ROUTINE */
   processMessage(header) {
-
     const resultIds = [];
     const subscriptionIds = this.model.accessComponentIds(
       header.event,
       "/procedure/subscription",
     );
     console.log("PROCESS MESSAGE", header.event, subscriptionIds.length);
+    const subscriptions = [];
     for (const subscriptionId of subscriptionIds) {
       const subscription = this.model.getComponent(subscriptionId);
       if (subscription.state) {
-        const state = {...this.model.accessComponent(header.thread, subscription.procedure)};
+        const state = this.model.accessComponent(header.thread, subscription.procedure);
         if (state && subscription.state && subscription.state !== state.state) continue;
       }
       if (!subscription.routine) continue;
-      console.log("SUBSCRIPTION", subscription.event, subscription.message, subscription.procedure, subscription.state);
+      subscriptions.push(subscription);
+    }
+    for (const subscription of subscriptions) {
       const resultId = this.model.ID();
       resultIds.push(resultId);
+      console.log("SUBSCRIPTION", subscription.event, subscription.message, subscription.procedure, subscription.state);
       subscription.routine(this.model, header, resultId);
     }
 

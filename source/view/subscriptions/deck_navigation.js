@@ -242,8 +242,32 @@ COMPONENTS.push(
   },
   {
     source: "/procedure/subscription",
+    procedure: "/navigation",
+    event: "/event/face/select",
+    message: "/message/navigation/select_face",
+    routine: (model, header, resultId) => {
+      Navigation.selectFace(model, header);
+      model.setComponent({
+        source: "/message/header",
+        result: resultId,
+        event: "/event/navigation/select_primary",
+        thread: header.thread
+      });
+    },
+  },
+  {
+    source: "/procedure/subscription",
     procedure: "/render",
     event: "/event/navigation/select_primary",
+    message: "/message/render/full",
+    routine: (model, header, resultId) => {
+      Render.full(model, header);
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/render",
+    event: "/event/navigation/select_face",
     message: "/message/render/full",
     routine: (model, header, resultId) => {
       Render.full(model, header);
