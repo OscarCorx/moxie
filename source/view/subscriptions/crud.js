@@ -2,26 +2,27 @@
 COMPONENTS.push(
   {
     source: "/procedure/subscription",
-    procedure: "/crud",
-    event: "/event/user_input/keyboard_input",
+    system: "/crud",
+    procedure: "/user_interface",
+    event: "/event/user_input/user_interface",
     message: "/message/crud/input",
-    routine: (model, header, resultId) => {
-      Crud.input(model, header);
+    routine: (m, h, r) => {
+      Crud.input(m, h);
       model.setComponent({
         source: "/message/header",
-        result: resultId,
+        result: r,
         event: "/event/crud/update",
-        thread: header.thread,
       });
     },
   },
   {
     source: "/procedure/subscription",
-    procedure: "/render",
+    system: "/render",
+    procedure: "/user_interface",
     event: "/event/crud/update",
     message: "/message/render/full",
-    routine: (model, header, resultId) => {
-      Render.full(model, header);
+    routine: (m, h, r) => {
+      Render.full(m, h);
     },
   },
 );
@@ -29,26 +30,27 @@ COMPONENTS.push(
 COMPONENTS.push(
   {
     source: "/procedure/subscription",
-    procedure: "/crud",
+    system: "/crud",
+    procedure: "/user_interface",
     event: "/event/entity/new",
     message: "/message/crud/create_entity",
-    routine: (model, header, resultId) => {
-      Crud.create_entity(model, header);
+    routine: (m, h, r) => {
+      Crud.create_entity(m, h);
       model.setComponent({
         source: "/message/header",
-        result: resultId,
+        result: r,
         event: "/event/crud/create_entity",
-        thread: header.thread,
       });
     },
   },
   {
     source: "/procedure/subscription",
-    procedure: "/render",
+    system: "/render",
+    procedure: "/user_interface",
     event: "/event/crud/create_entity",
     message: "/message/render/full",
-    routine: (model, header, resultId) => {
-      Render.full(model, header);
+    routine: (m, h, r) => {
+      Render.full(m, h);
     },
   },
 );
@@ -56,26 +58,27 @@ COMPONENTS.push(
 COMPONENTS.push(
   {
     source: "/procedure/subscription",
-    procedure: "/crud",
+    system: "/crud",
+    procedure: "/user_interface",
     event: "/event/component/new",
     message: "/message/crud/create_component",
-    routine: (model, header, resultId) => {
-      Crud.create_component(model, header, resultId);
+    routine: (m, h, r) => {
+      Crud.create_component(m, h, r);
       model.setComponent({
         source: "/message/header",
-        result: resultId,
+        result: r,
         event: "/event/crud/create_component",
-        thread: header.thread,
       });
     },
   },
   {
     source: "/procedure/subscription",
-    procedure: "/render",
+    system: "/render",
+    procedure: "/user_interface",
     event: "/event/crud/create_component",
     message: "/message/render/full",
-    routine: (model, header, resultId) => {
-      Render.full(model, header);
+    routine: (m, h, r) => {
+      Render.full(m, h);
     },
   },
 );

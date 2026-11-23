@@ -1,37 +1,32 @@
 class Process {
   start(thread) {
-    document.addEventListener(this._endpoint, (event) => {
+    document.addEventListener(this.endpoint, (event) => {
       setTimeout(() => {
         this.processMessage(event.detail);
       }, event.detail.timeout || 0);
     });
     window.addEventListener("load", () => {
-      this.model.emit({ event: "/event/initial/load", thread: thread, entity: "/person/0" });
+      this.model.setComponent({
+        source: "/procedure/run",
+        procedure: "/user_interface",
+        run: "/initial_load",
+      });
+      this.model.emit({ event: "/event/initial/load", run: "/initial_load" });
     });
   }
 
   /* PROCESS ROUTINE */
   processMessage(header) {
     const resultIds = [];
-    const subscriptionIds = this.model.accessComponentIds(
-      header.event,
-      "/procedure/subscription",
-    );
-    console.log("PROCESS MESSAGE", header.event, subscriptionIds.length);
-    const subscriptions = [];
+    const procedureRun = this.model.accessComponent(header.run, "/procedure/run");
+    const subscriptionIds = this.model.accessComponentIds(header.event, "/procedure/subscription");
+    console.log("EVENT", header.run, header.event, subscriptionIds.length);
     for (const subscriptionId of subscriptionIds) {
       const subscription = this.model.getComponent(subscriptionId);
-      if (subscription.state) {
-        const state = this.model.accessComponent(header.thread, subscription.procedure);
-        if (state && subscription.state && subscription.state !== state.state) continue;
-      }
-      if (!subscription.routine) continue;
-      subscriptions.push(subscription);
-    }
-    for (const subscription of subscriptions) {
+      if (subscription.procedure !== procedureRun.procedure) continue;
+
       const resultId = this.model.ID();
       resultIds.push(resultId);
-      console.log("SUBSCRIPTION", subscription.event, subscription.message, subscription.procedure, subscription.state);
       subscription.routine(this.model, header, resultId);
     }
 
@@ -40,16 +35,16 @@ class Process {
       for (const headerId of headerIds) {
         const h = this.model.getComponent(headerId);
         if (!h) continue;
-        h.prior_id = header.id;
-        h.thread = h.thread || header.id;
+        h.run = h.run || header.run;
         h.timestamp = Date.now();
         this.model.emit(h);
       }
     }
   }
+
   constructor(endpoint) {
     this.model = new Model(endpoint);
-    this._endpoint = endpoint;
+    this.endpoint = endpoint;
   }
 }
 

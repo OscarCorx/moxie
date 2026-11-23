@@ -1,3 +1,16 @@
+/* ARCHETYPE */
+COMPONENTS.push(
+  {
+    source: "/archetype/entity",
+    entity: "/display/0",
+    archetype: "/archetype/display",
+  },
+  {
+    source: "/archetype/entity",
+    entity: "/display/1",
+    archetype: "/archetype/display",
+  }
+);
 /* DARK MODE */
 COMPONENTS.push(
   {
@@ -152,19 +165,6 @@ COMPONENTS.push(
     color: "black",
   }
 );
-/* ARCHETYPE */
-COMPONENTS.push(
-  {
-    source: "/archetype/entity",
-    entity: "/display/0",
-    archetype: "/archetype/display",
-  },
-  {
-    source: "/archetype/entity",
-    entity: "/display/1",
-    archetype: "/archetype/display",
-  }
-)
 /* DISPLAY */
 COMPONENTS.push(
   {

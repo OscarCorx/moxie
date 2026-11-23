@@ -128,11 +128,20 @@ COMPONENTS.push(
 /* PROCEDURE SUBSCRIPTION */
 COMPONENTS.push(
   {
-    parent: "/state",
+    parent: "/procedure/run",
     source: "/schema/field",
     kind: "/entity",
-    key: "entity",
+    key: "run",
   },
+  {
+    parent: "/procedure/run",
+    source: "/schema/field",
+    kind: "/entity",
+    key: "procedure",
+  },
+);
+/* PROCEDURE RUN */
+COMPONENTS.push(
   {
     parent: "/procedure/subscription",
     source: "/schema/field",

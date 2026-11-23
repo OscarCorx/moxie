@@ -1,6 +1,6 @@
 class Crud {
   static input(model, header) {
-    const state = model.accessComponent(header.thread, "/navigation");
+    const state = model.accessComponent(model.endpoint, "/navigation");
     const component = model.getComponent(state.component);
     const field = model.getComponent(state.field);
     if (header.value === "Backspace") {
@@ -11,14 +11,14 @@ class Crud {
   }
 
   static update(model, header) {
-    const state = model.accessComponent(header.thread, "/navigation");
+    const state = model.accessComponent(model.endpoint, "/navigation");
     const component = model.getComponent(state.component);
     const schema_field = model.getComponent(state.schema_field);
     component[header.field] = header.value;
   }
 
   static new(model, header) {
-    const state = model.accessComponent(header.thread, "/navigation");
+    const state = model.accessComponent(model.endpoint, "/navigation");
     const archetype_entity = model.getComponent(state.entity);
     const archetype_property = model.getComponent(state.property);
     const component = model.getComponent(state.component);
@@ -38,7 +38,7 @@ class Crud {
   }
 
   static create_entity(model, header, resultId) {
-    const state = model.accessComponent(header.thread, "/navigation");
+    const state = model.accessComponent(model.endpoint, "/navigation");
     const archetype_entity = model.getComponent(state.entity);
     const c = {
       source: archetype_entity.source,

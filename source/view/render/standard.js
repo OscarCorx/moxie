@@ -46,7 +46,6 @@ class Standard {
         event.preventDefault();
         m.emit({
           event: "/event/mouse/down",
-          thread: "/current",
           element_id: c.id,
           x: event.clientX,
           y: event.clientY,
@@ -56,7 +55,7 @@ class Standard {
   }
 
   static detailAbsolute(m, c) {
-    const state = m.accessComponent("/current", "/style");
+    const state = m.accessComponent(m.endpoint, "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
   }
@@ -146,7 +145,7 @@ class Standard {
   }
 
   static detailTableRow(m, c) {
-    const state = m.accessComponent("/current", "/style");
+    const state = m.accessComponent(m.endpoint, "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id);
     if (c.focus) {
@@ -164,7 +163,7 @@ class Standard {
   }
 
   static detailTableField(m, c) {
-    const state = m.accessComponent("/current", "/style");
+    const state = m.accessComponent(m.endpoint, "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     e.textContent = c.content;
@@ -179,7 +178,6 @@ class Standard {
     e.addEventListener("click", (e) => {
       m.emit({
         event: "/event/entry/select",
-        thread: "/current",
         component: c.component,
         field: c.field,
       });
@@ -187,7 +185,7 @@ class Standard {
   }
 
   static detailTableCell(m, c) {
-    const state = m.accessComponent("/current", "/style");
+    const state = m.accessComponent(m.endpoint, "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     if (c.focus) {
@@ -215,14 +213,13 @@ class Standard {
           event: c.action,
           component: c.component,
           field: c.field,
-          thread: "/current",
         });
       });
     }
   }
 
   static detailEntry(m, c) {
-    const state = m.accessComponent("/current", "/style");
+    const state = m.accessComponent(m.endpoint, "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     this.addStyle(e, style["field_inactive"]);
@@ -274,7 +271,7 @@ class Standard {
   }
 
   static detailButton(m, c) {
-    const state = m.accessComponent("/current", "/style");
+    const state = m.accessComponent(m.endpoint, "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     if (c.focus === "inactive") {
@@ -306,14 +303,14 @@ class Standard {
   }
 
   static outlineTab(m, c) {
-    const state = m.accessComponent("/current", "/style");
+    const state = m.accessComponent(m.endpoint, "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     this.addStyle(e, style["space_tab"]);
   }
 
   static detailTab(m, c) {
-    const state = m.accessComponent("/current", "/style");
+    const state = m.accessComponent(m.endpoint, "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     if (c.active === "inactive") {
@@ -327,7 +324,6 @@ class Standard {
       m.emit({
         event: c.action,
         value: c.action_value,
-        thread: "/current",
       });
     });
     e.textContent = c.content;

@@ -33,13 +33,13 @@ class UserInput {
       buffer: "",
     };
     model.setComponent(c);
-    model.setReference(header.thread, "/user_input", c.id);
+    model.setReference(model.endpoint, "/user_input", c.id);
   }
 }
 
 class KeyboardActions {
   static move(model, header, resultId) {
-    const user_input = model.accessComponent(header.thread, "/user_input");
+    const user_input = model.accessComponent(model.endpoint, "/user_input");
     let event = NAVIGATION[header.value];
     switch (event) {
       case "/event/user_input/bind":
@@ -60,12 +60,11 @@ class KeyboardActions {
       source: "/message/header",
       event: event,
       result: resultId,
-      thread: header.thread,
     });
   }
 
   static edit(model, header, resultId) {
-    const user_input = model.accessComponent(header.thread, "/user_input");
+    const user_input = model.accessComponent(model.endpoint, "/user_input");
     let event = NAVIGATION[header.value];
     if (event === "/event/user_input/bind") {
       user_input.state = "/bind";
@@ -79,12 +78,11 @@ class KeyboardActions {
       event: event,
       result: resultId,
       value: header.value,
-      thread: header.thread,
     });
   }
 
   static bind(model, header, resultId) {
-    const user_input = model.accessComponent(header.thread, "/user_input");
+    const user_input = model.accessComponent(model.endpoint, "/user_input");
     let event = NAVIGATION[header.value];
     if (event === "/event/user_input/mode") {
       user_input.move = true;
@@ -93,7 +91,6 @@ class KeyboardActions {
         source: "/message/header",
         event: event,
         result: resultId,
-        thread: header.thread,
       });
       return;
     }
@@ -102,12 +99,11 @@ class KeyboardActions {
       source: "/message/header",
       event: event,
       result: resultId,
-      thread: header.thread,
     });
   }
 
   static keyUp(model, header, resultId) {
-    const state = model.accessComponent(header.thread, "/user_input");
+    const state = model.accessComponent(model.endpoint, "/user_input");
     let event = NAVIGATION[header.value];
     switch (event) {
       case "/event/user_input/bind":
@@ -117,7 +113,6 @@ class KeyboardActions {
           source: "/message/header",
           event: "/event/user_input/unbind",
           result: resultId,
-          thread: header.thread,
         });
         break;
       case "/event/user_input/big":
@@ -129,7 +124,7 @@ class KeyboardActions {
 
 class MouseActions {
   static down(model, header, element_id, x, y, resultId) {
-    const state = model.accessComponent(header.thread, "/user_input");
+    const state = model.accessComponent(model.endpoint, "/user_input");
     state.mouse_target = element_id;
     const element = model.getComponent(element_id);
     element.offset_x = x - element.x;
@@ -137,16 +132,16 @@ class MouseActions {
   }
 
   static move(model, header, x, y, resultId) {
-    const state = model.accessComponent(header.thread, "/user_input");
+    const state = model.accessComponent(model.endpoint, "/user_input");
   }
 
   static up(model, header, x, y, resultId) {
-    const state = model.accessComponent(header.thread, "/user_input");
+    const state = model.accessComponent(model.endpoint, "/user_input");
     state.mouse_target = null;
   }
 
   static entrySelect(model, header) {
-    const state = model.accessComponent(header.thread, "/user_input");
+    const state = model.accessComponent(model.endpoint, "/user_input");
     state.state = "/edit";
   }
 }

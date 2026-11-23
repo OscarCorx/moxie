@@ -4,7 +4,7 @@ class Model {
   }
 
   emit(header) {
-    document.dispatchEvent(new CustomEvent(this._endpoint, { detail: header }));
+    document.dispatchEvent(new CustomEvent(this.endpoint, { detail: header }));
   }
 
   setMessage(resultId, action, contents) {
@@ -119,7 +119,7 @@ class Model {
 
   constructor(endpoint) {
     /* Set Endpoint For Emit */
-    this._endpoint = endpoint;
+    this.endpoint = endpoint;
     /* COMPUTE CURRENT WITH TIMESTAMP */
     this._currentId = 0;
     /* CREATE _components and _entities */

@@ -1,108 +1,52 @@
 COMPONENTS.push(
   {
     source: "/procedure/subscription",
-    procedure: "/user_input",
+    procedure: "/user_interface",
+    system: "/user_input",
     event: "/event/initial/load",
-    message: "/message/user_input/event_listener",
-    routine: (model, header, resultId) => {
-      window.addEventListener("keydown", (event) => {
-        model.emit({
-          id: model.ID(),
-          event: "/event/keyboard/down",
-          value: event.key,
-          thread: header.thread,
-        });
-      });
-      window.addEventListener("keyup", (event) => {
-        model.emit({
-          id: model.ID(),
-          event: "/event/keyboard/up",
-          value: event.key,
-          thread: header.thread,
-        });
-      });
-      window.addEventListener("mousemove", (event) => {
-        event.preventDefault();
-        const state = model.accessComponent(header.thread, "/user_input");
-        if (!state.mouse_target) return;
-        model.emit({
-          id: model.ID(),
-          event: "/event/mouse/move",
-          x: event.clientX,
-          y: event.clientY,
-          thread: header.thread,
-        });
-      });
-      window.addEventListener("mouseup", (event) => {
-        const state = model.accessComponent(header.thread, "/user_input");
-        if (!state.mouse_target) return;
-        model.emit({
-          id: model.ID(),
-          event: "/event/mouse/up",
-          x: event.clientX,
-          y: event.clientY,
-          thread: header.thread,
-        });
-      });
-    },
-  },
-  {
-    source: "/procedure/subscription",
-    procedure: "/view",
-    event: "/event/initial/load",
-    message: "/message/all/create_state",
-    routine: (model, header, resultId) => {
-      UserInput.createState(model, header);
-      Navigation.createState(model, header, "/person/0");
-      Style.createState(model, header);
-      Render.createState(model, header);
-    },
-  },
-  {
-    source: "/procedure/subscription",
-    procedure: "/style",
-    event: "/event/initial/load",
-    message: "/message/style/compile",
-    routine: (model, header, resultId) => {
-      Style.compile(model, header);
-      model.setComponent({
+    message: "/message/initial/build",
+    routine: (m, h, r) => {
+      DeckNavigation.build(m, "/person/0");
+      Render.build(m);
+      Style.build(m);
+      UserInput.build(m);
+      UserInput.addEventListeners(m);
+      m.setComponent({
         source: "/message/header",
-        result: resultId,
-        thread: header.thread,
-        entity: header.entity,
-        event: "/event/style/compile",
-        thread: header.thread,
+        event: "/event/initial/build",
+        result: r,
       });
     },
   },
   {
     source: "/procedure/subscription",
-    procedure: "/navigation",
-    event: "/event/style/compile",
-    message: "/message/navigation/create_state",
-    routine: (model, header, resultId) => {
-      Navigation.createState(model, header.thread, header.entity);
-      model.setComponent({
+    procedure: "/user_interface",
+    system: "/view",
+    event: "/event/initial/build",
+    message: "/message/initial/compile",
+    routine: (m, h, r) => {
+      UserInput.compile(m);
+      Style.compile(m);
+      m.setComponent({
         source: "/message/header",
-        result: resultId,
-        event: "/event/navigation/create_state",
-        thread: header.thread,
+        event: "/event/initial/compile",
+        result: r,
       });
     },
   },
   {
     source: "/procedure/subscription",
-    procedure: "/render",
-    event: "/event/navigation/create_state",
+    procedure: "/user_interface",
+    system: "/render",
+    event: "/event/initial/compile",
     message: "/message/render/full",
-    routine: (model, header, resultId) => {
-      Render.background(model, header);
-      Render.full(model, header);
-      model.setComponent({
+    routine: (m, h, r) => {
+      Render.background(m, h);
+      Render.full(m, h);
+      m.setComponent({
         source: "/message/header",
-        result: resultId,
+        result: r,
         event: "/event/render/full",
-        thread: header.thread,
       });
     },
   },
