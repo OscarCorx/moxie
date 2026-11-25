@@ -1,0 +1,95 @@
+:root {
+  --width: 20px;
+  --height: 10px;
+  --space-xs: 10px;
+}
+#container {
+    display: flex;
+    flex-direction: column;
+    height: calc(var(--height) * 70);
+}
+#top {
+    padding: var(--space-xs);
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid black;
+}
+#icon {
+    width: calc(var(--width) * 5);
+    background-color: pink;
+    margin-right: var(--space-xs);
+    padding-left: var(--space-xs);
+    border-right: 1px solid black;
+}
+#info {
+    /*border-left: 1px solid black;*/
+    color: black;
+    flex: 1;
+}
+#search {
+    width: calc(var(--width) * 40);
+    color: black;
+}
+#user {
+    width: calc(var(--width) * 5);
+    background-color: pink;
+}
+#space-0 {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+.gutter {
+    padding: var(--space-xs);
+    width: calc(var(--width) * 5);
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid black;
+}
+.action {
+    width: calc(var(--width) * 5);
+    height: calc(var(--height) * 3);
+    color: black;
+    border-top: 1px solid black;
+}
+.gutter-group {
+    flex: 1;
+}
+#auxiliary {
+    height: calc(var(--height) * 3);
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid black;
+}
+#space-1 {
+    padding: var(--space-xs);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    color: black;
+}
+#card {
+    flex: 1;
+    background-color: pink;
+}
+#table {
+    display: none;
+    flex: 1;
+    background-color: pink;
+}
+#dashboard {
+    display: grid;
+    flex: 1;
+    background-color: pink;
+}
+#panel {
+    display: none;
+    flex: 1;
+    background-color: pink;
+}
+#form {
+    display: none;
+    flex: 1;
+    background-color: pink;
+}

@@ -117,6 +117,16 @@ class Model {
     return components[i];
   }
 
+  createRun() {
+    const c = {
+      source: "/procedure/run",
+      procedure: "/user_interface",
+      run: this.ID(),
+    };
+    this.setComponent(c);
+    return c.run;
+  }
+
   constructor(endpoint) {
     /* Set Endpoint For Emit */
     this.endpoint = endpoint;

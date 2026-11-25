@@ -23,6 +23,92 @@ class Standard {
     });
   }
 
+  static outlineHud(m, c) {
+    let e = this.getElement("/hud/container", "/app");
+    while (e.firstChild) {
+      e.firstChild.remove();
+    }
+    e = this.getElement("/hud/container", "/app");
+    this.addStyle(e, {
+      height: "98vh",
+      display: "flex",
+      "flex-direction": "column",
+    });
+    e = this.getElement("/hud/top", "/hud/container");
+    this.addStyle(e, {
+      height: "10vh",
+      display: "flex",
+      "flex-direction": "row",
+      "border-bottom": "1px solid black",
+    });
+    e = this.getElement("/hud/icon", "/hud/top");
+    this.addStyle(e, {
+      width: "10vw"
+    });
+    e.textContent = "ICON";
+    e = this.getElement("/hud/navigation", "/hud/top");
+    this.addStyle(e, {
+      width: "40vw"
+    });
+    e.textContent = "NAVIGATION";
+    e = this.getElement("/hud/search", "/hud/top");
+    this.addStyle(e, {
+      flex: 1
+    });
+    e.textContent = "SEARCH";
+    e = this.getElement("/hud/user", "/hud/top");
+    this.addStyle(e, {
+      width: "10vw"
+    });
+    e.textContent = "USER";
+    e = this.getElement("/hud/space", "/hud/container");
+    this.addStyle(e, {
+      flex: 1,
+      display: "flex",
+      "flex-direction": "row",
+    });
+    e = this.getElement("/hud/gutter", "/hud/space");
+    this.addStyle(e, {
+      width: "10vw",
+      padding: "10px",
+      display: "flex",
+      "flex-direction": "column",
+      "border-right": "1px solid black",
+    });
+    e = this.getElement("/hud/gutter_group", "/hud/gutter");
+    this.addStyle(e, {
+      flex: 1,
+    });
+    e.textContent = "NAVIGATION"
+    e = this.getElement("/hud/action", "/hud/gutter");
+    this.addStyle(e, {
+      height: "10vh",
+      "border-top": "1px solid black",
+    });
+    e.textContent = "ACTION"
+    e = this.getElement("/hud/workspace", "/hud/space");
+    this.addStyle(e, {
+      flex: 1,
+      display: "flex",
+      "flex-direction": "column",
+    });
+    e = this.getElement("/hud/card", "/hud/workspace");
+    this.addStyle(e, {
+      padding: "10px",
+      position: "relative",
+      // left: "50vw",
+      // top: "50vh",
+      flex: 1,
+    });
+    e = this.getElement("/hud/auxiliary", "/hud/workspace");
+    this.addStyle(e, {
+      height: "10vh",
+      padding: "5px",
+      "border-top": "1px solid black",
+    });
+    e.textContent = "AUXILIARY";
+  }
+
   static outlineAbsolute(m, c) {
     let e = this.getElement(c.id, c.parent);
     while (e.firstChild) {
@@ -44,8 +130,15 @@ class Standard {
       e.textContent = "HANDLE";
       e.addEventListener("mousedown", (event) => {
         event.preventDefault();
+        const p = {
+          source: "/procedure/run",
+          procedure: "/user_interace",
+          run: m.ID(),
+        };
+        m.setComponent(p);
         m.emit({
           event: "/event/mouse/down",
+          run: m.createRun(),
           element_id: c.id,
           x: event.clientX,
           y: event.clientY,
@@ -131,6 +224,7 @@ class Standard {
     let e = this.getElement(c.id, c.parent, "table");
     this.addStyle(e, {
       "border-collapse": "collapse",
+      width: "100%",
     });
     e = this.getElement(c.table_header, c.id, "tr");
   }
@@ -176,8 +270,15 @@ class Standard {
     let e = this.getElement(c.id, c.parent, "td");
     this.addStyle(e, { height: "20px" });
     e.addEventListener("click", (e) => {
+      const p = {
+        source: "/procedure/run",
+        procedure: "/user_interace",
+        run: m.ID(),
+      };
+      m.setComponent(p);
       m.emit({
         event: "/event/entry/select",
+        run: m.createRun(),
         component: c.component,
         field: c.field,
       });
@@ -209,8 +310,15 @@ class Standard {
     if (c.action) {
       e = this.getElement(`${c.id}/action`, c.id);
       e.addEventListener("click", () => {
+        const p = {
+          source: "/procedure/run",
+          procedure: "/user_interace",
+          run: m.ID(),
+        };
+        m.setComponent(p);
         m.emit({
           event: c.action,
+          run: m.createRun(),
           component: c.component,
           field: c.field,
         });
@@ -321,8 +429,15 @@ class Standard {
       this.addStyle(e, style["tab_focus"]);
     }
     e.addEventListener("click", () => {
+      const p = {
+        source: "/procedure/run",
+        procedure: "/user_interace",
+        run: m.ID(),
+      };
+      m.setComponent(p);
       m.emit({
         event: c.action,
+        run: m.createRun(),
         value: c.action_value,
       });
     });

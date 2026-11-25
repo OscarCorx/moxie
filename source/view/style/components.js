@@ -111,6 +111,13 @@ COMPONENTS.push(
   {
     style: "/theme/light_mode",
     source: "/style/definition",
+    key: "background",
+    "background-color": "white",
+    cursor: "arrow",
+  },
+  {
+    style: "/theme/light_mode",
+    source: "/style/definition",
     key: "row_passive_0",
     "background-color": "purple",
     color: "yellow",

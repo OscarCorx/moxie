@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Moxie - TESTING</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="container">
+            <div id="top">
+                <div id="icon">
+                    ICON
+                </div>
+                <div id="info">
+                    NAVIGATION
+                </div>
+                <div id="search">
+                    SEARCH
+                </div>
+                <div id="user">
+                    USER
+                </div>
+            </div>
+            <div id="space-0">
+                <div id="navigation" class="gutter">
+                    <div class="gutter-group">
+                        NAVIGATION
+                    </div>
+                    <div id="action-secondary" class="action">
+                        ACTION
+                    </div>
+                </div>
+                <div id="secondary" class="gutter">
+                    <div class="gutter-group">
+                        SECONDARY
+                    </div>
+                    <div id="action-secondary" class="action">
+                        ACTION
+                    </div>
+                </div>
+                <div id="primary" class="gutter">
+                    <div class="gutter-group">
+                        PRIMARY
+                    </div>
+                    <div id="action-primary" class="action">
+                        ACTION
+                    </div>
+                </div>
+                <div id="space-1">
+                    <div id="table">
+                        TABLE - TABLE
+                    </div>
+                    <div id="dashboard">
+                        DASHBOARD - GRID
+                    </div>
+                    <div id="form">
+                        FORM - FLEX ROW
+                    </div>
+                    <div id="form">
+                        DIAGRAM - SVG
+                    </div>
+                    <div id="form">
+                        PRESENTATION - CANVAS
+                    </div>
+                    <div id="auxiliary">
+                        <button onclick="openPopup()">Open Popup</button>
+                        <button onclick="resizePopup()">Resize to 600x400</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+      let popup;
+
+      function openPopup() {
+        // Must be opened via script to allow resizing
+        popup = window.open("", "popupWindow", "width=300,height=200");
+      }
+
+      function resizePopup() {
+        if (popup && !popup.closed) {
+          popup.resizeTo(600, 400);
+          popup.focus();
+        }
+      }
+    </script>
+</html>

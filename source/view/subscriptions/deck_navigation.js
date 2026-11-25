@@ -7,7 +7,7 @@ COMPONENTS.push(
     event: "/event/user_input/next",
     message: "/message/navigation/user_interface",
     routine: (m, h, r) => {
-      Navigation.incrementPrimary(m, false);
+      DeckNavigation.incrementPrimary(m, false);
       m.setComponent({
         source: "/message/header",
         result: r,
@@ -22,7 +22,7 @@ COMPONENTS.push(
     event: "/event/user_input/previous",
     message: "/message/navigation/user_interface",
     routine: (m, h, r) => {
-      Navigation.incrementPrimary(m, h, true);
+      DeckNavigation.incrementPrimary(m, h, true);
       m.setComponent({
         source: "/message/header",
         result: r,
@@ -50,7 +50,7 @@ COMPONENTS.push(
     event: "/event/user_input/forward",
     message: "/message/navigation/increment_secondary",
     routine: (m, h, r) => {
-      Navigation.incrementSecondary(m, h, false);
+      DeckNavigation.incrementSecondary(m, false);
       m.setComponent({
         source: "/message/header",
         result: r,
@@ -65,7 +65,7 @@ COMPONENTS.push(
     event: "/event/user_input/back",
     message: "/message/navigation/increment_secondary",
     routine: (m, h, r) => {
-      Navigation.incrementSecondary(m, true);
+      DeckNavigation.incrementSecondary(m, true);
       m.setComponent({
         source: "/message/header",
         result: r,
@@ -93,7 +93,7 @@ COMPONENTS.push(
     event: "/event/user_input/flip",
     message: "/message/navigation/increment_face",
     routine: (m, h, r) => {
-      Navigation.incrementFace(m, false);
+      DeckNavigation.incrementFace(m, false);
       m.setComponent({
         source: "/message/header",
         result: r,
@@ -108,7 +108,7 @@ COMPONENTS.push(
     event: "/event/user_input/reverse",
     message: "/message/navigation/increment_face",
     routine: (m, h, r) => {
-      Navigation.incrementFace(m, true);
+      DeckNavigation.incrementFace(m, true);
       m.setComponent({
         source: "/message/header",
         result: r,
@@ -136,7 +136,7 @@ COMPONENTS.push(
     event: "/event/user_input/draw",
     message: "/message/navigation/increment_card",
     routine: (m, h, r) => {
-      Navigation.incrementCard(m, false);
+      DeckNavigation.incrementCard(m, false);
       m.setComponent({
         source: "/message/header",
         result: r,
@@ -151,7 +151,7 @@ COMPONENTS.push(
     event: "/event/user_input/replace",
     message: "/message/navigation/increment_card",
     routine: (m, h, r) => {
-      Navigation.incrementCard(m, true);
+      DeckNavigation.incrementCard(m, true);
       m.setComponent({
         source: "/message/header",
         result: r,
@@ -179,7 +179,7 @@ COMPONENTS.push(
     event: "/event/user_input/enter",
     message: "/message/navigation/increment_deck",
     routine: (m, h, r) => {
-      Navigation.incrementDeck(m, false);
+      DeckNavigation.incrementDeck(m, false);
       m.setComponent({
         source: "/message/header",
         result: r,
@@ -194,7 +194,7 @@ COMPONENTS.push(
     event: "/event/user_input/exit",
     message: "/message/navigation/increment_deck",
     routine: (m, h, r) => {
-      Navigation.incrementDeck(m, false);
+      DeckNavigation.incrementDeck(m, false);
       m.setComponent({
         source: "/message/header",
         result: r,
@@ -222,7 +222,7 @@ COMPONENTS.push(
     event: "/event/user_input/return",
     message: "/message/navigation/user_interface",
     routine: (m, h, r) => {
-      Navigation.incrementPrimary(m, false);
+      DeckNavigation.incrementPrimary(m, false);
       m.setComponent({
         source: "/message/header",
         result: r,
@@ -237,7 +237,7 @@ COMPONENTS.push(
     event: "/event/user_input/entry_select",
     message: "/message/navigation/select_primary",
     routine: (m, h, r) => {
-      Navigation.selectPrimary(m, h);
+      DeckNavigation.selectPrimary(m, h);
       m.setComponent({
         source: "/message/header",
         result: r,
@@ -252,7 +252,7 @@ COMPONENTS.push(
     event: "/event/face/select",
     message: "/message/navigation/select_face",
     routine: (m, h, r) => {
-      Navigation.selectFace(m, h);
+      DeckNavigation.selectFace(m, h);
       m.setComponent({
         source: "/message/header",
         result: r,

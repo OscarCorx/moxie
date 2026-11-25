@@ -52,6 +52,9 @@ class Render {
 
   static outline(model, c) {
     switch (c.source) {
+      case "/hud":
+        Standard.outlineHud(model, c);
+        break;
       case "/absolute":
         Standard.outlineAbsolute(model, c);
         break;

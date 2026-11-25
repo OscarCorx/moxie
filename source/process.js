@@ -26,16 +26,14 @@ class Process {
       if (subscription.procedure !== procedureRun.procedure) continue;
 
       const resultId = this.model.ID();
-      resultIds.push(resultId);
+      console.log(subscription.message);
       subscription.routine(this.model, header, resultId);
-    }
-
-    for (const id of resultIds) {
-      const headerIds = this.model.accessComponentIds(id, "/message/header");
+      const headerIds = this.model.accessComponentIds(resultId, "/message/header");
       for (const headerId of headerIds) {
         const h = this.model.getComponent(headerId);
         if (!h) continue;
         h.run = h.run || header.run;
+        h.result = resultId;
         h.timestamp = Date.now();
         this.model.emit(h);
       }

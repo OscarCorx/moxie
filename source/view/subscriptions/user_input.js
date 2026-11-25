@@ -27,7 +27,7 @@ COMPONENTS.push(
     event: "/event/user_input/bind",
     message: "/message/render/full",
     routine: (m, h, r) => {
-      UserInput.keyDown(m, h, r);
+      Render.full(m, h, r);
     },
   },
   {

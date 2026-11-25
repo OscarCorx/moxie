@@ -1,9 +1,13 @@
 class Query {
   static fullRender(model, header) {
-    const contents = [];
+    const contents = [
+      {
+        source: "/hud"
+      }
+    ];
     this.getWorkspace(model, header, contents);
-    this.getPrimary(model, header, contents);
-    this.getSecondary(model, header, contents);
+    // this.getPrimary(model, header, contents);
+    // this.getSecondary(model, header, contents);
     return contents;
   }
 
@@ -140,7 +144,7 @@ class Query {
       {
         id: "/absolute/workspace/panel",
         source: "/panel",
-        parent: "/absolute/workspace",
+        parent: "/hud/card",
         header: "/absolute/workspace/header",
         body: "/absolute/workspace/body",
         footer: "/absolute/workspace/footer",
@@ -213,26 +217,6 @@ class Query {
           focus: component_id == state.component && field_id === state.field,
         });
       }
-    }
-    contents.push({
-      id: "/absolute/workspace/tab/new",
-      source: "/button",
-      parent: "/absolute/workspace/tab",
-      content: "NEW TAB",
-      active: "focus",
-    });
-    for (const i in property_ids) {
-      const property_id = property_ids[i];
-      const ap = model.getComponent(property_id);
-      contents.push({
-        id: `/absolute/workspace/tabs/${i}`,
-        source: "/tab",
-        parent: "/absolute/workspace/tabs",
-        content: ap.property,
-        active: (ap.property === archetype_property.property) ? "focus" : "passive",
-        action: "/event/face/select",
-        action_value: property_id,
-      });
     }
   }
 }
