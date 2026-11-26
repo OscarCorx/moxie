@@ -176,3 +176,12 @@ COMPONENTS.push(
     key: "event",
   },
 );
+/* ANIMATION */
+COMPONENTS.push(
+  {
+    parent: "/animation",
+    source: "/schema/field",
+    kind: "/entity",
+    key: "entity",
+  },
+);

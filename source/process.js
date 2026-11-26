@@ -13,6 +13,7 @@ class Process {
       });
       this.model.emit({ event: "/event/initial/load", run: "/initial_load" });
     });
+    requestAnimationFrame(() => { this.animate(); });
   }
 
   /* PROCESS ROUTINE */
@@ -20,13 +21,13 @@ class Process {
     const resultIds = [];
     const procedureRun = this.model.accessComponent(header.run, "/procedure/run");
     const subscriptionIds = this.model.accessComponentIds(header.event, "/procedure/subscription");
-    console.log("EVENT", header.run, header.event, subscriptionIds.length);
+    // console.log("EVENT", header.run, header.event, subscriptionIds.length);
     for (const subscriptionId of subscriptionIds) {
       const subscription = this.model.getComponent(subscriptionId);
       if (subscription.procedure !== procedureRun.procedure) continue;
 
       const resultId = this.model.ID();
-      console.log(subscription.message);
+      // console.log(subscription.message);
       subscription.routine(this.model, header, resultId);
       const headerIds = this.model.accessComponentIds(resultId, "/message/header");
       for (const headerId of headerIds) {
@@ -38,6 +39,29 @@ class Process {
         this.model.emit(h);
       }
     }
+  }
+
+  animate() {
+    const events = {};
+
+    const timestamp = Date.now();
+    for (const id of this.model.accessComponentIds("/animate", "/animation")) {
+      const a = this.model.getComponent(id);
+      if (!a.routine) return;
+      const event = a.routine(this.model, a, timestamp);
+      if (event) events[event] = true;
+    }
+    for (const event of Object.keys(events)) {
+      const subscriptionIds = this.model.accessComponentIds(event, "/procedure/subscription");
+      for (const subscriptionId of subscriptionIds) {
+        const subscription = this.model.getComponent(subscriptionId);
+        if (subscription.procedure !== "/animate") continue;
+
+        const resultId = this.model.ID();
+        subscription.routine(this.model, {}, null);
+      }
+    }
+    requestAnimationFrame(() => { this.animate(); });
   }
 
   constructor(endpoint) {

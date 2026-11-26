@@ -63,10 +63,10 @@ class Model {
     return c;
   }
 
-  deleteComponent(id) {
-    const c = this._components[id];
+  deleteComponent(c) {
     const schema = this._entities[c.source];
-    for (const f of schema["/schema/field"]) {
+    for (const id of schema["/schema/field"]) {
+      const f = this._components[id];
       if (!c[f.key]) return;
       switch (f.kind) {
         case "/entity":
@@ -125,6 +125,12 @@ class Model {
     };
     this.setComponent(c);
     return c.run;
+  }
+
+  stopAnimation(a) {
+    this.deleteComponent(a);
+    a.entity = "/complete_animation";
+    this.setComponent(a);
   }
 
   constructor(endpoint) {

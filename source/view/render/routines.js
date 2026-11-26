@@ -43,7 +43,7 @@ class Render {
   }
 
   static full(model, header) {
-    const contents = Query.fullRender(model, header);
+    const contents = Table.fullRender(model, header);
     for (const c of contents) {
       this.outline(model, c);
       this.detail(model, c);
@@ -60,12 +60,6 @@ class Render {
         break;
       case "/move/absolute":
         Standard.moveAbsolute(model, c);
-        break;
-      case "/panel":
-        Standard.outlinePanel(model, c);
-        break;
-      case "/panel/row":
-        Standard.outlinePanelRow(model, c);
         break;
       case "/board":
         Standard.outlineBoard(model, c);
@@ -116,12 +110,6 @@ class Render {
     switch (c.source) {
       case "/absolute":
         Standard.detailAbsolute(model, c);
-        break;
-      case "/panel":
-        Standard.detailPanel(model, c);
-        break;
-      case "/panel/row":
-        Standard.detailPanelRow(model, c);
         break;
       case "/board":
         Standard.detailBoard(model, c);

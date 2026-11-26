@@ -88,6 +88,7 @@ class Standard {
     e.textContent = "ACTION"
     e = this.getElement("/hud/workspace", "/hud/space");
     this.addStyle(e, {
+      padding: "10px",
       flex: 1,
       display: "flex",
       "flex-direction": "column",
@@ -95,18 +96,19 @@ class Standard {
     e = this.getElement("/hud/card", "/hud/workspace");
     this.addStyle(e, {
       padding: "10px",
+      "background-color": "pink",
       position: "relative",
       // left: "50vw",
       // top: "50vh",
       flex: 1,
     });
-    e = this.getElement("/hud/auxiliary", "/hud/workspace");
-    this.addStyle(e, {
-      height: "10vh",
-      padding: "5px",
-      "border-top": "1px solid black",
-    });
-    e.textContent = "AUXILIARY";
+    // e = this.getElement("/hud/auxiliary", "/hud/workspace");
+    // this.addStyle(e, {
+    //   height: "10vh",
+    //   padding: "5px",
+    //   "border-top": "1px solid black",
+    // });
+    // e.textContent = "AUXILIARY";
   }
 
   static outlineAbsolute(m, c) {
@@ -153,57 +155,6 @@ class Standard {
     let e = this.getElement(c.id, c.parent);
   }
 
-  static outlinePanel(m, c) {
-    let e = this.getElement(c.id, c.parent);
-    this.addStyle(e, {
-      display: "flex",
-      "flex-direction": "column",
-      height: "100%"
-    });
-    e = this.getElement(c.header, c.id);
-    this.addStyle(e, {
-      display: "flex",
-      "flex-direction": "row",
-    });
-    e = this.getElement(c.body, c.id);
-    this.addStyle(e, {
-      height: "100%",
-    });
-    e = this.getElement(c.footer, c.id);
-    this.addStyle(e, {
-      display: "flex",
-      "flex-direction": "row",
-    });
-    e = this.getElement(c.tabs, c.footer);
-    this.addStyle(e, {
-      display: "flex",
-      "flex-direction": "row",
-    });
-    e = this.getElement(c.tab, c.footer);
-    this.addStyle(e, {
-      display: "flex",
-      "flex-direction": "row",
-    });
-  }
-
-  static detailPanel(m, c) { }
-
-  static outlinePanelRow(m, c) {
-    let e = this.getElement(c.id, c.parent);
-  }
-
-  static detailPanelRow(m, c) {
-    let e = this.getElement(c.id, c.parent);
-  }
-
-  static outlinePanelEntry(m, c) {
-    let e = this.getElement(c.id, c.parent);
-  }
-
-  static detailPanelEntry(m, c) {
-    let e = this.getElement(c.id, c.parent);
-  }
-
   static outlineBoard(m, c) {
     let e = this.getElement(c.id, c.parent);
   }
@@ -221,12 +172,27 @@ class Standard {
   }
 
   static outlineTable(m, c) {
-    let e = this.getElement(c.id, c.parent, "table");
+    let e = this.getElement(c.id, c.parent);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "column",
+      height: "100%"
+    });
+    e = this.getElement(c.header, c.id);
+    this.addStyle(e, {
+      display: "flex",
+      "flex-direction": "row",
+    });
+    e = this.getElement(c.body, c.id);
+    this.addStyle(e, {
+      height: "100%",
+    });
+    e = this.getElement(c.table, c.body, "table");
     this.addStyle(e, {
       "border-collapse": "collapse",
       width: "100%",
     });
-    e = this.getElement(c.table_header, c.id, "tr");
+    e = this.getElement(c.fields, c.table, "tr");
   }
 
   static detailTable(m, c) {

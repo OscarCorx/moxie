@@ -1,4 +1,4 @@
-class Query {
+class Table {
   static fullRender(model, header) {
     const contents = [
       {
@@ -136,51 +136,44 @@ class Query {
     const field = model.getComponent(state.field);
     contents.push(
       {
-        id: "/absolute/workspace",
+        id: "/hud",
         source: "/absolute",
         parent: "/app",
         content: "Workspace",
       },
       {
-        id: "/absolute/workspace/panel",
-        source: "/panel",
-        parent: "/hud/card",
-        header: "/absolute/workspace/header",
-        body: "/absolute/workspace/body",
-        footer: "/absolute/workspace/footer",
-        tabs: "/absolute/workspace/tabs",
-        tab: "/absolute/workspace/tab",
-      },
-      {
-        id: "/absolute/workspace/table",
+        id: "/hud/table",
         source: "/table",
-        parent: "/absolute/workspace/body",
-        table_header: "/absolute/workspace/table/header",
+        parent: "/hud/card",
+        header: "/hud/header",
+        body: "/hud/body",
+        table: "/hud/table_body",
+        fields: "/hud/table/fields",
       },
       {
-        id: "/absolute/workspace/header/entry_0",
+        id: "/hud/header/entry_0",
         source: "/entry",
-        parent: "/absolute/workspace/header",
-        title: entity_present.title,
-        description: entity_present.description,
+        parent: "/hud/header",
         subtitle: archetype_present.title,
         subdescription: archetype_present.description,
         action: "/message/create_entity",
         action_text: (user_input.bind) ? "N" : "New Entity",
       },
       {
-        id: "/absolute/workspace/header/entry_2",
+        id: "/hud/header/entry_2",
         source: "/entry",
-        parent: "/absolute/workspace/header",
-        title: schema_present.title,
-        description: schema_present.description,
+        parent: "/hud/header",
+        title: entity_present.title,
+        description: entity_present.description,
+        subtitle: schema_present.title,
+        subdescription: schema_present.description,
         action: "New Component",
         action_text: (user_input.bind) ? "Q" : "New Component",
       },
       {
-        id: "/absolute/workspace/header/entry_3",
+        id: "/hud/header/entry_3",
         source: "/entry",
-        parent: "/absolute/workspace/header",
+        parent: "/hud/header",
         title: "FIELD",
         description: "This is a deep dive into the schema",
       },
@@ -188,9 +181,9 @@ class Query {
     for (const field_id of field_ids) {
       const field = model.getComponent(field_id);
       contents.push({
-        id: `/absolute/workspace/table/field/${field_id}`,
+        id: `/hud/table/field/${field_id}`,
         source: "/table/field",
-        parent: "/absolute/workspace/table/header",
+        parent: "/hud/table/fields",
         content: field.key,
       });
     }
@@ -198,9 +191,9 @@ class Query {
       const component_id = component_ids[r];
       const component = model.getComponent(component_id);
       contents.push({
-        id: `/absolute/workspace/table/row/${r}`,
+        id: `/hud/table/row/${r}`,
         source: "/table/row",
-        parent: "/absolute/workspace/table",
+        parent: "/hud/table_body",
         row: r,
       });
 
@@ -208,9 +201,9 @@ class Query {
         const field_id = field_ids[c];
         const field = model.getComponent(field_id)
         contents.push({
-          id: `/absolute/workspace/table/row/${r}/${c}`,
+          id: `/hud/table/row/${r}/${c}`,
           source: "/table/cell",
-          parent: `/absolute/workspace/table/row/${r}`,
+          parent: `/hud/table/row/${r}`,
           content: component[field.key],
           component: component.id,
           field: field_id,
