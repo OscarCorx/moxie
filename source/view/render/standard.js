@@ -98,8 +98,8 @@ class Standard {
       padding: "10px",
       "background-color": "pink",
       position: "relative",
-      // left: "50vw",
-      // top: "50vh",
+      left: "0px",
+      top: "0px",
       flex: 1,
     });
     // e = this.getElement("/hud/auxiliary", "/hud/workspace");
@@ -208,9 +208,7 @@ class Standard {
     const state = m.accessComponent(m.endpoint, "/style");
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id);
-    if (c.focus) {
-      this.addStyle(e, style["row_focus"]);
-    } else if (c.row % 2) {
+    if (c.row % 2) {
       this.addStyle(e, style["row_passive_0"]);
     } else {
       this.addStyle(e, style["row_passive_1"]);
@@ -227,7 +225,7 @@ class Standard {
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     e.textContent = c.content;
-    const display = (c.focus) ? style["field_focus"] : style["field_inactive"];
+    const display = style["field_inactive"];
     this.addStyle(e, display);
 
   }
@@ -236,14 +234,8 @@ class Standard {
     let e = this.getElement(c.id, c.parent, "td");
     this.addStyle(e, { height: "20px" });
     e.addEventListener("click", (e) => {
-      const p = {
-        source: "/procedure/run",
-        procedure: "/user_interace",
-        run: m.ID(),
-      };
-      m.setComponent(p);
       m.emit({
-        event: "/event/entry/select",
+        event: "/event/user_input/entry_select",
         run: m.createRun(),
         component: c.component,
         field: c.field,
@@ -276,12 +268,7 @@ class Standard {
     if (c.action) {
       e = this.getElement(`${c.id}/action`, c.id);
       e.addEventListener("click", () => {
-        const p = {
-          source: "/procedure/run",
-          procedure: "/user_interace",
-          run: m.ID(),
-        };
-        m.setComponent(p);
+        console.log("ACTION", c.action);
         m.emit({
           event: c.action,
           run: m.createRun(),
@@ -345,17 +332,7 @@ class Standard {
   }
 
   static detailButton(m, c) {
-    const state = m.accessComponent(m.endpoint, "/style");
-    const style = m.getEntity(state.main_theme);
-    let e = this.getElement(c.id, c.parent);
-    if (c.focus === "inactive") {
-      this.addStyle(e, style["button_inactive"]);
-    } else if (c.active === "passive") {
-      this.addStyle(e, style["button_passive"]);
-    } else {
-      this.addStyle(e, style["button_focus"]);
-    }
-    e.textContent = c.content;
+
   }
 
   static outlineLink(m, c) {

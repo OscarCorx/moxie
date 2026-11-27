@@ -16,3 +16,18 @@ PRIMARY -> List of Entries
 - 
 
 /<EVENT/MESSAGE>/<SYSTEM>/<ROUTINE>
+
+ROUNDED CORNER NO OUTLINE
+ - Input / Chip
+  - Neutral
+ - Toggle
+  - Colorful
+  - Category Select
+SHARP CORNER AND OUTLINE
+ - Button
+  - Create Data
+ - Link
+  - Square w/ Icon
+  - Navigation
+NO CORNER NO AND NO OUTLINE
+ - Field

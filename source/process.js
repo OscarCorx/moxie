@@ -24,10 +24,13 @@ class Process {
     // console.log("EVENT", header.run, header.event, subscriptionIds.length);
     for (const subscriptionId of subscriptionIds) {
       const subscription = this.model.getComponent(subscriptionId);
+      if (!procedureRun) {
+        console.log("HERE WE GO")
+      }
       if (subscription.procedure !== procedureRun.procedure) continue;
 
       const resultId = this.model.ID();
-      // console.log(subscription.message);
+      console.log(subscription.message);
       subscription.routine(this.model, header, resultId);
       const headerIds = this.model.accessComponentIds(resultId, "/message/header");
       for (const headerId of headerIds) {
@@ -46,20 +49,20 @@ class Process {
 
     const timestamp = Date.now();
     for (const id of this.model.accessComponentIds("/animate", "/animation")) {
-      const a = this.model.getComponent(id);
+      const c = this.model.getComponent(id);
+      const a = this.model.accessComponent(c.procedure, "/procedure/animation");
       if (!a.routine) return;
-      const event = a.routine(this.model, a, timestamp);
-      if (event) events[event] = true;
+      const event = a.routine(this.model, c, timestamp);
+      if (event) events[event] = c.run;
+      if (c.complete) this.model.stopAnimation(c);
     }
     for (const event of Object.keys(events)) {
-      const subscriptionIds = this.model.accessComponentIds(event, "/procedure/subscription");
-      for (const subscriptionId of subscriptionIds) {
-        const subscription = this.model.getComponent(subscriptionId);
-        if (subscription.procedure !== "/animate") continue;
-
-        const resultId = this.model.ID();
-        subscription.routine(this.model, {}, null);
-      }
+      this.model.emit({
+        source: "/message/header",
+        event: event,
+        run: events[event],
+        timestamp: Date.now(),
+      })
     }
     requestAnimationFrame(() => { this.animate(); });
   }

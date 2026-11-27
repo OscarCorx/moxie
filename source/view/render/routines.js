@@ -43,7 +43,7 @@ class Render {
   }
 
   static full(model, header) {
-    const contents = Table.fullRender(model, header);
+    const contents = TableQuery.fullRender(model, header);
     for (const c of contents) {
       this.outline(model, c);
       this.detail(model, c);

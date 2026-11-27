@@ -127,6 +127,16 @@ class Model {
     return c.run;
   }
 
+  startAnimation(procedure, options) {
+    this.setComponent(
+      Object.assign({
+        source: "/animation",
+        entity: "/animate",
+        procedure: procedure,
+      }, options));
+
+  }
+
   stopAnimation(a) {
     this.deleteComponent(a);
     a.entity = "/complete_animation";

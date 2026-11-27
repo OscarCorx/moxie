@@ -1,4 +1,4 @@
-class Table {
+class TableQuery {
   static fullRender(model, header) {
     const contents = [
       {

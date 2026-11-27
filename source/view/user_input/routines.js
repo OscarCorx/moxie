@@ -97,6 +97,7 @@ class UserInput {
     } else if (state.edit) {
       event = this.edit(m, h.value);
     }
+    console.log("KEY DOWN", event, state);
     if (!event) return;
     m.setComponent({
       source: "/message/header",
@@ -148,14 +149,15 @@ class UserInput {
     const state = m.accessComponent(m.endpoint, "/user_input");
     const modifiers = m.accessComponent(m.endpoint, "/modifier_mapping");
     const event = modifiers[h.value];
-    if (event === "/user_input/big") {
+    console.log("KEY_UP", event);
+    if (event === "/event/user_input/big") {
       state.big = false;
       m.setComponent({
         source: "/message/header",
         event: "/event/user_input/unbig",
         result: r,
       });
-    } else if (event === "/user_input/bind") {
+    } else if (event === "/event/user_input/bind") {
       state.bind = false;
       m.setComponent({
         source: "/message/header",

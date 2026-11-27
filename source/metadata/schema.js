@@ -184,4 +184,16 @@ COMPONENTS.push(
     kind: "/entity",
     key: "entity",
   },
+  {
+    parent: "/animation",
+    source: "/schema/field",
+    kind: "/entity",
+    key: "procedure",
+  },
+  {
+    parent: "/procedure/animation",
+    source: "/schema/field",
+    kind: "/entity",
+    key: "procedure",
+  },
 );

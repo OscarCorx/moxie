@@ -4,11 +4,11 @@ COMPONENTS.push(
     source: "/procedure/subscription",
     system: "/crud",
     procedure: "/user_interface",
-    event: "/event/user_input/user_interface",
+    event: "/event/user_input/keyboard_input",
     message: "/message/crud/input",
     routine: (m, h, r) => {
       Crud.input(m, h);
-      model.setComponent({
+      m.setComponent({
         source: "/message/header",
         result: r,
         event: "/event/crud/update",

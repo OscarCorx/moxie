@@ -92,6 +92,6 @@ COMPONENTS.push(
     entity: "/user_input",
     action: "/event/user_input/mode",
     mode: "/modifier",
-    key: "Command",
+    key: "Meta",
   },
 );

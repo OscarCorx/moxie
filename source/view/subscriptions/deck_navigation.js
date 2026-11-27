@@ -141,6 +141,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: r,
         event: "/event/navigation/increment_card",
+        direction: "/down",
       });
     },
   },
@@ -156,6 +157,7 @@ COMPONENTS.push(
         source: "/message/header",
         result: r,
         event: "/event/navigation/increment_card",
+        direction: "/up",
       });
     },
   },
@@ -164,6 +166,32 @@ COMPONENTS.push(
     procedure: "/user_interface",
     system: "/render",
     event: "/event/navigation/increment_card",
+    message: "/message/slide/card",
+    routine: (m, h, r) => {
+      m.startAnimation("/slide/card", {
+        direction: h.direction,
+        run: h.run,
+        count: 0,
+        top: 0,
+        left: 0,
+      });
+    },
+  },
+  // {
+  //   source: "/procedure/subscription",
+  //   procedure: "/user_interface",
+  //   system: "/render",
+  //   event: "/event/render/card_slide",
+  //   message: "/message/render/full",
+  //   routine: (m, h, r) => {
+  //     Render.full(m, h);
+  //   },
+  // },
+  {
+    source: "/procedure/subscription",
+    procedure: "/user_interface",
+    system: "/render",
+    event: "/event/render/card_slide_complete",
     message: "/message/render/full",
     routine: (m, h, r) => {
       Render.full(m, h);
