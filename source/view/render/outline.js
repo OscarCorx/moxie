@@ -103,7 +103,7 @@ class Outline {
         event.preventDefault();
         m.emit({
           event: "/event/mouse/down",
-          element_id: c.id,
+          element: c.id,
           x: event.clientX,
           y: event.clientY,
         });

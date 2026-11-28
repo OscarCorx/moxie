@@ -1,16 +1,14 @@
 - Today
   - [ ] Formattiing
+    - [ ] Spacing on header
+    - [ ] Form and Dashboard views
   - [ ] Application
-    - [ ] View Application
-    - [ ] Module / Application / Tennancy
+    - [ ] Add /present to view
+    - [ ] Entity Entry
     - [ ] Authorization
     - [ ] Expectations
   - [ ] Rote
     - [ ] Design Rote Application
-  - [ ] Authentication
-    - [ ] Device Roles
-    - [ ] Partial Auth
-    - [ ] Local Refresh Tokens
 
 - Tests
 - Workflows
@@ -27,32 +25,6 @@
   - Machine learning
   - Chat
   - Language
-
-Template
-Pattern
-Layout
-Format
-Blueprint
-Framework
-Stencil
-Mold
-Cast
-
-Archetype
-Prototype
-Standard
-
-Category
-Class
-Type
-Kind
-Group
-Division
-Section
-Sort
-Classification
-Tier
-Heading
 
 Style
 - Display
