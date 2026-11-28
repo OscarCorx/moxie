@@ -1,2 +1,0 @@
-ASSETS.push(
-);

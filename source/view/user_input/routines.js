@@ -115,6 +115,7 @@ class UserInput {
       case "/event/user_input/bind":
         state.bind = true;
         return modifier;
+      case "/event/user_input/return":
       case "/event/user_input/mode":
         state.move = false;
         state.edit = true;
@@ -123,8 +124,8 @@ class UserInput {
         state.big = true;
         return modifier;
     }
-    const moves = m.accessComponent(m.endpoint, "/move_mapping");
-    return moves[v];
+    const event = m.accessComponent(m.endpoint, "/move_mapping")[v];
+    return event;
   }
 
   static edit(m, v) {
@@ -133,6 +134,9 @@ class UserInput {
     const event = modifiers[v];
     if (event === "/event/user_input/bind") {
       state.bind = true;
+      return event;
+    }
+    if (event === "/event/user_input/return") {
       return event;
     }
     if (v.length === 1 || v === "Backspace") {

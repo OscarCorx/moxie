@@ -1,3 +1,4 @@
+/* ARCHETYPE */
 ASSETS.push(
   {
     source: "/present",
@@ -7,8 +8,6 @@ ASSETS.push(
     icon: "[L]",
     description: "This is an entity of a person",
   },
-);
-ASSETS.push(
   {
     source: "/archetype/property",
     property: "/present",
@@ -16,7 +15,6 @@ ASSETS.push(
     field: "entity",
   },
   {
-    id: "/location/0",
     source: "/archetype/property",
     property: "/location",
     archetype: "/archetype/person",

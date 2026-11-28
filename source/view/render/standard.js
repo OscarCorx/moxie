@@ -24,6 +24,9 @@ class Standard {
   }
 
   static outlineHud(m, c) {
+    const state = m.accessComponent(m.endpoint, "/style");
+    const style = m.getEntity(state.main_theme);
+
     let e = this.getElement("/hud/container", "/app");
     while (e.firstChild) {
       e.firstChild.remove();
@@ -67,25 +70,25 @@ class Standard {
       display: "flex",
       "flex-direction": "row",
     });
-    e = this.getElement("/hud/gutter", "/hud/space");
-    this.addStyle(e, {
-      width: "10vw",
-      padding: "10px",
-      display: "flex",
-      "flex-direction": "column",
-      "border-right": "1px solid black",
-    });
-    e = this.getElement("/hud/gutter_group", "/hud/gutter");
-    this.addStyle(e, {
-      flex: 1,
-    });
-    e.textContent = "NAVIGATION"
-    e = this.getElement("/hud/action", "/hud/gutter");
-    this.addStyle(e, {
-      height: "10vh",
-      "border-top": "1px solid black",
-    });
-    e.textContent = "ACTION"
+    // e = this.getElement("/hud/gutter", "/hud/space");
+    // this.addStyle(e, {
+    //   width: "10vw",
+    //   padding: "10px",
+    //   display: "flex",
+    //   "flex-direction": "column",
+    //   "border-right": "1px solid black",
+    // });
+    // e = this.getElement("/hud/gutter_group", "/hud/gutter");
+    // this.addStyle(e, {
+    //   flex: 1,
+    // });
+    // e.textContent = "NAVIGATION"
+    // e = this.getElement("/hud/action", "/hud/gutter");
+    // this.addStyle(e, {
+    //   height: "10vh",
+    //   "border-top": "1px solid black",
+    // });
+    // e.textContent = "ACTION"
     e = this.getElement("/hud/workspace", "/hud/space");
     this.addStyle(e, {
       padding: "10px",
@@ -96,12 +99,12 @@ class Standard {
     e = this.getElement("/hud/card", "/hud/workspace");
     this.addStyle(e, {
       padding: "10px",
-      "background-color": "pink",
       position: "relative",
       left: "0px",
       top: "0px",
       flex: 1,
     });
+    this.addStyle(e, style["background"]);
     // e = this.getElement("/hud/auxiliary", "/hud/workspace");
     // this.addStyle(e, {
     //   height: "10vh",
@@ -209,9 +212,9 @@ class Standard {
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id);
     if (c.row % 2) {
-      this.addStyle(e, style["row_passive_0"]);
+      this.addStyle(e, style["foreground_0"]);
     } else {
-      this.addStyle(e, style["row_passive_1"]);
+      this.addStyle(e, style["foreground_1"]);
     }
   }
 
@@ -225,7 +228,7 @@ class Standard {
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     e.textContent = c.content;
-    const display = style["field_inactive"];
+    const display = style["background"];
     this.addStyle(e, display);
 
   }
@@ -248,7 +251,7 @@ class Standard {
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id, c.parent);
     if (c.focus) {
-      this.addStyle(e, style["field_focus"]);
+      this.addStyle(e, style["focus"]);
     }
     e.textContent = c.content;
   }

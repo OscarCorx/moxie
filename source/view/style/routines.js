@@ -2,8 +2,8 @@ class Style {
   static build(m, h) {
     const c = {
       source: "/style/state",
-      main_theme: "/theme/light_mode",
-      stable_theme: "/theme/light_mode",
+      main_theme: "/theme/dark_mode",
+      stable_theme: "/theme/dark_mode",
       main_space: "/layout/0",
       stable_space: "/layout/1",
       main_display: "/display/0",

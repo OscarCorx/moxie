@@ -1,19 +1,17 @@
 - Today
-  - [ ] Replace thread with "run"
   - [ ] Formattiing
-    - [ ] Remove panel
-  - [ ] Work out workflow to create workflows
-    - [ ] Will then support algorithms
-      - [ ] Requirements
-        - [ ] Entity
-        - [ ] Procedure applied to the entity archetype
-        - [ ] Actions ( Event / Message / Error )
-        - [ ] State of Procedure
+  - [ ] Application
+    - [ ] View Application
+    - [ ] Module / Application / Tennancy
+    - [ ] Authorization
+    - [ ] Expectations
+  - [ ] Rote
+    - [ ] Design Rote Application
+  - [ ] Authentication
+    - [ ] Device Roles
+    - [ ] Partial Auth
+    - [ ] Local Refresh Tokens
 
-- Interfaces
-  - Mobile
-  - Tablet
-  - Desktop
 - Tests
 - Workflows
   - Schema Editor

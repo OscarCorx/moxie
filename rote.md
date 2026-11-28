@@ -1,0 +1,12 @@
+Generically, a game with a progression mechanic
+- Have queries draw content from other applications
+- Each view should provide user_inputs mapped to bet, raise, and double
+- Configure the procedure
+  - Progress faster for correct answers
+  - Regress faster for incorrect answers
+- The general approach
+  - Each problem is a procedure
+    - User Input
+    - Sub Procedure: Check if the answer is correct
+    - Sub Procedure: Compute progression
+    - Progress Procedure

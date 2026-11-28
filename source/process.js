@@ -1,8 +1,8 @@
-class Process {
+class Application {
   start(thread) {
     document.addEventListener(this.endpoint, (event) => {
       setTimeout(() => {
-        this.processMessage(event.detail);
+        this.process(event.detail);
       }, event.detail.timeout || 0);
     });
     window.addEventListener("load", () => {
@@ -17,7 +17,8 @@ class Process {
   }
 
   /* PROCESS ROUTINE */
-  processMessage(header) {
+  /* REFACTOR PROCESS / ANIMATE / SCHEDULE to all run the same logic */
+  process(header) {
     const resultIds = [];
     const procedureRun = this.model.accessComponent(header.run, "/procedure/run");
     const subscriptionIds = this.model.accessComponentIds(header.event, "/procedure/subscription");
@@ -66,19 +67,22 @@ class Process {
     }
     requestAnimationFrame(() => { this.animate(); });
   }
+  /* ACTUALLY PROCESSING SCHEDULED MESSAGES.  SHOULD BE RESOLVED WHEN ALL THREE ARE HARMONIZED */
+  schedule() { }
 
+  /* USE ENDPOINT AS A TENNANT TO ALLOW FOR ONE MODEL PER PROCESS */
   constructor(endpoint) {
     this.model = new Model(endpoint);
     this.endpoint = endpoint;
   }
 }
 
-const PROCESS = new Process("/target");
+const APPLICATION = new Application("/target");
 
 COMPONENTS.forEach((i) => {
-  PROCESS.model.setComponent(i);
+  APPLICATION.model.setComponent(i);
 });
 ASSETS.forEach((i) => {
-  PROCESS.model.setComponent(i);
+  APPLICATION.model.setComponent(i);
 });
-PROCESS.start("/current");
+APPLICATION.start("/current");

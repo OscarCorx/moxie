@@ -1,0 +1,2 @@
+/* ARCHETYPE */
+ASSETS.push();
