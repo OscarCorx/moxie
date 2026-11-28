@@ -136,6 +136,11 @@ class UserInput {
       state.bind = true;
       return event;
     }
+    if (event === "/event/user_input/mode") {
+      state.move = true;
+      state.edit = false;
+      return event;
+    }
     if (event === "/event/user_input/return") {
       return event;
     }
@@ -181,5 +186,11 @@ class UserInput {
 
   static mouseUp(m, h, r) {
 
+  }
+
+  static clickEntry(m, h, r) {
+    const state = m.accessComponent(m.endpoint, "/user_input");
+    state.move = false;
+    state.edit = true;
   }
 }

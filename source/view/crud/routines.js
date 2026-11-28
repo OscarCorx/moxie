@@ -17,7 +17,7 @@ class Crud {
     component[h.field] = h.value;
   }
 
-  static new(m, h) {
+  static createComponent(m, h) {
     const state = m.accessComponent(m.endpoint, "/navigation");
     const archetype_entity = m.getComponent(state.entity);
     const archetype_property = m.getComponent(state.property);
@@ -37,7 +37,7 @@ class Crud {
     m.setComponent(c);
   }
 
-  static create_entity(m, h, resultId) {
+  static createEntity(m, h, resultId) {
     const state = m.accessComponent(m.endpoint, "/navigation");
     const archetype_entity = m.getComponent(state.entity);
     const c = {

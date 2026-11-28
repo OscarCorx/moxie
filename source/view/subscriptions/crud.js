@@ -32,11 +32,11 @@ COMPONENTS.push(
     source: "/procedure/subscription",
     system: "/crud",
     procedure: "/user_interface",
-    event: "/event/entity/new",
+    event: "/event/user_input/create_entity",
     message: "/message/crud/create_entity",
     routine: (m, h, r) => {
-      Crud.create_entity(m, h);
-      model.setComponent({
+      Crud.createEntity(m, h);
+      m.setComponent({
         source: "/message/header",
         result: r,
         event: "/event/crud/create_entity",
@@ -60,11 +60,11 @@ COMPONENTS.push(
     source: "/procedure/subscription",
     system: "/crud",
     procedure: "/user_interface",
-    event: "/event/component/new",
+    event: "/event/user_input/create_component",
     message: "/message/crud/create_component",
     routine: (m, h, r) => {
-      Crud.create_component(m, h, r);
-      model.setComponent({
+      Crud.createComponent(m, h, r);
+      m.setComponent({
         source: "/message/header",
         result: r,
         event: "/event/crud/create_component",

@@ -238,7 +238,7 @@ class Standard {
     this.addStyle(e, { height: "20px" });
     e.addEventListener("click", (e) => {
       m.emit({
-        event: "/event/user_input/entry_select",
+        event: "/event/view/entry_select",
         run: m.createRun(),
         component: c.component,
         field: c.field,

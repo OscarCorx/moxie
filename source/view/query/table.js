@@ -57,17 +57,6 @@ class TableQuery {
         x: c.x,
         y: c.y
       },
-      {
-        id: "/absolute/primary/entry_0",
-        source: "/entry",
-        parent: "/absolute/primary",
-        title: entity_present.title,
-        description: entity_present.description,
-        subtitle: archetype_present.title,
-        subdescription: archetype_present.description,
-        action: "/message/create_entity",
-        action_text: "New Entity",
-      },
     );
   }
   /* AUGMENTS PRIMARY TOOLS */
@@ -101,7 +90,7 @@ class TableQuery {
         parent: "/absolute/secondary",
         title: schema_present.title,
         description: schema_present.description,
-        action: "New Component",
+        action: "/event/user_input/create_component",
         action_text: "Secondary",
       },
       {
@@ -156,7 +145,7 @@ class TableQuery {
         parent: "/hud/header",
         subtitle: archetype_present.title,
         subdescription: archetype_present.description,
-        action: "/message/create_entity",
+        action: "/event/user_input/create_entity",
         action_text: (user_input.bind) ? "N" : "New Entity",
       },
       {
@@ -167,7 +156,7 @@ class TableQuery {
         description: entity_present.description,
         subtitle: schema_present.title,
         subdescription: schema_present.description,
-        action: "New Component",
+        action: "/event/user_input/create_component",
         action_text: (user_input.bind) ? "Q" : "New Component",
       },
       {

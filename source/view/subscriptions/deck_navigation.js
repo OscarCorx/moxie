@@ -262,7 +262,24 @@ COMPONENTS.push(
     source: "/procedure/subscription",
     procedure: "/user_interface",
     system: "/navigation",
-    event: "/event/user_input/entry_select",
+    event: "/event/view/entry_select",
+    message: "/message/user_input/click_entry",
+    routine: (m, h, r) => {
+      UserInput.clickEntry(m, h);
+      m.setComponent({
+        source: "/message/header",
+        result: r,
+        event: "/event/user_input/click_entry",
+        component: h.component,
+        field: h.field,
+      });
+    },
+  },
+  {
+    source: "/procedure/subscription",
+    procedure: "/user_interface",
+    system: "/navigation",
+    event: "/event/user_input/click_entry",
     message: "/message/navigation/select_primary",
     routine: (m, h, r) => {
       DeckNavigation.selectPrimary(m, h);

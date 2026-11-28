@@ -94,4 +94,11 @@ COMPONENTS.push(
     mode: "/modifier",
     key: "Meta",
   },
+  {
+    source: "/user_input/binding",
+    entity: "/user_input",
+    action: "/event/user_input/return",
+    mode: "/modifier",
+    key: "Enter",
+  },
 );
