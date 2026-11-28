@@ -39,7 +39,7 @@ class Standard {
     });
     e = this.getElement("/hud/top", "/hud/container");
     this.addStyle(e, {
-      height: "10vh",
+      height: "5vh",
       display: "flex",
       "flex-direction": "row",
       "border-bottom": "1px solid black",
@@ -70,18 +70,17 @@ class Standard {
       display: "flex",
       "flex-direction": "row",
     });
-    // e = this.getElement("/hud/gutter", "/hud/space");
-    // this.addStyle(e, {
-    //   width: "10vw",
-    //   padding: "10px",
-    //   display: "flex",
-    //   "flex-direction": "column",
-    //   "border-right": "1px solid black",
-    // });
-    // e = this.getElement("/hud/gutter_group", "/hud/gutter");
-    // this.addStyle(e, {
-    //   flex: 1,
-    // });
+    e = this.getElement("/hud/gutter", "/hud/space");
+    this.addStyle(e, {
+      padding: "10px",
+      display: "flex",
+      "flex-direction": "column",
+      "border-right": "1px solid black",
+    });
+    e = this.getElement("/hud/gutter_group", "/hud/gutter");
+    this.addStyle(e, {
+      flex: 1,
+    });
     // e.textContent = "NAVIGATION"
     // e = this.getElement("/hud/action", "/hud/gutter");
     // this.addStyle(e, {
@@ -212,9 +211,9 @@ class Standard {
     const style = m.getEntity(state.main_theme);
     let e = this.getElement(c.id);
     if (c.row % 2) {
-      this.addStyle(e, style["foreground_0"]);
+      this.addStyle(e, style["background"]);
     } else {
-      this.addStyle(e, style["foreground_1"]);
+      this.addStyle(e, style["foreground_0"]);
     }
   }
 
