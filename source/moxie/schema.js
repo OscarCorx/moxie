@@ -46,30 +46,35 @@ COMPONENTS.push(
     source: "/schema/field",
     kind: "/entity",
     key: "entity",
+    title: "Entity"
   },
   {
     parent: "/present",
     source: "/schema/field",
     kind: "/string",
     key: "key",
+    title: "Key"
   },
   {
     parent: "/present",
     source: "/schema/field",
     kind: "/sting",
     key: "title",
+    title: "Title"
   },
   {
     parent: "/present",
     source: "/schema/field",
     kind: "/sting",
     key: "icon",
+    title: "Icon"
   },
   {
     parent: "/present",
     source: "/schema/field",
     kind: "/sting",
     key: "description",
+    title: "Description"
   },
   {
     source: "/present",

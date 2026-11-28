@@ -261,6 +261,8 @@ class Standard {
     this.addStyle(e, {
       display: "flex",
       "flex-direction": "column",
+      width: c.width,
+      height: c.height,
     });
     e = this.getElement(`${c.id}/title`, c.id);
     e = this.getElement(`${c.id}/description`, c.id);

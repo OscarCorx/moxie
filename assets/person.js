@@ -63,36 +63,42 @@ ASSETS.push(
     source: "/schema/field",
     kind: "/entity",
     key: "entity",
+    title: "Entity"
   },
   {
     parent: "/location",
     source: "/schema/field",
     kind: "/string",
     key: "address_1",
+    title: "Address 1"
   },
   {
     parent: "/location",
     source: "/schema/field",
     kind: "/string",
     key: "address_2",
+    title: "Address 2"
   },
   {
     parent: "/location",
     source: "/schema/field",
     kind: "/string",
     key: "city",
+    title: "City"
   },
   {
     parent: "/location",
     source: "/schema/field",
     kind: "/string",
     key: "state",
+    title: "State"
   },
   {
     parent: "/location",
     source: "/schema/field",
     kind: "/string",
     key: "zipcode",
+    title: "Postal Code"
   },
 );
 /* DEMOGRAPHICS */
@@ -110,36 +116,42 @@ ASSETS.push(
     source: "/schema/field",
     kind: "/entity",
     key: "entity",
+    title: "Person"
   },
   {
     parent: "/demographics",
     source: "/schema/field",
     kind: "/string",
     key: "family_name",
-  },
-  {
-    parent: "/demographics",
-    source: "/schema/field",
-    kind: "/string",
-    key: "given_name",
+    title: "Family Name"
   },
   {
     parent: "/demographics",
     source: "/schema/field",
     kind: "/string",
     key: "middle_name",
+    title: "Middle Name"
+  },
+  {
+    parent: "/demographics",
+    source: "/schema/field",
+    kind: "/string",
+    key: "given_name",
+    title: "Given Name"
   },
   {
     parent: "/demographics",
     source: "/schema/field",
     kind: "/string",
     key: "date_of_birth",
+    title: "Date of Birth"
   },
   {
     parent: "/demographics",
     source: "/schema/field",
     kind: "/string",
     key: "gender",
+    title: "Gender"
   },
 );
 /* CONTACT */
@@ -157,17 +169,20 @@ ASSETS.push(
     source: "/schema/field",
     kind: "/entity",
     key: "entity",
+    title: "Person"
   },
   {
     parent: "/contact",
     source: "/schema/field",
     kind: "/string",
     key: "kind",
+    title: "Kind"
   },
   {
     parent: "/contact",
     source: "/schema/field",
     kind: "/string",
     key: "value",
+    title: "Value"
   },
 );

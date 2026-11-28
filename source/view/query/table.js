@@ -147,9 +147,11 @@ class TableQuery {
         subdescription: archetype_present.description,
         action: "/event/user_input/create_entity",
         action_text: (user_input.bind) ? "N" : "New Entity",
+        height: "20vh",
+        width: "20vw",
       },
       {
-        id: "/hud/header/entry_2",
+        id: "/hud/header/entry_1",
         source: "/entry",
         parent: "/hud/header",
         title: entity_present.title,
@@ -158,13 +160,17 @@ class TableQuery {
         subdescription: schema_present.description,
         action: "/event/user_input/create_component",
         action_text: (user_input.bind) ? "Q" : "New Component",
+        height: "20vh",
+        width: "20vw",
       },
       {
-        id: "/hud/header/entry_3",
+        id: "/hud/header/entry_2",
         source: "/entry",
         parent: "/hud/header",
         title: "FIELD",
         description: "This is a deep dive into the schema",
+        height: "20vh",
+        width: "20vw",
       },
     );
     for (const field_id of field_ids) {
@@ -173,7 +179,7 @@ class TableQuery {
         id: `/hud/table/field/${field_id}`,
         source: "/table/field",
         parent: "/hud/table/fields",
-        content: field.key,
+        content: field.title || field.key,
       });
     }
     for (const r in component_ids) {
@@ -189,11 +195,16 @@ class TableQuery {
       for (const c in field_ids) {
         const field_id = field_ids[c];
         const field = model.getComponent(field_id)
+        let content = component[field.key]
+        if (field.kind === "/entity") {
+          const present = model.accessComponent(content, "/present") || {};
+          content = present.title || content;
+        }
         contents.push({
           id: `/hud/table/row/${r}/${c}`,
           source: "/table/cell",
           parent: `/hud/table/row/${r}`,
-          content: component[field.key],
+          content: content,
           component: component.id,
           field: field_id,
           focus: component_id == state.component && field_id === state.field,
